@@ -123,7 +123,7 @@ public class PlayerController : NetworkComponent
         if (IsLocalPlayer)
         {
             float cameraSpeed = 5f;
-            Vector3 offsetVector = transform.forward * -10 + (new Vector3(AimDir.x, AimDir.y, 0) * 2);
+            Vector3 offsetVector = transform.forward * -10 + (new Vector3(AimDir.x, AimDir.y, 0) * 1.3f);
             Vector3 targetCameraPosition = this.gameObject.transform.position + offsetVector;
             Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetCameraPosition, cameraSpeed * Time.deltaTime);
             Camera.main.transform.forward = new Vector3(0, 0, 1);
