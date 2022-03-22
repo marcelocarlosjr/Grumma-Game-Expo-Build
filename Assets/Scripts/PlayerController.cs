@@ -10,10 +10,16 @@ public class PlayerController : NetworkComponent
 
     public Vector2 MoveInput;
     public Vector2 AimInput;
-
     public Vector2 AimDir;
 
+    public float AimRot;
+
     public float MoveSpeed;
+
+    public string InputType;
+    string KBM = "Keyboard&Mouse";
+    string GP = "Gamepad";
+
     public override void HandleMessage(string flag, string value)
     {
         if(flag == "MOVE" && IsServer)
@@ -22,7 +28,7 @@ public class PlayerController : NetworkComponent
         }
         if(flag == "AIM" && IsServer)
         {
-            AimDir = VectorFromString(value);
+            AimRot = float.Parse(value);
         }
     }
 
@@ -30,7 +36,10 @@ public class PlayerController : NetworkComponent
     {
         
     }
-
+    public override IEnumerator SlowUpdate()
+    {
+        yield return new WaitForSeconds(0.01f);
+    }
     public static Vector2 VectorFromString(string value)
     {
         char[] temp = { '(', ')' };
@@ -38,21 +47,21 @@ public class PlayerController : NetworkComponent
         return new Vector2(float.Parse(args[0].Trim()), float.Parse(args[1].Trim()));
     }
 
-    public Vector2 GlobalMousePos(Vector2 position)
+    public float GlobalMousePos(Vector2 position)
     {
         Vector3 mousePos = new Vector3(position.x, position.y, Mathf.Infinity);
 
         Ray rayPos = Camera.main.ScreenPointToRay(mousePos);
 
-        Vector2 relative = (rayPos.origin - MyRig.transform.position).normalized;
+        Vector2 relative = rayPos.origin - MyRig.transform.position;
 
-        return relative;
+        AimDir = relative.normalized * ((Mathf.Clamp(relative.magnitude / 5, 0, 1)));
+
+        float angle = Mathf.Atan2(relative.y, relative.x) * Mathf.Rad2Deg;
+
+        return angle - 90;
     }
 
-    public override IEnumerator SlowUpdate()
-    {
-        yield return new WaitForSeconds(0.01f);
-    }
     public void OnMoveInput(InputAction.CallbackContext context)
     {
         if (IsLocalPlayer)
@@ -66,7 +75,22 @@ public class PlayerController : NetworkComponent
         if (IsLocalPlayer)
         {
             AimInput = context.ReadValue<Vector2>();
-            SendCommand("AIM", GlobalMousePos(AimInput).ToString());
+            if (InputType == KBM)
+            {
+                SendCommand("AIM", GlobalMousePos(AimInput).ToString());
+            }
+            if(InputType == GP)
+            {
+                if(AimInput.magnitude > 0)
+                {
+                    AimDir = AimInput;
+                    SendCommand("AIM", ((Mathf.Atan2(AimInput.y, AimInput.x) * Mathf.Rad2Deg) - 90).ToString());
+                }
+                else
+                {
+                    AimDir = Vector2.zero;
+                }
+            }
         }
     }
     
@@ -82,6 +106,10 @@ public class PlayerController : NetworkComponent
     {
 
     }
+    public void OnInputChange(PlayerInput input)
+    {
+        InputType = input.currentControlScheme;
+    }
     private void Start()
     {
         MyRig = GetComponent<Rigidbody2D>();
@@ -95,7 +123,16 @@ public class PlayerController : NetworkComponent
         if (IsServer)
         {
             MyRig.velocity = (MoveInput * MoveSpeed);
-            MyRig.transform.up = AimDir;
+            MyRig.rotation = AimRot;
+        }
+
+        if (IsLocalPlayer)
+        {
+            float cameraSpeed = 5f;
+            Vector3 offsetVector = transform.forward * -10 + (new Vector3(AimDir.x, AimDir.y, 0) * 2);
+            Vector3 targetCameraPosition = this.gameObject.transform.position + offsetVector;
+            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetCameraPosition, cameraSpeed * Time.deltaTime);
+            Camera.main.transform.forward = new Vector3(0, 0, 1);
         }
     }
 }

@@ -77,7 +77,7 @@ public class NetworkRigidBody2D : NetworkComponent
                     SendUpdate("VEL", MyRig.velocity.ToString("F3"), false);
                     LastVelocity = MyRig.velocity;
                 }
-                if ((LastRotation - MyRig.rotation > Threshold))
+                if ((Mathf.Abs(LastRotation - MyRig.rotation) > Threshold))
                 {
                     SendUpdate("ROT", MyRig.rotation.ToString("F3"), false);
                     LastRotation = MyRig.rotation;
@@ -96,7 +96,7 @@ public class NetworkRigidBody2D : NetworkComponent
                     IsDirty = false;
                 }
             }
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.01f);
         }
     }
 
