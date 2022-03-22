@@ -105,7 +105,6 @@ public class NetworkRigidBody2D : NetworkComponent
         MyRig = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (IsClient)

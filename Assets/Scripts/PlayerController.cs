@@ -118,14 +118,8 @@ public class PlayerController : NetworkComponent
             throw new System.Exception("ERROR: Could not find Rigidbody!");
         }
     }
-    private void Update()
+    private void FixedUpdate()
     {
-        if (IsServer)
-        {
-            MyRig.velocity = (MoveInput * MoveSpeed);
-            MyRig.rotation = AimRot;
-        }
-
         if (IsLocalPlayer)
         {
             float cameraSpeed = 5f;
@@ -133,6 +127,14 @@ public class PlayerController : NetworkComponent
             Vector3 targetCameraPosition = this.gameObject.transform.position + offsetVector;
             Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetCameraPosition, cameraSpeed * Time.deltaTime);
             Camera.main.transform.forward = new Vector3(0, 0, 1);
+        }
+    }
+    private void Update()
+    {
+        if (IsServer)
+        {
+            MyRig.velocity = (MoveInput * MoveSpeed);
+            MyRig.rotation = AimRot;
         }
     }
 }
