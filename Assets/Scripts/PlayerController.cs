@@ -8,6 +8,7 @@ public class PlayerController : NetworkComponent
 {
     public Rigidbody2D MyRig;
     public Animator AnimController;
+    public Animator SlashAnim;
 
     public Vector2 MoveInput;
     public Vector2 AimInput;
@@ -72,6 +73,7 @@ public class PlayerController : NetworkComponent
         {
             STATE = float.Parse(value);
             AnimController.SetFloat("STATE", STATE);
+            SlashAnim.SetInteger("SLASH", (int)STATE);
         }
     }
 
@@ -233,6 +235,11 @@ public class PlayerController : NetworkComponent
         {
             throw new System.Exception("ERROR: Could not find Animator!");
         }
+        SlashAnim = this.transform.GetChild(0).GetComponent<Animator>();
+        if (SlashAnim == null)
+        {
+            throw new System.Exception("ERROR: Could not find Slash Animator!");
+        }
     }
     private void FixedUpdate()
     {
@@ -262,6 +269,18 @@ public class PlayerController : NetworkComponent
             }
             AnimController.SetFloat("STATE", STATE);
             SendUpdate("STATE", STATE.ToString());
+        }
+
+        if (IsClient)
+        {
+            if(STATE != IDLESTATE)
+            {
+                AnimController.SetFloat("SPEED", MyRig.velocity.magnitude);
+            }
+            else
+            {
+                AnimController.SetFloat("SPEED", 5);
+            }
         }
     }
 }
