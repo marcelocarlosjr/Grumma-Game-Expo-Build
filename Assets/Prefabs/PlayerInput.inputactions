@@ -25,30 +25,30 @@
                 },
                 {
                     "name": "LFire",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "60729a00-4655-477f-9b6c-87d6b0c98f44",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "RFire",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "54e442f9-7924-437a-bb82-f318fa5bf35d",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Sprint",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "b67a0487-4cc8-4537-85ef-2b4c05370133",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [

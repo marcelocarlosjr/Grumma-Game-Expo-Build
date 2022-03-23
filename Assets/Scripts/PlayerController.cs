@@ -11,6 +11,9 @@ public class PlayerController : NetworkComponent
     public Vector2 MoveInput;
     public Vector2 AimInput;
     public Vector2 AimDir;
+    public bool LFireInput;
+    public bool RFireInput;
+    public bool SprintInput;
 
     public float AimRot;
 
@@ -30,6 +33,18 @@ public class PlayerController : NetworkComponent
         {
             AimRot = float.Parse(value);
         }
+        if(flag == "LFIRE" && IsServer)
+        {
+            LFireInput = bool.Parse(value);
+        }
+        if (flag == "RFIRE" && IsServer)
+        {
+            RFireInput = bool.Parse(value);
+        }
+        if (flag == "SPRINT" && IsServer)
+        {
+            SprintInput = bool.Parse(value);
+        }
     }
 
     public override void NetworkedStart()
@@ -45,6 +60,21 @@ public class PlayerController : NetworkComponent
         char[] temp = { '(', ')' };
         string[] args = value.Trim(temp).Split(',');
         return new Vector2(float.Parse(args[0].Trim()), float.Parse(args[1].Trim()));
+    }
+    public static bool BoolFromFloat(float value)
+    {
+        if(value < 0.3)
+        {
+            return false;
+        }
+        else if (value >= 0.3)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public float GlobalMousePos(Vector2 position)
@@ -96,15 +126,27 @@ public class PlayerController : NetworkComponent
     
     public void OnLClickInput(InputAction.CallbackContext context)
     {
-
+        if (IsLocalPlayer)
+        {
+            LFireInput = BoolFromFloat(context.ReadValue<float>());
+            SendCommand("LFIRE", LFireInput.ToString());
+        }
     }
     public void OnRClickInput(InputAction.CallbackContext context)
     {
-
+        if (IsLocalPlayer)
+        {
+            RFireInput = BoolFromFloat(context.ReadValue<float>());
+            SendCommand("RFIRE", RFireInput.ToString());
+        }
     }
     public void OnSprintInput(InputAction.CallbackContext context)
     {
-
+        if (IsLocalPlayer)
+        {
+            SprintInput = BoolFromFloat(context.ReadValue<float>());
+            SendCommand("SPRINT", SprintInput.ToString());
+        }
     }
     public void OnInputChange(PlayerInput input)
     {
