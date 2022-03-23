@@ -25,10 +25,14 @@ public class PlayerController : NetworkComponent
     string KBM = "Keyboard&Mouse";
     string GP = "Gamepad";
 
+    bool LFireCD;
+    bool LFireAnimation;
+
 
     float STATE = 0;
     float IDLESTATE = 0;
     float RUNSTATE = 1;
+    float LFIRESTATE = 2;
 
     public override void HandleMessage(string flag, string value)
     {
@@ -47,9 +51,12 @@ public class PlayerController : NetworkComponent
         if(flag == "LFIRE" && IsServer)
         {
             LFireInput = bool.Parse(value);
-            if (LFireInput)
+            if(LFireInput)
             {
-                
+                if (!LFireCD)
+                {
+                    StartCoroutine(LFire());
+                }
             }
         }
         if (flag == "RFIRE" && IsServer)
@@ -61,6 +68,11 @@ public class PlayerController : NetworkComponent
             SprintInput = bool.Parse(value);
             Sprint(SprintInput);
         }
+        if(flag == "STATE" && IsClient)
+        {
+            STATE = float.Parse(value);
+            AnimController.SetFloat("STATE", STATE);
+        }
     }
 
     public override void NetworkedStart()
@@ -70,6 +82,27 @@ public class PlayerController : NetworkComponent
     public override IEnumerator SlowUpdate()
     {
         yield return new WaitForSeconds(0.01f);
+    }
+    public IEnumerator LFire()
+    {
+        if (IsServer)
+        {
+            while (LFireInput)
+            {
+                LFireCD = true;
+                StartCoroutine(LFireAnim());
+                //spawn slash animation
+                yield return new WaitForSeconds(.7f);
+                LFireCD = false;
+            }
+        }
+    }
+    public IEnumerator LFireAnim()
+    {
+        LFireAnimation = true;
+        STATE = LFIRESTATE;
+        yield return new WaitForSeconds(0.3f);
+        LFireAnimation = false;
     }
     public static Vector2 VectorFromString(string value)
     {
@@ -146,7 +179,6 @@ public class PlayerController : NetworkComponent
         {
             LFireInput = BoolFromFloat(context.ReadValue<float>());
             SendCommand("LFIRE", LFireInput.ToString());
-            AnimController.SetTrigger("ATTACK");
         }
     }
     public void OnRClickInput(InputAction.CallbackContext context)
@@ -219,18 +251,17 @@ public class PlayerController : NetworkComponent
         {
             MyRig.velocity = (MoveInput * MoveSpeed * SprintMod);
             MyRig.SetRotation(AimRot);
-        }
-        if (IsClient)
-        {
-            if(MyRig.velocity.magnitude == 0)
+
+            if (MyRig.velocity.magnitude == 0 && !LFireAnimation)
             {
                 STATE = IDLESTATE;
             }
-            if(MyRig.velocity.magnitude > 0)
+            if (MyRig.velocity.magnitude > 0 && !LFireAnimation)
             {
                 STATE = RUNSTATE;
             }
             AnimController.SetFloat("STATE", STATE);
+            SendUpdate("STATE", STATE.ToString());
         }
     }
 }
