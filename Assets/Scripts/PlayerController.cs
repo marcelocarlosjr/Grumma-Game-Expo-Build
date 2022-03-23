@@ -7,6 +7,7 @@ using NETWORK_ENGINE;
 public class PlayerController : NetworkComponent
 {
     public Rigidbody2D MyRig;
+    public Animator AnimController;
 
     public Vector2 MoveInput;
     public Vector2 AimInput;
@@ -18,10 +19,16 @@ public class PlayerController : NetworkComponent
     public float AimRot;
 
     public float MoveSpeed;
+    public float SprintMod = 1;
 
     public string InputType;
     string KBM = "Keyboard&Mouse";
     string GP = "Gamepad";
+
+
+    float STATE = 0;
+    float IDLESTATE = 0;
+    float RUNSTATE = 1;
 
     public override void HandleMessage(string flag, string value)
     {
@@ -32,10 +39,18 @@ public class PlayerController : NetworkComponent
         if(flag == "AIM" && IsServer)
         {
             AimRot = float.Parse(value);
+            if(AimRot == 0)
+            {
+                MyRig.rotation = 0;
+            }
         }
         if(flag == "LFIRE" && IsServer)
         {
             LFireInput = bool.Parse(value);
+            if (LFireInput)
+            {
+                
+            }
         }
         if (flag == "RFIRE" && IsServer)
         {
@@ -44,6 +59,7 @@ public class PlayerController : NetworkComponent
         if (flag == "SPRINT" && IsServer)
         {
             SprintInput = bool.Parse(value);
+            Sprint(SprintInput);
         }
     }
 
@@ -130,6 +146,7 @@ public class PlayerController : NetworkComponent
         {
             LFireInput = BoolFromFloat(context.ReadValue<float>());
             SendCommand("LFIRE", LFireInput.ToString());
+            AnimController.SetTrigger("ATTACK");
         }
     }
     public void OnRClickInput(InputAction.CallbackContext context)
@@ -152,12 +169,37 @@ public class PlayerController : NetworkComponent
     {
         InputType = input.currentControlScheme;
     }
+    public void LFire(bool state)
+    {
+        
+    }
+    public void RFire(bool state)
+    {
+
+    }
+    public void Sprint(bool state)
+    {
+        if (!state)
+        {
+            SprintMod = 1;
+        }
+        if (state)
+        {
+            SprintMod = 1.6f;
+        }
+    }
     private void Start()
     {
+        SprintMod = 1;
         MyRig = GetComponent<Rigidbody2D>();
         if(MyRig == null)
         {
             throw new System.Exception("ERROR: Could not find Rigidbody!");
+        }
+        AnimController = GetComponent<Animator>();
+        if (AnimController == null)
+        {
+            throw new System.Exception("ERROR: Could not find Animator!");
         }
     }
     private void FixedUpdate()
@@ -175,8 +217,20 @@ public class PlayerController : NetworkComponent
     {
         if (IsServer)
         {
-            MyRig.velocity = (MoveInput * MoveSpeed);
-            MyRig.rotation = AimRot;
+            MyRig.velocity = (MoveInput * MoveSpeed * SprintMod);
+            MyRig.SetRotation(AimRot);
+        }
+        if (IsClient)
+        {
+            if(MyRig.velocity.magnitude == 0)
+            {
+                STATE = IDLESTATE;
+            }
+            if(MyRig.velocity.magnitude > 0)
+            {
+                STATE = RUNSTATE;
+            }
+            AnimController.SetFloat("STATE", STATE);
         }
     }
 }

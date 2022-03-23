@@ -9,7 +9,7 @@ public class NetworkRigidBody2D : NetworkComponent
     public Vector2 LastPosition;
     public float LastRotation;
     public Vector2 LastVelocity;
-    public float LastAngular;
+    //public float LastAngular;
 
     public Vector2 OffsetVelocity;
 
@@ -50,10 +50,10 @@ public class NetworkRigidBody2D : NetworkComponent
             LastRotation = float.Parse(value);
             MyRig.rotation = LastRotation;
         }
-        if (flag == "ANG" && IsClient)
+        /*if (flag == "ANG" && IsClient)
         {
             LastAngular = float.Parse(value);
-        }
+        }*/
     }
 
     public override void NetworkedStart()
@@ -82,11 +82,11 @@ public class NetworkRigidBody2D : NetworkComponent
                     SendUpdate("ROT", MyRig.rotation.ToString("F3"), false);
                     LastRotation = MyRig.rotation;
                 }
-                if ((LastAngular - MyRig.angularVelocity > Threshold))
+                /* if ((LastAngular - MyRig.angularVelocity > Threshold))
                 {
                     SendUpdate("ANG", MyRig.angularVelocity.ToString("F3"), false);
                     LastAngular = MyRig.angularVelocity;
-                }
+                }*/
                 if (IsDirty)
                 {
                     SendUpdate("POS", MyRig.position.ToString("F3"), false);
@@ -109,6 +109,7 @@ public class NetworkRigidBody2D : NetworkComponent
     {
         if (IsClient)
         {
+            MyRig.angularVelocity = 0;
             if (LastVelocity.magnitude < 0.05f)
             {
                 OffsetVelocity = Vector2.zero;
@@ -121,8 +122,6 @@ public class NetworkRigidBody2D : NetworkComponent
             {
                 MyRig.velocity = LastVelocity;
             }
-
-            MyRig.angularVelocity = LastAngular;
         }
     }
 }
