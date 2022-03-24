@@ -359,7 +359,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 139753977648684975}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd436fb42d7eb664799424dcf3dadb25, type: 3}
+  m_Script: {fileID: 11500000, guid: 00b191f1d22f6d849b4c67741e310de7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MyCore: {fileID: 0}
@@ -376,7 +376,7 @@ MonoBehaviour:
   SprintInput: 0
   AimRot: 0
   MoveSpeed: 4
-  SprintMod: 1
+  SprintMod: 1.6
   InputType: 
 --- !u!1 &5042984219994303462
 GameObject:
@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 1184168618857917669}
   - component: {fileID: 543742431195935031}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Slash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

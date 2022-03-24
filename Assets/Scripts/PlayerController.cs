@@ -4,36 +4,42 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using NETWORK_ENGINE;
 
-public class PlayerController : NetworkComponent
+public abstract class PlayerController : NetworkComponent
 {
+    [Header("Components")]
     public Rigidbody2D MyRig;
     public Animator AnimController;
     public Animator SlashAnim;
 
+    [Header("Player Inputs")]
     public Vector2 MoveInput;
     public Vector2 AimInput;
     public Vector2 AimDir;
     public bool LFireInput;
     public bool RFireInput;
     public bool SprintInput;
-
     public float AimRot;
 
+    [Header("Player Speed")]
     public float MoveSpeed;
     public float SprintMod = 1;
 
+    [Header("Current Input")]
     public string InputType;
-    string KBM = "Keyboard&Mouse";
-    string GP = "Gamepad";
-
-    bool LFireCD;
-    bool LFireAnimation;
+    protected string KBM = "Keyboard&Mouse";
+    protected string GP = "Gamepad";
 
 
-    float STATE = 0;
-    float IDLESTATE = 0;
-    float RUNSTATE = 1;
-    float LFIRESTATE = 2;
+    protected bool LFireCD;
+    protected bool LFireAnimation;
+    protected bool RFireCD;
+    protected bool RFireAnimation;
+
+
+    protected float STATE = 0;
+    protected float IDLESTATE = 0;
+    protected float RUNSTATE = 1;
+    protected float LFIRESTATE = 2;
 
     public override void HandleMessage(string flag, string value)
     {
@@ -52,13 +58,7 @@ public class PlayerController : NetworkComponent
         if(flag == "LFIRE" && IsServer)
         {
             LFireInput = bool.Parse(value);
-            if(LFireInput)
-            {
-                if (!LFireCD)
-                {
-                    StartCoroutine(LFire());
-                }
-            }
+            LFire(LFireInput);
         }
         if (flag == "RFIRE" && IsServer)
         {
@@ -85,27 +85,11 @@ public class PlayerController : NetworkComponent
     {
         yield return new WaitForSeconds(0.01f);
     }
-    public IEnumerator LFire()
-    {
-        if (IsServer)
-        {
-            while (LFireInput)
-            {
-                LFireCD = true;
-                StartCoroutine(LFireAnim());
-                //spawn slash animation
-                yield return new WaitForSeconds(.7f);
-                LFireCD = false;
-            }
-        }
-    }
-    public IEnumerator LFireAnim()
-    {
-        LFireAnimation = true;
-        STATE = LFIRESTATE;
-        yield return new WaitForSeconds(0.3f);
-        LFireAnimation = false;
-    }
+    public abstract IEnumerator LFire();
+    public abstract IEnumerator LFireAnim();
+    public abstract IEnumerator RFire();
+    public abstract IEnumerator RFireAnim();
+
     public static Vector2 VectorFromString(string value)
     {
         char[] temp = { '(', ')' };
@@ -203,14 +187,8 @@ public class PlayerController : NetworkComponent
     {
         InputType = input.currentControlScheme;
     }
-    public void LFire(bool state)
-    {
-        
-    }
-    public void RFire(bool state)
-    {
-
-    }
+    public abstract void LFire(bool state);
+    public abstract void RFire(bool state);
     public void Sprint(bool state)
     {
         if (!state)
