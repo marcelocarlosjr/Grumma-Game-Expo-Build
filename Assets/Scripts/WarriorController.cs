@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class WarriorController : PlayerController
 {
+    [Header("WARRIOR VARIABLES")]
+    public BoxCollider2D SlashCollider;
+    public float LFireDamage;
+    public float RFireDamage;
     public override void LFire(bool state)
     {
         if (LFireInput)
@@ -30,9 +34,11 @@ public class WarriorController : PlayerController
     }
     public override IEnumerator LFireAnim()
     {
+        SlashCollider.enabled = true;
         LFireAnimation = true;
         STATE = LFIRESTATE;
         yield return new WaitForSeconds(.15f);
+        SlashCollider.enabled = false;
         LFireAnimation = false;
     }
 
