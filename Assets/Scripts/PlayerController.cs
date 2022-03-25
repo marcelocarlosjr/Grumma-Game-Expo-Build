@@ -42,6 +42,8 @@ public abstract class PlayerController : NetworkComponent
     protected bool LFireAnimation;
     protected bool RFireCD;
     protected bool RFireAnimation;
+    protected bool TakingDamage;
+    protected bool Dead;
 
 
     protected float STATE = 0;
@@ -49,6 +51,8 @@ public abstract class PlayerController : NetworkComponent
     protected float RUNSTATE = 1;
     protected float LFIRESTATE = 2;
     protected float RFIRESTATE = 3;
+    protected float TAKEDAMAGESTATE = 5;
+    protected float DEADSTATE = 69;
 
     public override void HandleMessage(string flag, string value)
     {
@@ -85,6 +89,10 @@ public abstract class PlayerController : NetworkComponent
             AnimController.SetFloat("STATE", STATE);
             AnimController.SetInteger("ISTATE", (int)STATE);
             SlashAnim.SetInteger("SLASH", (int)STATE);
+            if(STATE == DEADSTATE)
+            {
+                Die();
+            }
         }
         if(flag == "HP" && IsClient)
         {
@@ -126,14 +134,32 @@ public abstract class PlayerController : NetworkComponent
         {
             Health -= damage;
             SendUpdate("HP", Health.ToString());
-            //send "takedamage" animation
-            if (Health == 0)
+            StartCoroutine(TakeDamageTimer());
+            if (Health <= 0)
             {
-                //die
-                //send die animation
-                //show NPM to respawn
+                STATE = DEADSTATE;
+                Die();
+                SendUpdate("STATE", DEADSTATE.ToString());
             }
         }
+    }
+    public void Die()
+    {
+        Dead = true;
+        MyRig.bodyType = RigidbodyType2D.Static;
+        this.GetComponent<CircleCollider2D>().enabled = false;
+        this.GetComponent<SpriteRenderer>().sortingOrder = -1;
+        if (IsLocalPlayer)
+        {
+            //spawn respwan screen
+        }
+    }
+    public IEnumerator TakeDamageTimer()
+    {
+        TakingDamage = true;
+        STATE = TAKEDAMAGESTATE;
+        yield return new WaitForSeconds(0.10f);
+        TakingDamage = false;
     }
     public void Heal(float amount)
     {
@@ -256,7 +282,7 @@ public abstract class PlayerController : NetworkComponent
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {
-        if (IsLocalPlayer)
+        if (IsLocalPlayer && !Dead)
         {
             MoveInput = context.ReadValue<Vector2>();
             SendCommand("MOVE", MoveInput.ToString());
@@ -264,7 +290,7 @@ public abstract class PlayerController : NetworkComponent
     }
     public void OnAimInput(InputAction.CallbackContext context)
     {
-        if (IsLocalPlayer)
+        if (IsLocalPlayer && !Dead)
         {
             AimInput = context.ReadValue<Vector2>();
             if (InputType == KBM)
@@ -288,7 +314,7 @@ public abstract class PlayerController : NetworkComponent
     
     public void OnLClickInput(InputAction.CallbackContext context)
     {
-        if (IsLocalPlayer)
+        if (IsLocalPlayer && !Dead)
         {
             LFireInput = BoolFromFloat(context.ReadValue<float>());
             SendCommand("LFIRE", LFireInput.ToString());
@@ -296,7 +322,7 @@ public abstract class PlayerController : NetworkComponent
     }
     public void OnRClickInput(InputAction.CallbackContext context)
     {
-        if (IsLocalPlayer)
+        if (IsLocalPlayer && !Dead)
         {
             RFireInput = BoolFromFloat(context.ReadValue<float>());
             SendCommand("RFIRE", RFireInput.ToString());
@@ -304,7 +330,7 @@ public abstract class PlayerController : NetworkComponent
     }
     public void OnSprintInput(InputAction.CallbackContext context)
     {
-        if (IsLocalPlayer)
+        if (IsLocalPlayer && !Dead)
         {
             SprintInput = BoolFromFloat(context.ReadValue<float>());
             SendCommand("SPRINT", SprintInput.ToString());
@@ -364,11 +390,11 @@ public abstract class PlayerController : NetworkComponent
             MyRig.velocity = (MoveInput * MoveSpeed * SprintMod);
             MyRig.SetRotation(AimRot);
 
-            if (MyRig.velocity.magnitude == 0 && !LFireAnimation && !RFireAnimation)
+            if (MyRig.velocity.magnitude == 0 && !LFireAnimation && !RFireAnimation && !TakingDamage && !Dead)
             {
                 STATE = IDLESTATE;
             }
-            if (MyRig.velocity.magnitude > 0 && !LFireAnimation && !RFireAnimation)
+            if (MyRig.velocity.magnitude > 0 && !LFireAnimation && !RFireAnimation && !TakingDamage && !Dead)
             {
                 STATE = RUNSTATE;
             }
