@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WarriorAttack
+  m_Name: WarriorTakeDamage
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -20,9 +20,9 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 7442833654410566199, guid: f5df9d7886de77843b6f644c12401207, type: 3}
+      value: {fileID: -6123905353893036705, guid: f5df9d7886de77843b6f644c12401207, type: 3}
     - time: 0.083333336
-      value: {fileID: -1543031742662595542, guid: f5df9d7886de77843b6f644c12401207, type: 3}
+      value: {fileID: 4621557363637371380, guid: f5df9d7886de77843b6f644c12401207, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -42,8 +42,8 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 7442833654410566199, guid: f5df9d7886de77843b6f644c12401207, type: 3}
-    - {fileID: -1543031742662595542, guid: f5df9d7886de77843b6f644c12401207, type: 3}
+    - {fileID: -6123905353893036705, guid: f5df9d7886de77843b6f644c12401207, type: 3}
+    - {fileID: 4621557363637371380, guid: f5df9d7886de77843b6f644c12401207, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
