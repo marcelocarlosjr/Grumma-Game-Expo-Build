@@ -5,13 +5,10 @@ using UnityEngine;
 public class WarriorController : PlayerController
 {
     [Header("WARRIOR VARIABLES")]
-    public BoxCollider2D SlashCollider;
-    public BoxCollider2D SlashCollider2;
     public float LFireDamage;
     public float RFireDamage;
     public float RFireTimer;
     public bool RFireTimerDone;
-
 
     protected float RFIRESLASHSTATE = 4;
     public override void LFire(bool state)
