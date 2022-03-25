@@ -72,6 +72,7 @@ public abstract class PlayerController : NetworkComponent
         if (flag == "RFIRE" && IsServer)
         {
             RFireInput = bool.Parse(value);
+            RFire(RFireInput);
         }
         if (flag == "SPRINT" && IsServer)
         {
@@ -214,9 +215,7 @@ public abstract class PlayerController : NetworkComponent
         }
     }
     public abstract IEnumerator LFire();
-    public abstract IEnumerator LFireAnim();
     public abstract IEnumerator RFire();
-    public abstract IEnumerator RFireAnim();
 
     public static Vector2 VectorFromString(string value)
     {
@@ -365,15 +364,16 @@ public abstract class PlayerController : NetworkComponent
             MyRig.velocity = (MoveInput * MoveSpeed * SprintMod);
             MyRig.SetRotation(AimRot);
 
-            if (MyRig.velocity.magnitude == 0 && !LFireAnimation)
+            if (MyRig.velocity.magnitude == 0 && !LFireAnimation && !RFireAnimation)
             {
                 STATE = IDLESTATE;
             }
-            if (MyRig.velocity.magnitude > 0 && !LFireAnimation)
+            if (MyRig.velocity.magnitude > 0 && !LFireAnimation && !RFireAnimation)
             {
                 STATE = RUNSTATE;
             }
             AnimController.SetFloat("STATE", STATE);
+            AnimController.SetInteger("ISTATE", (int)STATE);
             SendUpdate("STATE", STATE.ToString());
         }
 

@@ -6,8 +6,13 @@ public class WarriorController : PlayerController
 {
     [Header("WARRIOR VARIABLES")]
     public BoxCollider2D SlashCollider;
+    public BoxCollider2D SlashCollider2;
     public float LFireDamage;
     public float RFireDamage;
+    public float RFireTimer;
+    public bool RFireTimerDone;
+
+    protected float RFIRESLASHSTATE = 4;
     public override void LFire(bool state)
     {
         if (LFireInput)
@@ -32,7 +37,7 @@ public class WarriorController : PlayerController
             }
         }
     }
-    public override IEnumerator LFireAnim()
+    public IEnumerator LFireAnim()
     {
         SlashCollider.enabled = true;
         LFireAnimation = true;
@@ -48,8 +53,13 @@ public class WarriorController : PlayerController
         {
             if (!RFireCD)
             {
+                RFireCD = true;
                 StartCoroutine(RFire());
             }
+        }
+        else
+        {
+            StopCoroutine(RFire());
         }
     }
 
@@ -59,20 +69,39 @@ public class WarriorController : PlayerController
         {
             while (RFireInput)
             {
-                RFireCD = true;
-                StartCoroutine(LFireAnim());
-                //spawn slash animation
-                yield return new WaitForSeconds(.35f);
+                RFireTimerDone = false;
+                RFireAnimation = true;
+                STATE = RFIRESTATE;
+                for(int i = 0; i <= 5; i++)
+                {
+                    yield return new WaitForSeconds(0.5f);
+                    RFireTimer += 0.5f;
+                    if (!RFireInput)
+                    {
+                        RFireTimerDone = true;
+                        RFireCD = false;
+                        StartCoroutine(RFireAnim(RFireTimer));
+                        RFireTimer = 0;
+                        yield break;
+                    }
+                }
+                yield return new WaitUntil(() => !RFireInput);
+                RFireTimerDone = true;
+                STATE = RFIRESLASHSTATE;
+                yield return new WaitForSeconds(.3f);
                 RFireCD = false;
+                RFireTimer = 0;
             }
         }
     }
 
-    public override IEnumerator RFireAnim()
+    public IEnumerator RFireAnim(float time)
     {
-        RFireAnimation = true;
-        STATE = RFIRESTATE;
-        yield return new WaitForSeconds(.15f);
+        //damage = damage * time;
+        SlashCollider2.enabled = true;
+        STATE = RFIRESLASHSTATE;
+        yield return new WaitForSeconds(.3f);
+        SlashCollider2.enabled = false;
         RFireAnimation = false;
     }
 }
