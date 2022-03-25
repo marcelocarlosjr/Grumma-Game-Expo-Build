@@ -20,7 +20,15 @@ public abstract class PlayerController : NetworkComponent
     public bool SprintInput;
     public float AimRot;
 
-    [Header("Player Speed")]
+    [Header("Player Stats")]
+    public float MaxHealth;
+    public float Health;
+    public float Damage;
+    public float HealthRegeneration;
+    public float AttackSpeed;
+    public float XPMod;
+    public float MaxStamina;
+    public float Stamina;
     public float MoveSpeed;
     public float SprintMod = 1;
 
@@ -40,6 +48,7 @@ public abstract class PlayerController : NetworkComponent
     protected float IDLESTATE = 0;
     protected float RUNSTATE = 1;
     protected float LFIRESTATE = 2;
+    protected float RFIRESTATE = 3;
 
     public override void HandleMessage(string flag, string value)
     {
@@ -73,17 +82,136 @@ public abstract class PlayerController : NetworkComponent
         {
             STATE = float.Parse(value);
             AnimController.SetFloat("STATE", STATE);
+            AnimController.SetInteger("ISTATE", (int)STATE);
             SlashAnim.SetInteger("SLASH", (int)STATE);
+        }
+        if(flag == "HP" && IsClient)
+        {
+            Health = float.Parse(value);
+            //update health bar
+        }
+        if (flag == "MAXHP" && IsClient)
+        {
+            MaxHealth = float.Parse(value);
+            //update health bar
         }
     }
 
     public override void NetworkedStart()
     {
-        
+        if (IsServer)
+        {
+            Health = MaxHealth;
+            SendUpdate("HP", Health.ToString());
+            SendUpdate("MAXHP", MaxHealth.ToString());
+        }
     }
     public override IEnumerator SlowUpdate()
     {
+        if (IsServer)
+        {
+            if (IsDirty)
+            {
+                SendUpdate("HP", Health.ToString());
+                SendUpdate("MAXHP", MaxHealth.ToString());
+                IsDirty = false;
+            }
+        }
         yield return new WaitForSeconds(0.01f);
+    }
+    public void TakeDamage(float damage)
+    {
+        if (IsServer)
+        {
+            Health -= damage;
+            SendUpdate("HP", Health.ToString());
+            //send "takedamage" animation
+            if (Health == 0)
+            {
+                //die
+                //send die animation
+                //show NPM to respawn
+            }
+        }
+    }
+    public void Heal(float amount)
+    {
+        if (IsServer)
+        {
+            if (Health + amount >= MaxHealth)
+            {
+                Health = MaxHealth;
+            }
+            else
+            {
+                Health += amount;
+            }
+            SendUpdate("HP", Health.ToString());
+        }
+    }
+    public void IncreaseMaxHealth(float amount)
+    {
+        if (IsServer)
+        {
+            MaxHealth += amount;
+            SendUpdate("MAXHP", MaxHealth.ToString());
+        }
+    }
+    public void IncreaseMoveSpeed(float amount)
+    {
+        if (IsServer)
+        {
+            MoveSpeed += amount;
+        }
+    }
+    public void IncreaseDamage(float amount)
+    {
+        if (IsServer)
+        {
+            Damage += amount;
+        }
+    }
+    public void IncreaseHealthRegen(float amount)
+    {
+        if (IsServer)
+        {
+            HealthRegeneration += amount;
+        }
+    }
+    public void IncreaseAttackSpeed(float amount)
+    {
+        if (IsServer)
+        {
+            AttackSpeed += amount;
+        }
+    }
+    public void IncreaseXPMod(float amount)
+    {
+        if (IsServer)
+        {
+            XPMod += amount;
+        }
+    }
+    public void IncreaseMaxStamina(float amount)
+    {
+        if (IsServer)
+        {
+            MaxStamina += amount;
+        }
+    }
+    public void IncreaseStamina(float amount)
+    {
+        if (IsServer)
+        {
+            if(Stamina + amount >= MaxStamina)
+            {
+                Stamina = MaxStamina;
+            }
+            else
+            {
+                Stamina += amount;
+            }
+        }
     }
     public abstract IEnumerator LFire();
     public abstract IEnumerator LFireAnim();

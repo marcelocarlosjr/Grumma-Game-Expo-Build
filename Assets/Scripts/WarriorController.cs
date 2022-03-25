@@ -44,16 +44,35 @@ public class WarriorController : PlayerController
 
     public override void RFire(bool state)
     {
-
+        if (RFireInput)
+        {
+            if (!RFireCD)
+            {
+                StartCoroutine(RFire());
+            }
+        }
     }
 
     public override IEnumerator RFire()
     {
-        throw new System.NotImplementedException();
+        if (IsServer)
+        {
+            while (RFireInput)
+            {
+                RFireCD = true;
+                StartCoroutine(LFireAnim());
+                //spawn slash animation
+                yield return new WaitForSeconds(.35f);
+                RFireCD = false;
+            }
+        }
     }
 
     public override IEnumerator RFireAnim()
     {
-        throw new System.NotImplementedException();
+        RFireAnimation = true;
+        STATE = RFIRESTATE;
+        yield return new WaitForSeconds(.15f);
+        RFireAnimation = false;
     }
 }
