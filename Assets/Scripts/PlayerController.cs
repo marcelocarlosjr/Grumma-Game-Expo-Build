@@ -387,7 +387,10 @@ public abstract class PlayerController : NetworkComponent
     {
         if (IsServer)
         {
-            MyRig.velocity = (MoveInput * MoveSpeed * SprintMod);
+            if (!Dead)
+            {
+                MyRig.velocity = (MoveInput * MoveSpeed * SprintMod);
+            }
             MyRig.SetRotation(AimRot);
 
             if (MyRig.velocity.magnitude == 0 && !LFireAnimation && !RFireAnimation && !TakingDamage && !Dead)
