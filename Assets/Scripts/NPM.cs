@@ -43,6 +43,14 @@ public class NPM : NetworkComponent
                     SpawnPlayer();
                 }
             }
+            if (IsLocalPlayer)
+            {
+                if (Ready)
+                {
+                    RemoveCanvas();
+                    ClearUI();
+                }
+            }
         }
     }
     public override IEnumerator SlowUpdate()
@@ -82,11 +90,17 @@ public class NPM : NetworkComponent
             NameInput = NPMcanvas.GetComponent<UIInputManager>().NameInput;
             ReadyInput = NPMcanvas.GetComponent<UIInputManager>().ReadyInput;
 
-            ReadyInput.isOn = false;
-            NameInput.text = "";
-            Name = "";
-            Ready = false;
+            ClearUI();
         }
+    }
+    public void ClearUI()
+    {
+        Class = 0;
+        ReadyInput.isOn = false;
+        ReadyInput.interactable = false;
+        NameInput.text = "";
+        Name = "";
+        Ready = false;
     }
     public void SpawnPlayer()
     {
@@ -113,15 +127,10 @@ public class NPM : NetworkComponent
     }
     public void GetReady(bool value)
     {
-        Ready = value;
-        SendCommand("READY", Ready.ToString());
-        if (Ready)
+        if (IsLocalPlayer)
         {
-            ReadyInput.isOn = false;
-            NameInput.text = "";
-            Name = "";
-            Ready = false;
-            RemoveCanvas();
+            Ready = value;
+            SendCommand("READY", Ready.ToString());
         }
     }
 

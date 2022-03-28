@@ -135,7 +135,7 @@ public abstract class PlayerController : NetworkComponent
             Health -= damage;
             SendUpdate("HP", Health.ToString());
             StartCoroutine(TakeDamageTimer());
-            if (Health <= 0)
+            if (Health <= 0 && !Dead)
             {
                 STATE = DEADSTATE;
                 Die();
@@ -156,6 +156,7 @@ public abstract class PlayerController : NetworkComponent
                 if(npm.GetComponent<NPM>().Owner == this.Owner)
                 {
                     npm.ShowCanvas();
+                    this.GetComponent<PlayerController>().enabled = false;
                 }
             }
         }
