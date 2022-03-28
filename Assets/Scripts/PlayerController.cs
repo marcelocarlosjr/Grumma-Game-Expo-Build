@@ -151,7 +151,13 @@ public abstract class PlayerController : NetworkComponent
         this.GetComponent<SpriteRenderer>().sortingOrder = -1;
         if (IsLocalPlayer)
         {
-            //spawn respwan screen
+            foreach(NPM npm in FindObjectsOfType<NPM>())
+            {
+                if(npm.GetComponent<NPM>().Owner == this.Owner)
+                {
+                    npm.ShowCanvas();
+                }
+            }
         }
     }
     public IEnumerator TakeDamageTimer()

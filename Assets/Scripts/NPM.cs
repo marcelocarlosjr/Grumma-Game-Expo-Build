@@ -75,13 +75,18 @@ public class NPM : NetworkComponent
     }
     public override void NetworkedStart()
     {
-        Class = 0;
-        Name = "";
+        if (IsLocalPlayer)
+        {
+            NPMcanvas = FindObjectOfType<UIInputManager>().gameObject;
+            NPMcanvas.GetComponent<UIInputManager>().LocalNPM = this.gameObject;
+            NameInput = NPMcanvas.GetComponent<UIInputManager>().NameInput;
+            ReadyInput = NPMcanvas.GetComponent<UIInputManager>().ReadyInput;
 
-        NPMcanvas = FindObjectOfType<UIInputManager>().gameObject;
-        NPMcanvas.GetComponent<UIInputManager>().LocalNPM = this.gameObject;
-        NameInput = NPMcanvas.GetComponent<UIInputManager>().NameInput;
-        ReadyInput = NPMcanvas.GetComponent<UIInputManager>().ReadyInput;
+            ReadyInput.isOn = false;
+            NameInput.text = "";
+            Name = "";
+            Ready = false;
+        }
     }
     public void SpawnPlayer()
     {
@@ -112,9 +117,23 @@ public class NPM : NetworkComponent
         SendCommand("READY", Ready.ToString());
         if (Ready)
         {
-            this.gameObject.SetActive(false);
+            ReadyInput.isOn = false;
+            NameInput.text = "";
+            Name = "";
+            Ready = false;
+            RemoveCanvas();
         }
     }
+
+    public void RemoveCanvas()
+    {
+        NPMcanvas.gameObject.SetActive(false);
+    }
+    public void ShowCanvas()
+    {
+        NPMcanvas.gameObject.SetActive(true);
+    }
+
     private void Start()
     {
        
