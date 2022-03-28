@@ -44,6 +44,7 @@ public abstract class PlayerController : NetworkComponent
     protected bool RFireAnimation;
     protected bool TakingDamage;
     protected bool Dead;
+    protected bool DeadCycle;
 
 
     protected float STATE = 0;
@@ -155,8 +156,14 @@ public abstract class PlayerController : NetworkComponent
             {
                 if(npm.GetComponent<NPM>().Owner == this.Owner)
                 {
-                    npm.ShowCanvas();
-                    this.GetComponent<PlayerController>().enabled = false;
+                    if (!DeadCycle)
+                    {
+                        npm.ShowCanvas();
+                        this.GetComponent<PlayerInput>().enabled = false;
+                        this.GetComponent<NetworkRigidBody2D>().enabled = false;
+                        DeadCycle = true;
+                        this.GetComponent<PlayerController>().enabled = false;
+                    }
                 }
             }
         }
@@ -397,8 +404,8 @@ public abstract class PlayerController : NetworkComponent
             if (!Dead)
             {
                 MyRig.velocity = (MoveInput * MoveSpeed * SprintMod);
+                MyRig.SetRotation(AimRot);
             }
-            MyRig.SetRotation(AimRot);
 
             if (MyRig.velocity.magnitude == 0 && !LFireAnimation && !RFireAnimation && !TakingDamage && !Dead)
             {
@@ -408,14 +415,18 @@ public abstract class PlayerController : NetworkComponent
             {
                 STATE = RUNSTATE;
             }
-            AnimController.SetFloat("STATE", STATE);
-            AnimController.SetInteger("ISTATE", (int)STATE);
-            SendUpdate("STATE", STATE.ToString());
+
+            if (!Dead)
+            {
+                AnimController.SetFloat("STATE", STATE);
+                AnimController.SetInteger("ISTATE", (int)STATE);
+                SendUpdate("STATE", STATE.ToString());
+            }
         }
 
         if (IsClient)
         {
-            if(STATE != IDLESTATE)
+            if(STATE != IDLESTATE && !Dead)
             {
                 AnimController.SetFloat("SPEED", MyRig.velocity.magnitude);
             }
