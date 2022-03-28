@@ -11,6 +11,15 @@ public class WarriorController : PlayerController
     public bool RFireTimerDone;
 
     protected float RFIRESLASHSTATE = 4;
+
+    public override void HandleMessage(string flag, string value)
+    {
+        base.HandleMessage(flag, value);
+        if (flag == "STATE" && IsClient)
+        {
+            SlashAnim.SetInteger("SLASH", (int)STATE);
+        }
+    }
     public override void LFire(bool state)
     {
         if (LFireInput)
@@ -134,6 +143,15 @@ public class WarriorController : PlayerController
                     collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(LFireDamage);
                 }
             }
+        }
+    }
+    public override void Start()
+    {
+        base.Start();
+        SlashAnim = this.transform.GetChild(0).GetComponent<Animator>();
+        if (SlashAnim == null)
+        {
+            throw new System.Exception("ERROR: Could not find Slash Animator!");
         }
     }
 }

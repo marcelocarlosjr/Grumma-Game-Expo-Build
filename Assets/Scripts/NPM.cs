@@ -98,8 +98,6 @@ public class NPM : NetworkComponent
         Class = 0;
         ReadyInput.isOn = false;
         ReadyInput.interactable = false;
-        NameInput.text = "";
-        Name = "";
         Ready = false;
     }
     public void SpawnPlayer()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using NETWORK_ENGINE;
+using UnityEngine.UI;
 
 public abstract class PlayerController : NetworkComponent
 {
@@ -10,6 +11,7 @@ public abstract class PlayerController : NetworkComponent
     public Rigidbody2D MyRig;
     public Animator AnimController;
     public Animator SlashAnim;
+    public Text NameBox;
 
     [Header("Player Inputs")]
     public Vector2 MoveInput;
@@ -32,6 +34,9 @@ public abstract class PlayerController : NetworkComponent
     public float MoveSpeed;
     public float SprintMod = 1;
 
+    [Header("Player Info")]
+    public string Name;
+
     [Header("Current Input")]
     public string InputType;
     protected string KBM = "Keyboard&Mouse";
@@ -43,7 +48,7 @@ public abstract class PlayerController : NetworkComponent
     protected bool RFireCD;
     protected bool RFireAnimation;
     protected bool TakingDamage;
-    protected bool Dead;
+    public bool Dead;
     protected bool DeadCycle;
 
 
@@ -89,7 +94,7 @@ public abstract class PlayerController : NetworkComponent
             STATE = float.Parse(value);
             AnimController.SetFloat("STATE", STATE);
             AnimController.SetInteger("ISTATE", (int)STATE);
-            SlashAnim.SetInteger("SLASH", (int)STATE);
+            //SlashAnim.SetInteger("SLASH", (int)STATE);
             if(STATE == DEADSTATE)
             {
                 Die();
@@ -149,7 +154,7 @@ public abstract class PlayerController : NetworkComponent
         Dead = true;
         MyRig.bodyType = RigidbodyType2D.Static;
         this.GetComponent<CircleCollider2D>().enabled = false;
-        this.GetComponent<SpriteRenderer>().sortingOrder = -1;
+        this.GetComponent<SpriteRenderer>().sortingOrder = -2;
         if (IsLocalPlayer)
         {
             foreach(NPM npm in FindObjectsOfType<NPM>())
@@ -163,6 +168,7 @@ public abstract class PlayerController : NetworkComponent
                         this.GetComponent<NetworkRigidBody2D>().enabled = false;
                         DeadCycle = true;
                         this.GetComponent<PlayerController>().enabled = false;
+                        NameBox.enabled = false;
                     }
                 }
             }
@@ -367,7 +373,7 @@ public abstract class PlayerController : NetworkComponent
             SprintMod = 1.6f;
         }
     }
-    private void Start()
+    public virtual void Start()
     {
         SprintMod = 1;
         MyRig = GetComponent<Rigidbody2D>();
@@ -380,11 +386,16 @@ public abstract class PlayerController : NetworkComponent
         {
             throw new System.Exception("ERROR: Could not find Animator!");
         }
-        SlashAnim = this.transform.GetChild(0).GetComponent<Animator>();
-        if (SlashAnim == null)
+
+        foreach(NPM npm in FindObjectsOfType<NPM>())
         {
-            throw new System.Exception("ERROR: Could not find Slash Animator!");
+            if(npm.Owner == this.Owner)
+            {
+                Name = npm.Name;
+            }
         }
+
+        NameBox.text = Name;
     }
     private void FixedUpdate()
     {
