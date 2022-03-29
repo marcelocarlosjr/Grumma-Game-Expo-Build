@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 844918238639824045}
   - component: {fileID: 844918238639824040}
   - component: {fileID: 844918238639824041}
-  - component: {fileID: 100081674661197287}
+  - component: {fileID: 4750959017277631902}
   m_Layer: 0
   m_Name: Arrow
   m_TagString: Untagged
@@ -169,7 +169,7 @@ MonoBehaviour:
   EThreshold: 2.5
   MyRig: {fileID: 0}
   UseOffsetVelocity: 1
---- !u!114 &100081674661197287
+--- !u!114 &4750959017277631902
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,12 +178,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 844918238639824034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b6e2343577372d4cb8135bbc981dc1a, type: 3}
+  m_Script: {fileID: 11500000, guid: 251437f02d1848249929677371722b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MyCore: {fileID: 0}
   MyId: {fileID: 0}
   IsDirty: 0
+  position: {x: 0, y: 0}
+  direction: {x: 0, y: 0}
+  radius: 0
+  distance: 0
   Damage: 10
   Speed: 9
-  Timer: 2
+  Timer: 3

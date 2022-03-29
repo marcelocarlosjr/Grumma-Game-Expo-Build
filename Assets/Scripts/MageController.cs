@@ -30,7 +30,7 @@ public class MageController : PlayerController
             {
                 LFireCD = true;
                 StartCoroutine(LFireAnim());
-                MyCore.NetCreateObject(3, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
+                MyCore.NetCreateObject(4, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
                 yield return new WaitForSeconds(1);
                 LFireCD = false;
 

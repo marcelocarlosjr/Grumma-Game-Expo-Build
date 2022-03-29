@@ -7,11 +7,16 @@ public class Projectile : NetworkComponent
 {
     protected Rigidbody2D MyRig;
 
+    public Vector2 position;
+    public Vector2 direction;
+    public float radius;
+    public float distance;
+
     public float Damage;
     public float Speed;
     public float Timer;
 
-    private void Start()
+    protected virtual void Start()
     {
         if (IsServer)
         {
@@ -19,22 +24,16 @@ public class Projectile : NetworkComponent
         }
         Invoke("DestroyTimer", Timer);
     }
-    private void Update()
+    protected virtual void Update()
     {
         if (IsServer)
         {
             MyRig.velocity = transform.up * Speed;
-            DectectCollision();
         }
     }
 
-    public void DectectCollision()
+    public void DectectCollisionCircleCast()
     {
-        Vector2 position = transform.position + (transform.up * -0.375f);
-        Vector2 direction = this.transform.up;
-        float radius = 0.1875f;
-        float distance = 0.6875f;
-
         RaycastHit2D[] hits = Physics2D.CircleCastAll(position, radius, direction, distance);
         foreach (RaycastHit2D collision in hits)
         {
