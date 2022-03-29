@@ -22,7 +22,7 @@ public class WarriorController : PlayerController
     }
     public override void LFire(bool state)
     {
-        if (LFireInput)
+        if (LFireInput && !Dead)
         {
             if (!LFireCD)
             {
@@ -54,7 +54,7 @@ public class WarriorController : PlayerController
 
     public override void RFire(bool state)
     {
-        if (RFireInput && !LFireAnimation && !TakingDamage)
+        if (RFireInput && !LFireAnimation && !TakingDamage && !Dead)
         {
             if (!RFireCD)
             {

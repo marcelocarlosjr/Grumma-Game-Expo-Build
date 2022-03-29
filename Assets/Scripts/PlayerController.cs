@@ -12,6 +12,7 @@ public abstract class PlayerController : NetworkComponent
     public Animator AnimController;
     public Animator SlashAnim;
     public Text NameBox;
+    public GameObject ShadowBox;
 
     [Header("Player Inputs")]
     public Vector2 MoveInput;
@@ -152,9 +153,18 @@ public abstract class PlayerController : NetworkComponent
     public void Die()
     {
         Dead = true;
-        MyRig.bodyType = RigidbodyType2D.Static;
-        this.GetComponent<CircleCollider2D>().enabled = false;
-        this.GetComponent<SpriteRenderer>().sortingOrder = -2;
+        if (!IsLocalPlayer)
+        {
+            this.GetComponent<PlayerInput>().enabled = false;
+            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            this.GetComponent<NetworkRigidBody2D>().enabled = false;
+            this.GetComponent<CircleCollider2D>().enabled = false;
+            this.GetComponent<SpriteRenderer>().sortingOrder = -2;
+            DeadCycle = true;
+            NameBox.enabled = false;
+            ShadowBox.gameObject.SetActive(false);
+            this.GetComponent<PlayerController>().enabled = false;
+        }
         if (IsLocalPlayer)
         {
             foreach(NPM npm in FindObjectsOfType<NPM>())
@@ -165,10 +175,14 @@ public abstract class PlayerController : NetworkComponent
                     {
                         npm.ShowCanvas();
                         this.GetComponent<PlayerInput>().enabled = false;
+                        this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                         this.GetComponent<NetworkRigidBody2D>().enabled = false;
+                        this.GetComponent<CircleCollider2D>().enabled = false;
+                        this.GetComponent<SpriteRenderer>().sortingOrder = -2;
                         DeadCycle = true;
-                        this.GetComponent<PlayerController>().enabled = false;
                         NameBox.enabled = false;
+                        ShadowBox.gameObject.SetActive(false);
+                        this.GetComponent<PlayerController>().enabled = false;
                     }
                 }
             }
