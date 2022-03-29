@@ -10,7 +10,6 @@ public abstract class PlayerController : NetworkComponent
     [Header("Components")]
     public Rigidbody2D MyRig;
     public Animator AnimController;
-    public Animator SlashAnim;
     public Text NameBox;
     public GameObject ShadowBox;
 
@@ -49,7 +48,7 @@ public abstract class PlayerController : NetworkComponent
     protected bool RFireCD;
     protected bool RFireAnimation;
     protected bool TakingDamage;
-    public bool Dead;
+    protected bool Dead;
     protected bool DeadCycle;
 
 

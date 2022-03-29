@@ -5,6 +5,7 @@ using UnityEngine;
 public class WarriorController : PlayerController
 {
     [Header("WARRIOR VARIABLES")]
+    public Animator SlashAnim;
     public float LFireDamage;
     public float RFireDamage;
     public float RFireTimer;

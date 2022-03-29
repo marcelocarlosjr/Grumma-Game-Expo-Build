@@ -554,7 +554,7 @@ MonoBehaviour:
   Dead: 0
   LFireDamage: 0
   RFireDamage: 0
-  RFireTimer: 0
+  RFIRECOUNT: 1
   RFireTimerDone: 0
 --- !u!1 &4930042262522450505
 GameObject:

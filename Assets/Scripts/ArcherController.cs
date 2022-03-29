@@ -97,7 +97,6 @@ public class ArcherController : PlayerController
                             }
                         }
                         RFireTimerDone = true;
-                        StartCoroutine(RFireAnim());
                         RFIRECOUNT = 1;
                         yield break;
                     }
@@ -119,56 +118,8 @@ public class ArcherController : PlayerController
                     }
                 }
                 STATE = RFIRESHOOTSTATE;
-                StartCoroutine(RFireAnim());
                 RFIRECOUNT = 1;
                 yield break;
-            }
-        }
-    }
-
-    public IEnumerator RFireAnim()
-    {
-        RFireRaycast();
-        STATE = RFIRESHOOTSTATE;
-        yield return new WaitForSeconds(.252f);
-        RFireAnimation = false;
-        RFireCD = false;
-        yield break;
-    }
-
-    public void RFireRaycast()
-    {
-        Vector2 position = transform.position;
-        Vector2 direction = this.transform.up;
-        float radius = .4f;
-
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(position, radius, direction, 1.7f);
-        foreach (RaycastHit2D collision in hits)
-        {
-            if (collision.collider.gameObject != this.gameObject)
-            {
-                if (collision.collider.gameObject.GetComponent<PlayerController>())
-                {
-                    
-                }
-            }
-        }
-    }
-    public void LFireRaycast()
-    {
-        Vector2 position = transform.position;
-        Vector2 direction = this.transform.up;
-        float radius = .4f;
-
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(position, radius, direction, .5f);
-        foreach (RaycastHit2D collision in hits)
-        {
-            if (collision.collider.gameObject != this.gameObject)
-            {
-                if (collision.collider.gameObject.GetComponent<PlayerController>())
-                {
-                    collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(LFireDamage);
-                }
             }
         }
     }

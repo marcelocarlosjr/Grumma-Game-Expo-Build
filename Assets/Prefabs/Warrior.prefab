@@ -260,7 +260,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -6442648773352441177, guid: 338deb03922f55141a21c1a13b731a8a, type: 3}
+  m_Sprite: {fileID: 556547805293976928, guid: f5df9d7886de77843b6f644c12401207, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -548,7 +548,6 @@ MonoBehaviour:
   IsDirty: 0
   MyRig: {fileID: 0}
   AnimController: {fileID: 0}
-  SlashAnim: {fileID: 0}
   NameBox: {fileID: 1815172042}
   ShadowBox: {fileID: 3949172433044235927}
   MoveInput: {x: 0, y: 0}
@@ -571,6 +570,7 @@ MonoBehaviour:
   Name: 
   InputType: 
   Dead: 0
+  SlashAnim: {fileID: 0}
   LFireDamage: 3
   RFireDamage: 10
   RFireTimer: 0
