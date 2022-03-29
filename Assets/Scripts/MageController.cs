@@ -72,9 +72,14 @@ public class MageController : PlayerController
                 {
                     if (!RFireInput)
                     {
+                        RFireTimerDone = true;
                         if (RFIRECOUNT < 3)
                         {
                             MyCore.NetCreateObject(3, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
+                            STATE = RFIRESHOOTSTATE;
+                            RFireAnimation = false;
+                            RFIRECOUNT = 1;
+                            RFireCD = false;
                             yield break;
                         }
                     }
@@ -82,6 +87,7 @@ public class MageController : PlayerController
                     RFIRECOUNT += .4f;
                     if (!RFireInput)
                     {
+                        RFireTimerDone = true;
                         if (RFIRECOUNT >= 1)
                         {
                             MyCore.NetCreateObject(3, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
@@ -96,8 +102,10 @@ public class MageController : PlayerController
                                 }
                             }
                         }
-                        RFireTimerDone = true;
+                        STATE = RFIRESHOOTSTATE;
+                        RFireAnimation = false;
                         RFIRECOUNT = 1;
+                        RFireCD = false;
                         yield break;
                     }
                 }
@@ -118,7 +126,9 @@ public class MageController : PlayerController
                     }
                 }
                 STATE = RFIRESHOOTSTATE;
+                RFireAnimation = false;
                 RFIRECOUNT = 1;
+                RFireCD = false;
                 yield break;
             }
         }

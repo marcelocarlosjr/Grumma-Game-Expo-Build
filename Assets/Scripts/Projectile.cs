@@ -7,11 +7,6 @@ public class Projectile : NetworkComponent
 {
     protected Rigidbody2D MyRig;
 
-    public Vector2 position;
-    public Vector2 direction;
-    public float radius;
-    public float distance;
-
     public float Damage;
     public float Speed;
     public float Timer;
@@ -21,8 +16,8 @@ public class Projectile : NetworkComponent
         if (IsServer)
         {
             MyRig = GetComponent<Rigidbody2D>();
+            Invoke("DestroyTimer", Timer);
         }
-        Invoke("DestroyTimer", Timer);
     }
     protected virtual void Update()
     {
@@ -32,7 +27,7 @@ public class Projectile : NetworkComponent
         }
     }
 
-    public void DectectCollisionCircleCast()
+    public void DectectCollisionCircleCast(Vector2 position, float radius, Vector2 direction, float distance)
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(position, radius, direction, distance);
         foreach (RaycastHit2D collision in hits)

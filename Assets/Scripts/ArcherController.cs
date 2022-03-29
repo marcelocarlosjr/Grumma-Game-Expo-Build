@@ -72,9 +72,14 @@ public class ArcherController : PlayerController
                 {
                     if (!RFireInput)
                     {
+                        RFireTimerDone = true;
                         if (RFIRECOUNT < 3)
                         {
                             MyCore.NetCreateObject(3, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
+                            STATE = RFIRESHOOTSTATE;
+                            RFIRECOUNT = 1;
+                            RFireAnimation = false;
+                            RFireCD = false;
                             yield break;
                         }
                     }
@@ -82,6 +87,7 @@ public class ArcherController : PlayerController
                     RFIRECOUNT += .4f;
                     if (!RFireInput)
                     {
+                        RFireTimerDone = true;
                         if (RFIRECOUNT >= 1)
                         {
                             MyCore.NetCreateObject(3, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
@@ -96,14 +102,16 @@ public class ArcherController : PlayerController
                                 }
                             }
                         }
-                        RFireTimerDone = true;
+                        STATE = RFIRESHOOTSTATE;
                         RFIRECOUNT = 1;
+                        RFireAnimation = false;
+                        RFireCD = false;
                         yield break;
                     }
                 }
                 yield return new WaitUntil(() => !RFireInput);
                 RFireTimerDone = true;
-                if(RFIRECOUNT >= 1)
+                if (RFIRECOUNT >= 1)
                 {
                     MyCore.NetCreateObject(3, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
                     if (RFIRECOUNT >= 3)
@@ -118,7 +126,9 @@ public class ArcherController : PlayerController
                     }
                 }
                 STATE = RFIRESHOOTSTATE;
+                RFireAnimation = false;
                 RFIRECOUNT = 1;
+                RFireCD = false;
                 yield break;
             }
         }
