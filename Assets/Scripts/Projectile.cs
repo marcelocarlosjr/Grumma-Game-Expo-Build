@@ -7,6 +7,11 @@ public class Projectile : NetworkComponent
 {
     protected Rigidbody2D MyRig;
 
+    public Vector2 position;
+    public Vector2 direction;
+    public float radius;
+    public float distance;
+
     public float Damage;
     public float Speed;
     public float Timer;
@@ -27,9 +32,9 @@ public class Projectile : NetworkComponent
         }
     }
 
-    public void DectectCollisionCircleCast(Vector2 position, float radius, Vector2 direction, float distance)
+    public void DectectCollisionCircleCast(Vector2 position1, float radius1, Vector2 direction1, float distance1)
     {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(position, radius, direction, distance);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(position1, radius1, direction1, distance1);
         foreach (RaycastHit2D collision in hits)
         {
             if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)

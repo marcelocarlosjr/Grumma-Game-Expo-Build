@@ -26,7 +26,7 @@ public class ArcherController : PlayerController
     {
         if (IsServer)
         {
-            while (LFireInput && !RFireAnimation && !TakingDamage)
+            while (LFireInput && !RFireAnimation && !TakingDamage && !Dead)
             {
                 LFireCD = true;
                 StartCoroutine(LFireAnim());
@@ -63,7 +63,7 @@ public class ArcherController : PlayerController
     {
         if (IsServer)
         {
-            while (RFireInput)
+            while (RFireInput && !Dead)
             {
                 RFireTimerDone = false;
                 RFireAnimation = true;
@@ -76,12 +76,13 @@ public class ArcherController : PlayerController
                         if (RFIRECOUNT < 3)
                         {
                             MyCore.NetCreateObject(3, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
-                            STATE = RFIRESHOOTSTATE;
-                            RFIRECOUNT = 1;
-                            RFireAnimation = false;
-                            RFireCD = false;
-                            yield break;
                         }
+                        STATE = RFIRESHOOTSTATE;
+                        RFIRECOUNT = 1;
+                        yield return new WaitForSeconds(0.25f);
+                        RFireAnimation = false;
+                        RFireCD = false;
+                        yield break;
                     }
                     yield return new WaitForSeconds(.2f);
                     RFIRECOUNT += .4f;
@@ -104,6 +105,7 @@ public class ArcherController : PlayerController
                         }
                         STATE = RFIRESHOOTSTATE;
                         RFIRECOUNT = 1;
+                        yield return new WaitForSeconds(0.25f);
                         RFireAnimation = false;
                         RFireCD = false;
                         yield break;
@@ -126,8 +128,9 @@ public class ArcherController : PlayerController
                     }
                 }
                 STATE = RFIRESHOOTSTATE;
-                RFireAnimation = false;
                 RFIRECOUNT = 1;
+                yield return new WaitForSeconds(0.25f);
+                RFireAnimation = false;
                 RFireCD = false;
                 yield break;
             }
