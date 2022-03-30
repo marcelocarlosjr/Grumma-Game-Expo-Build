@@ -267,6 +267,7 @@ MonoBehaviour:
   MyCore: {fileID: 0}
   MyId: {fileID: 0}
   IsDirty: 0
+  MyAnim: {fileID: 7269611350334002572}
   position: {x: 0, y: 0}
   direction: {x: 0, y: 0}
   radius: 0
@@ -275,6 +276,6 @@ MonoBehaviour:
   Speed: 7
   Timer: 4
   OuterRing: {fileID: 7269611349438378849}
-  RotationSpeed: 1.5
+  RotationSpeed: 1
   Outer: 0
   MoveDir: {x: 0, y: 0}

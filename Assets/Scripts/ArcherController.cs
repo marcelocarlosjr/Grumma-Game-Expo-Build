@@ -118,12 +118,12 @@ public class ArcherController : PlayerController
                     MyCore.NetCreateObject(3, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
                     if (RFIRECOUNT >= 3)
                     {
-                        MyCore.NetCreateObject(3, this.Owner, (this.transform.position + (transform.right * 0.2f) + (transform.up * -0.1f)), Quaternion.LookRotation(transform.forward, transform.up));
-                        MyCore.NetCreateObject(3, this.Owner, (this.transform.position + (transform.right * -0.2f) + (transform.up * -0.1f)), Quaternion.LookRotation(transform.forward, transform.up));
-                        if (RFIRECOUNT == 5)
+                        MyCore.NetCreateObject(3, this.Owner, (this.transform.position + (transform.right * 0.4f) + (transform.up * -0.15f)), Quaternion.LookRotation(transform.forward, transform.up));
+                        MyCore.NetCreateObject(3, this.Owner, (this.transform.position + (transform.right * -0.4f) + (transform.up * -0.15f)), Quaternion.LookRotation(transform.forward, transform.up));
+                        if (RFIRECOUNT >= 5)
                         {
-                            MyCore.NetCreateObject(3, this.Owner, (this.transform.position + (transform.right * 0.4f) + (transform.up * -0.2f)), Quaternion.LookRotation(transform.forward, transform.up));
-                            MyCore.NetCreateObject(3, this.Owner, (this.transform.position + (transform.right * -0.4f) + (transform.up * -0.2f)), Quaternion.LookRotation(transform.forward, transform.up));
+                            MyCore.NetCreateObject(3, this.Owner, (this.transform.position + (transform.right * 0.8f) + (transform.up * -0.3f)), Quaternion.LookRotation(transform.forward, transform.up));
+                            MyCore.NetCreateObject(3, this.Owner, (this.transform.position + (transform.right * -0.8f) + (transform.up * -0.3f)), Quaternion.LookRotation(transform.forward, transform.up));
                         }
                     }
                 }

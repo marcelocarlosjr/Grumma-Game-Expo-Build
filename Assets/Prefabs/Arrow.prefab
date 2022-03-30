@@ -184,10 +184,11 @@ MonoBehaviour:
   MyCore: {fileID: 0}
   MyId: {fileID: 0}
   IsDirty: 0
+  MyAnim: {fileID: 0}
   position: {x: 0, y: 0}
   direction: {x: 0, y: 0}
   radius: 0
   distance: 0
   Damage: 10
-  Speed: 9
+  Speed: 3
   Timer: 3

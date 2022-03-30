@@ -6,6 +6,7 @@ using NETWORK_ENGINE;
 public class Projectile : NetworkComponent
 {
     protected Rigidbody2D MyRig;
+    public Animator MyAnim;
 
     public Vector2 position;
     public Vector2 direction;
@@ -21,7 +22,7 @@ public class Projectile : NetworkComponent
         if (IsServer)
         {
             MyRig = GetComponent<Rigidbody2D>();
-            Invoke("DestroyTimer", Timer);
+            StartCoroutine(Die());
         }
     }
     protected virtual void Update()
@@ -47,10 +48,16 @@ public class Projectile : NetworkComponent
             }
         }
     }
-
-    public void DestroyTimer()
+    public IEnumerator Die()
     {
-        MyCore.NetDestroyObject(this.NetId);
+        yield return new WaitForSeconds(Timer);
+        MyAnim.SetBool("DIE", true);
+        Debug.Log("breh");
+        yield return new WaitForSeconds(0.34f);
+        if (IsServer)
+        {
+            MyCore.NetDestroyObject(this.NetId);
+        }
     }
 
     public override IEnumerator SlowUpdate()
@@ -68,6 +75,10 @@ public class Projectile : NetworkComponent
 
     public override void NetworkedStart()
     {
-        
+        MyAnim = GetComponent<Animator>();
+        if (IsClient)
+        {
+            StartCoroutine(Die());
+        }
     }
 }
