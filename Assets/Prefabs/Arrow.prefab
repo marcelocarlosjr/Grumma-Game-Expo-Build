@@ -190,5 +190,5 @@ MonoBehaviour:
   radius: 0
   distance: 0
   Damage: 10
-  Speed: 3
+  Speed: 9
   Timer: 3
