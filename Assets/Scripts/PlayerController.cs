@@ -141,6 +141,7 @@ public abstract class PlayerController : NetworkComponent
             Health -= damage;
             SendUpdate("HP", Health.ToString());
             StartCoroutine(TakeDamageTimer());
+            //screenshake
             if (Health <= 0 && !Dead)
             {
                 STATE = DEADSTATE;

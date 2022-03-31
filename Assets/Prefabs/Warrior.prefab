@@ -316,7 +316,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 139753977648684975}
   m_BodyType: 0
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
@@ -569,7 +569,6 @@ MonoBehaviour:
   SprintMod: 1.6
   Name: 
   InputType: 
-  Dead: 0
   SlashAnim: {fileID: 0}
   LFireDamage: 3
   RFireDamage: 10

@@ -35,7 +35,7 @@ public class Projectile : NetworkComponent
 
     public void DectectCollisionCircleCast(Vector2 position1, float radius1, Vector2 direction1, float distance1)
     {
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(position1, radius1, direction1, distance1);
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(position1, radius1, direction1, (distance1 - radius1));
         foreach (RaycastHit2D collision in hits)
         {
             if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)

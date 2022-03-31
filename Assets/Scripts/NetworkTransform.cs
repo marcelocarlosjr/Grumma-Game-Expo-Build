@@ -25,20 +25,20 @@ public class NetworkTransform : NetworkComponent
     }
     public override void HandleMessage(string flag, string value)
     {
-        if(flag == "POS")
+        if (flag == "POS")
         {
             Vector3 temp = NetworkTransform.VectorFromString(value);
-            if((temp-this.transform.position).magnitude > MaxThreshold || !Smooth)
+            if ((temp - this.transform.position).magnitude > MaxThreshold || !Smooth)
             {
                 this.transform.position = temp;
             }
             LastPosition = temp;
         }
 
-        if(flag == "ROT")
+        if (flag == "ROT")
         {
             Vector3 temp = NetworkTransform.VectorFromString(value);
-            if((temp - this.transform.rotation.eulerAngles).magnitude < MaxThreshold || !Smooth)
+            if ((temp - this.transform.rotation.eulerAngles).magnitude < MaxThreshold || !Smooth)
             {
                 Quaternion qt = new Quaternion();
                 qt.eulerAngles = temp;
@@ -48,7 +48,7 @@ public class NetworkTransform : NetworkComponent
             LastRotation = temp;
         }
 
-        if(flag == "SCALE")
+        if (flag == "SCALE")
         {
             Vector3 temp = NetworkTransform.VectorFromString(value);
             this.transform.localScale = temp;
@@ -59,7 +59,7 @@ public class NetworkTransform : NetworkComponent
 
     public override void NetworkedStart()
     {
-        
+
     }
 
     public override IEnumerator SlowUpdate()
@@ -69,13 +69,13 @@ public class NetworkTransform : NetworkComponent
             if (IsServer)
             {
                 float DistCheck = (this.transform.position - LastPosition).magnitude;
-                if(DistCheck > MinThreshold)
+                if (DistCheck > MinThreshold)
                 {
                     SendUpdate("POS", this.transform.position.ToString("F2"));
                     LastPosition = this.transform.position;
                 }
                 float CheckRotation = (this.transform.rotation.eulerAngles - LastRotation).magnitude;
-                if(CheckRotation > MinThreshold)
+                if (CheckRotation > MinThreshold)
                 {
                     SendUpdate("ROT", this.transform.rotation.eulerAngles.ToString("F2"));
                     LastRotation = this.transform.rotation.eulerAngles;
@@ -94,23 +94,23 @@ public class NetworkTransform : NetworkComponent
                     IsDirty = false;
                 }
             }
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.01f);
         }
     }
 
     void Start()
     {
-        
+
     }
 
     void Update()
     {
-        if(IsClient && Smooth)
+        if (IsClient && Smooth)
         {
-            this.transform.position = Vector3.Lerp(this.transform.position, LastPosition, 0.2f);
-            Quaternion qt = new Quaternion();
-            qt.eulerAngles = Vector3.Lerp(this.transform.rotation.eulerAngles, LastRotation, RotationSpeed * Time.deltaTime);
-            this.transform.rotation = qt;
+            this.transform.position = Vector3.Lerp(this.transform.position, LastPosition, 0.1f);
+            //Quaternion qt = new Quaternion();
+            //qt.eulerAngles = Vector3.Lerp(this.transform.rotation.eulerAngles, LastRotation, RotationSpeed * Time.deltaTime);
+            //this.transform.rotation = qt;
         }
     }
 }

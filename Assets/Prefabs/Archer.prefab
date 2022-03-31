@@ -297,7 +297,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 2139248985608448946}
   m_BodyType: 0
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
@@ -529,7 +529,6 @@ MonoBehaviour:
   IsDirty: 0
   MyRig: {fileID: 0}
   AnimController: {fileID: 0}
-  SlashAnim: {fileID: 0}
   NameBox: {fileID: 187939380863656837}
   ShadowBox: {fileID: 741731515484713383}
   MoveInput: {x: 0, y: 0}
@@ -551,7 +550,6 @@ MonoBehaviour:
   SprintMod: 1
   Name: 
   InputType: 
-  Dead: 0
   LFireDamage: 0
   RFireDamage: 0
   RFIRECOUNT: 1

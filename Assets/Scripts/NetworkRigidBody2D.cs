@@ -27,7 +27,7 @@ public class NetworkRigidBody2D : NetworkComponent
 
     public override void HandleMessage(string flag, string value)
     {
-        if (flag == "POS" && IsClient)
+        if (flag == "POS")
         {
             LastPosition = VectorFromString(value);
             float d = (MyRig.position - LastPosition).magnitude;
@@ -41,11 +41,11 @@ public class NetworkRigidBody2D : NetworkComponent
                 OffsetVelocity = (LastPosition - MyRig.position);
             }
         }
-        if (flag == "VEL" && IsClient)
+        if (flag == "VEL")
         {
             LastVelocity = VectorFromString(value);
         }
-        if (flag == "ROT" && IsClient)
+        if (flag == "ROT")
         {
             LastRotation = float.Parse(value);
             MyRig.rotation = LastRotation;
