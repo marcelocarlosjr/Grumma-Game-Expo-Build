@@ -92,11 +92,6 @@ public class NPM : NetworkComponent
 
             ClearUI();
         }
-
-        if (IsServer)
-        {
-            MyCore.NetCreateObject(6, Owner, new Vector3(7, 9, 0), Quaternion.identity);
-        }
     }
     public void ClearUI()
     {
