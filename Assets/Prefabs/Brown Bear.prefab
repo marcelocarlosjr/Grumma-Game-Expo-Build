@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 1164548877394098189}
   - component: {fileID: 4125910169328519796}
   - component: {fileID: 1240758373250200183}
+  - component: {fileID: 1286466891}
   m_Layer: 0
   m_Name: Brown Bear
   m_TagString: Untagged
@@ -58,7 +59,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: ee6732f8636ba384e9efe9f960487e2e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -76,8 +77,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1946649745
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 5716474971017960925, guid: a62b0b9b600bb04428dd098245c723ad, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -230,8 +231,54 @@ MonoBehaviour:
   MyAnim: {fileID: 0}
   AttackSprite: {fileID: 0}
   RoamDistance: 4
+  MinStopTime: 1.5
   MaxStopTime: 5
   Speed: 1.8
+--- !u!114 &1286466891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240758373250200180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 350a9855
+  m_ShapePath:
+  - {x: 0.5206075, y: -1.10608, z: 0}
+  - {x: 0.7347069, y: -0.83914816, z: 0}
+  - {x: 0.8364072, y: -0.4921708, z: 0}
+  - {x: 0.5851474, y: -0.21698189, z: 0}
+  - {x: 0.5731826, y: 0.028295279, z: 0}
+  - {x: 0.7876339, y: 0.38049817, z: 0}
+  - {x: 0.7843509, y: 0.6630714, z: 0}
+  - {x: 0.39371157, y: 0.8299327, z: 0}
+  - {x: 0.33388805, y: 0.9196682, z: 0}
+  - {x: 0.3999958, y: 1.0642037, z: 0}
+  - {x: 0.08861065, y: 1.4221871, z: 0}
+  - {x: -0.085427284, y: 1.426966, z: 0}
+  - {x: -0.4258728, y: 1.0393157, z: 0}
+  - {x: -0.3361373, y: 0.95556235, z: 0}
+  - {x: -0.3421197, y: 0.8418975, z: 0}
+  - {x: -0.7823329, y: 0.6717043, z: 0}
+  - {x: -0.775969, y: 0.35891604, z: 0}
+  - {x: -0.5814142, y: 0.058207035, z: 0}
+  - {x: -0.5754323, y: -0.19903469, z: 0}
+  - {x: -0.8506212, y: -0.4682412, z: 0}
+  - {x: -0.6901822, y: -0.9416057, z: 0}
+  - {x: -0.44821978, y: -1.1473569, z: 0}
+  - {x: 0.016572952, y: -1.3588231, z: 0}
+  m_ShapePathHash: 225951267
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -2638
 --- !u!1 &5569594213809543684
 GameObject:
   m_ObjectHideFlags: 0

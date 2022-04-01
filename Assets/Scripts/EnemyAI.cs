@@ -12,7 +12,7 @@ public class EnemyAI : NetworkComponent
     public Animator AttackSprite;
 
     public float RoamDistance = 5;
-    public float MinStopTime = 1.5;
+    public float MinStopTime = 1.5f;
     public float MaxStopTime = 5;
     public float Speed;
 
