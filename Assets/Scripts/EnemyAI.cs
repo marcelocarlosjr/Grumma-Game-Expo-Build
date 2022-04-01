@@ -14,7 +14,10 @@ public class EnemyAI : NetworkComponent
     public float RoamDistance = 5;
     public float MinStopTime = 1.5f;
     public float MaxStopTime = 5;
-    public float Speed;
+    public float Speed = 1.5f;
+    public float AgroDistance = 6;
+    public float AgroTimer = 6;
+    Coroutine AgroCo;
 
     bool StopTimer;
     bool FollowPlayer;
@@ -23,6 +26,8 @@ public class EnemyAI : NetworkComponent
     bool StopMove;
     bool Attacking;
     bool AttackAnim;
+    bool Agro;
+    int CurrentAgroID;
 
     float STATE;
     float IDLESTATE = 0;
@@ -92,11 +97,11 @@ public class EnemyAI : NetworkComponent
 
         if (IsServer && IsConnected)
         {
-            if(FindObjectsOfType<PlayerController>() != null)
+            if(FindObjectsOfType<PlayerController>() != null && !Agro)
             {
                 foreach (PlayerController p in FindObjectsOfType<PlayerController>())
                 {
-                    if (Vector2.Distance(this.transform.position, p.transform.position) < 6)
+                    if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance)
                     {
                         MyAgent.speed = Speed * 2;
                         DestinationMet = true;
@@ -119,7 +124,7 @@ public class EnemyAI : NetworkComponent
                 }
             }
 
-            if (!FollowPlayer)
+            if (!FollowPlayer && !Agro)
             {
                 MyAgent.speed = Speed;
                 if (DestinationMet)
@@ -142,6 +147,25 @@ public class EnemyAI : NetworkComponent
                     if (MyAgent.remainingDistance < 0.3f)
                     {
                         DestinationMet = true;
+                    }
+                }
+            }
+
+            if (Agro)
+            {
+                foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+                {
+                    if(pc.Owner == CurrentAgroID)
+                    {
+                        MyAgent.speed = Speed * 2;
+                        Vector2 position = transform.position;
+                        Vector2 direction = this.transform.up;
+                        float radius = 0.6f;
+                        float distance = 1.85f;
+
+                        DetectPlayer(position, radius, direction, distance);
+
+                        MyAgent.SetDestination(pc.gameObject.transform.position);
                     }
                 }
             }
@@ -220,6 +244,38 @@ public class EnemyAI : NetworkComponent
                 MyAgent.isStopped = false;
             }
             
+        }
+    }
+
+    public void TakeDamage(int attackerid, float damage)
+    {
+        if(AgroCo != null)
+        {
+            StopCoroutine(AgroCo);
+        }
+        Agro = true;
+        CurrentAgroID = attackerid;
+        AgroCo = StartCoroutine(FollowPlayerTimer());
+    }
+
+    public IEnumerator FollowPlayerTimer()
+    {
+        yield return new WaitForSeconds(AgroTimer);
+        CurrentAgroID = -99;
+        Agro = false;
+
+        AgroCo = null;
+
+        foreach (PlayerController p in FindObjectsOfType<PlayerController>())
+        {
+            if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance)
+            {
+                yield break;
+            }
+            else
+            {
+                StartCoroutine(Stop(Random.Range(MinStopTime, MaxStopTime)));
+            }
         }
     }
 }
