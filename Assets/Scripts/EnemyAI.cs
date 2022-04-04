@@ -3,19 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using NETWORK_ENGINE;
 using UnityEngine.AI;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class EnemyAI : NetworkComponent
 {
+    [Header("ENEMY COMPONENT")]
     public NavMeshAgent MyAgent;
     public Rigidbody2D MyRig;
     public Animator MyAnim;
     public Animator AttackSprite;
 
+    [Header("ENEMY AI STATS")]
     public float RoamDistance = 5;
     public float MinStopTime = 1.5f;
     public float MaxStopTime = 5;
-    public float Speed;
+    public float Speed = 1.5f;
+    public float AgroDistance = 6;
+    public float AgroTimer = 6;
+    Coroutine AgroCo;
 
+    [Header("ENEMY STATS")]
+    public float MaxHealth;
+    public float Health;
+    public float Damage;
+
+    bool Dead = false;
+    bool DeadCycle = false;
     bool StopTimer;
     bool FollowPlayer;
     bool DestinationMet = false;
@@ -23,12 +36,14 @@ public class EnemyAI : NetworkComponent
     bool StopMove;
     bool Attacking;
     bool AttackAnim;
+    bool Agro;
+    int CurrentAgroID;
 
     float STATE;
     float IDLESTATE = 0;
     float RUNSTATE = 1;
     float ATTACKSTATE = 2;
-    float DIESTATE = 3;
+    float DEADSTATE = 3;
     public override void HandleMessage(string flag, string value)
     {
         if(flag == "STATE" && IsClient)
@@ -37,6 +52,10 @@ public class EnemyAI : NetworkComponent
             MyAnim.SetFloat("STATE", STATE);
             MyAnim.SetInteger("ISTATE", (int)STATE);
             AttackSprite.SetInteger("ISTATE", (int)STATE);
+            if (STATE == DEADSTATE)
+            {
+                Die();
+            }
         }
     }
 
@@ -77,26 +96,27 @@ public class EnemyAI : NetworkComponent
         MyRig = GetComponent<Rigidbody2D>();
         MyAgent.speed = Speed;
         AttackSprite = transform.GetChild(0).GetComponent<Animator>();
+        Health = MaxHealth;
     }
 
     void Update()
     {
-        if (STATE != IDLESTATE)
+        if (STATE != IDLESTATE && !Dead)
         {
             MyAnim.SetFloat("SPEED", MyRig.velocity.magnitude);
         }
-        else
+        else if (!Dead)
         {
             MyAnim.SetFloat("SPEED", 5);
         }
 
-        if (IsServer && IsConnected)
+        if (IsServer && IsConnected && !Dead)
         {
-            if(FindObjectsOfType<PlayerController>() != null)
+            if(FindObjectsOfType<PlayerController>() != null && !Agro)
             {
                 foreach (PlayerController p in FindObjectsOfType<PlayerController>())
                 {
-                    if (Vector2.Distance(this.transform.position, p.transform.position) < 6)
+                    if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance)
                     {
                         MyAgent.speed = Speed * 2;
                         DestinationMet = true;
@@ -119,7 +139,7 @@ public class EnemyAI : NetworkComponent
                 }
             }
 
-            if (!FollowPlayer)
+            if (!FollowPlayer && !Agro)
             {
                 MyAgent.speed = Speed;
                 if (DestinationMet)
@@ -146,6 +166,25 @@ public class EnemyAI : NetworkComponent
                 }
             }
 
+            if (Agro)
+            {
+                foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+                {
+                    if(pc.Owner == CurrentAgroID)
+                    {
+                        MyAgent.speed = Speed * 2;
+                        Vector2 position = transform.position;
+                        Vector2 direction = this.transform.up;
+                        float radius = 0.6f;
+                        float distance = 1.85f;
+
+                        DetectPlayer(position, radius, direction, distance);
+
+                        MyAgent.SetDestination(pc.gameObject.transform.position);
+                    }
+                }
+            }
+
             if (MyAgent.isStopped == false && !AttackAnim)
             {
                 STATE = RUNSTATE;
@@ -168,6 +207,12 @@ public class EnemyAI : NetworkComponent
                 rotationAngle = (Mathf.Atan2(relative.y, relative.x) * Mathf.Rad2Deg) - 90;
                 MyRig.rotation = Mathf.LerpAngle(MyRig.rotation, rotationAngle, 2);
             }
+        }
+        if (Dead)
+        {
+            MyAgent.isStopped = true;
+            MyAgent.velocity = Vector3.zero;
+            MyRig.velocity = MyAgent.velocity;
         }
     }
 
@@ -220,6 +265,81 @@ public class EnemyAI : NetworkComponent
                 MyAgent.isStopped = false;
             }
             
+        }
+    }
+
+    public void Die()
+    {
+        Dead = true;
+        if (!IsLocalPlayer)
+        {
+            this.GetComponent<ShadowCaster2D>().enabled = false;
+            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            this.GetComponent<NetworkRigidBody2D>().enabled = false;
+            this.GetComponent<CapsuleCollider2D>().enabled = false;
+            this.GetComponent<NavMeshAgent>().enabled = false;
+            this.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
+            this.GetComponent<SpriteRenderer>().sortingOrder = 0;
+            DeadCycle = true;
+            this.GetComponent<NetworkID>().enabled = false;
+            this.GetComponent<EnemyAI>().enabled = false;
+        }
+        if (IsLocalPlayer)
+        {
+            if (!DeadCycle)
+            {
+                this.GetComponent<ShadowCaster2D>().enabled = false;
+                this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                this.GetComponent<NetworkRigidBody2D>().enabled = false;
+                this.GetComponent<CapsuleCollider2D>().enabled = false;
+                this.GetComponent<NavMeshAgent>().enabled = false;
+                this.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
+                this.GetComponent<SpriteRenderer>().sortingOrder = 0;
+                DeadCycle = true;
+                this.GetComponent<NetworkID>().enabled = false;
+                this.GetComponent<EnemyAI>().enabled = false;
+            }
+        }
+    }
+
+    public void TakeDamage(int attackerid, float damage)
+    {
+        if(AgroCo != null)
+        {
+            StopCoroutine(AgroCo);
+        }
+        Health -= damage;
+        if(Health <= 0)
+        {
+            STATE = DEADSTATE;
+            Die();
+            SendUpdate("STATE", DEADSTATE.ToString());
+            return;
+        }
+
+        Agro = true;
+        CurrentAgroID = attackerid;
+        AgroCo = StartCoroutine(FollowPlayerTimer());
+    }
+
+    public IEnumerator FollowPlayerTimer()
+    {
+        yield return new WaitForSeconds(AgroTimer);
+        CurrentAgroID = -99;
+        Agro = false;
+
+        AgroCo = null;
+
+        foreach (PlayerController p in FindObjectsOfType<PlayerController>())
+        {
+            if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance)
+            {
+                yield break;
+            }
+            else
+            {
+                StartCoroutine(Stop(Random.Range(MinStopTime, MaxStopTime)));
+            }
         }
     }
 }

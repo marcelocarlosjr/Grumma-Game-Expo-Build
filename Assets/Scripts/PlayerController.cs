@@ -116,7 +116,6 @@ public abstract class PlayerController : NetworkComponent
     {
         if (IsServer)
         {
-            Health = MaxHealth;
             SendUpdate("HP", Health.ToString());
             SendUpdate("MAXHP", MaxHealth.ToString());
         }
@@ -163,6 +162,7 @@ public abstract class PlayerController : NetworkComponent
             DeadCycle = true;
             NameBox.enabled = false;
             ShadowBox.gameObject.SetActive(false);
+            this.GetComponent<NetworkID>().enabled = false;
             this.GetComponent<PlayerController>().enabled = false;
         }
         if (IsLocalPlayer)
@@ -182,6 +182,7 @@ public abstract class PlayerController : NetworkComponent
                         DeadCycle = true;
                         NameBox.enabled = false;
                         ShadowBox.gameObject.SetActive(false);
+                        this.GetComponent<NetworkID>().enabled = false;
                         this.GetComponent<PlayerController>().enabled = false;
                     }
                 }
@@ -389,6 +390,7 @@ public abstract class PlayerController : NetworkComponent
     }
     public virtual void Start()
     {
+        Health = MaxHealth;
         SprintMod = 1;
         MyRig = GetComponent<Rigidbody2D>();
         if(MyRig == null)

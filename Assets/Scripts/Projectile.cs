@@ -45,6 +45,11 @@ public class Projectile : NetworkComponent
                     collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(Damage);
                     MyCore.NetDestroyObject(this.NetId);
                 }
+                if (collision.collider.gameObject.GetComponent<EnemyAI>())
+                {
+                    collision.collider.gameObject.GetComponent<EnemyAI>().TakeDamage(this.Owner, Damage);
+                    MyCore.NetDestroyObject(this.NetId);
+                }
             }
         }
     }
