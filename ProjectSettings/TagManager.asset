@@ -42,8 +42,14 @@ TagManager:
   - name: Ground
     uniqueID: 1436027445
     locked: 0
+  - name: CaveGround
+    uniqueID: 1174744231
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Death
+    uniqueID: 2148991707
     locked: 0
   - name: Nodes
     uniqueID: 2348317551
