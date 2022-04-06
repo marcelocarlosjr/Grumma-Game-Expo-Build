@@ -278,7 +278,7 @@ public class EnemyAI : NetworkComponent
             this.GetComponent<NetworkRigidBody2D>().enabled = false;
             this.GetComponent<CapsuleCollider2D>().enabled = false;
             this.GetComponent<NavMeshAgent>().enabled = false;
-            this.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
+            this.GetComponent<SpriteRenderer>().sortingLayerName = "Death";
             this.GetComponent<SpriteRenderer>().sortingOrder = 0;
             DeadCycle = true;
             this.GetComponent<NetworkID>().enabled = false;
@@ -293,7 +293,7 @@ public class EnemyAI : NetworkComponent
                 this.GetComponent<NetworkRigidBody2D>().enabled = false;
                 this.GetComponent<CapsuleCollider2D>().enabled = false;
                 this.GetComponent<NavMeshAgent>().enabled = false;
-                this.GetComponent<SpriteRenderer>().sortingLayerName = "Ground";
+                this.GetComponent<SpriteRenderer>().sortingLayerName = "Death";
                 this.GetComponent<SpriteRenderer>().sortingOrder = 0;
                 DeadCycle = true;
                 this.GetComponent<NetworkID>().enabled = false;

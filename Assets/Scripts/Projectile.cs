@@ -38,14 +38,17 @@ public class Projectile : NetworkComponent
         RaycastHit2D[] hits = Physics2D.CircleCastAll(position1, radius1, direction1, (distance1 - radius1));
         foreach (RaycastHit2D collision in hits)
         {
-            if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
+            if (collision.collider.gameObject.GetComponent<PlayerController>())
             {
-                if (collision.collider.gameObject.GetComponent<PlayerController>())
+                if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
                 {
                     collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(Damage);
                     MyCore.NetDestroyObject(this.NetId);
                 }
-                if (collision.collider.gameObject.GetComponent<EnemyAI>())
+            }
+            if (collision.collider.gameObject.GetComponent<EnemyAI>())
+            {
+                if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
                 {
                     collision.collider.gameObject.GetComponent<EnemyAI>().TakeDamage(this.Owner, Damage);
                     MyCore.NetDestroyObject(this.NetId);

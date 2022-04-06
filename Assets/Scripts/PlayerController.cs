@@ -12,6 +12,7 @@ public abstract class PlayerController : NetworkComponent
     public Animator AnimController;
     public Text NameBox;
     public GameObject ShadowBox;
+    public InventoryObject Inventory;
 
     [Header("Player Inputs")]
     public Vector2 MoveInput;
@@ -158,7 +159,8 @@ public abstract class PlayerController : NetworkComponent
             this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
             this.GetComponent<NetworkRigidBody2D>().enabled = false;
             this.GetComponent<CircleCollider2D>().enabled = false;
-            this.GetComponent<SpriteRenderer>().sortingOrder = -2;
+            this.GetComponent<SpriteRenderer>().sortingLayerName = "Death";
+            this.GetComponent<SpriteRenderer>().sortingOrder = 0;
             DeadCycle = true;
             NameBox.enabled = false;
             ShadowBox.gameObject.SetActive(false);
@@ -178,7 +180,8 @@ public abstract class PlayerController : NetworkComponent
                         this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                         this.GetComponent<NetworkRigidBody2D>().enabled = false;
                         this.GetComponent<CircleCollider2D>().enabled = false;
-                        this.GetComponent<SpriteRenderer>().sortingOrder = -2;
+                        this.GetComponent<SpriteRenderer>().sortingLayerName = "Death";
+                        this.GetComponent<SpriteRenderer>().sortingOrder = 0;
                         DeadCycle = true;
                         NameBox.enabled = false;
                         ShadowBox.gameObject.SetActive(false);
@@ -390,6 +393,7 @@ public abstract class PlayerController : NetworkComponent
     }
     public virtual void Start()
     {
+        Inventory = ScriptableObject.CreateInstance<InventoryObject>();
         Health = MaxHealth;
         SprintMod = 1;
         MyRig = GetComponent<Rigidbody2D>();
@@ -460,6 +464,19 @@ public abstract class PlayerController : NetworkComponent
             else
             {
                 AnimController.SetFloat("SPEED", 5);
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (IsServer)
+        {
+            var item = collision.GetComponent<Item>();
+            if (item)
+            {
+                Inventory.AddItem(item.item, 1);
+                MyCore.NetDestroyObject(collision.GetComponent<Item>().NetId);
             }
         }
     }

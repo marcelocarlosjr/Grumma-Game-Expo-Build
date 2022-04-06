@@ -54,3 +54,6 @@ TagManager:
   - name: Nodes
     uniqueID: 2348317551
     locked: 0
+  - name: Projectile
+    uniqueID: 1656287923
+    locked: 0
