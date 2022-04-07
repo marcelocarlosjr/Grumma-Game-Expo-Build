@@ -116,7 +116,6 @@ public abstract class PlayerController : NetworkComponent
         if (flag == "UPDATEINV" && IsLocalPlayer)
         {
             string[] args = value.Split(',');
-            Debug.Log(args[0] + " " + args[1]);
             Inventory.AddItem(Inventory.database.GetItem[int.Parse(args[0])], int.Parse(args[1]), -99);
         }
     }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32e88e3c15a696a47afc7e28c1a4ff80, type: 3}
   m_Name: JarOfEyes
   m_EditorClassIdentifier: 
-  prefab: {fileID: 4056110989371054059, guid: 0466875d46eb19d47afaf0496c2c8766, type: 3}
+  prefab: {fileID: 3208940280885952929, guid: 0d224c2558e14fa479d38d395831768e, type: 3}
   type: 2
   description: Increases player's _____ stat.
   statModifier: 1.1

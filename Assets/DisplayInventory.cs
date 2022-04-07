@@ -7,6 +7,7 @@ public class DisplayInventory : MonoBehaviour
 {
     public InventoryObject Inventory;
     public bool InventoryLinked;
+    public bool DisplayCreated;
     Dictionary<InventorySlot, GameObject> ItemsDisplayed = new Dictionary<InventorySlot, GameObject>();
 
     private void Start()
@@ -15,16 +16,17 @@ public class DisplayInventory : MonoBehaviour
     }
     void Update()
     {
-        if (!InventoryLinked)
+        foreach(PlayerController pc in FindObjectsOfType<PlayerController>())
         {
-            foreach(PlayerController pc in FindObjectsOfType<PlayerController>())
+            if(pc.Owner == FindObjectOfType<NetworkCore>().LocalConnectionID)
             {
-                if(pc.Owner == FindObjectOfType<NetworkCore>().LocalConnectionID)
+                Inventory = pc.Inventory;
+                if (!DisplayCreated)
                 {
-                    Inventory = pc.Inventory;
                     CreateDisplay();
-                    InventoryLinked = true;
+                    DisplayCreated = true;
                 }
+                InventoryLinked = true;
             }
         }
 
