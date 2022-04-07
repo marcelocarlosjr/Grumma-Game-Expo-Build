@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class DisplayInventory : MonoBehaviour
 {
+    public GameObject InventoryPrefab;
     public InventoryObject Inventory;
     public bool InventoryLinked;
     public bool DisplayCreated;
@@ -39,8 +40,9 @@ public class DisplayInventory : MonoBehaviour
     {
         for (int i = 0; i < Inventory.Container.Count; i++)
         {
-            var obj = Instantiate(Inventory.Container[i].item.prefab, Vector3.zero, Quaternion.identity, transform);
-            obj.GetComponentInChildren<Text>().text = Inventory.Container[i].amount.ToString("n0");
+            var obj = Instantiate(InventoryPrefab, Vector3.zero, Quaternion.identity, transform);
+            obj.transform.GetChild(0).GetComponent<Image>().sprite = Inventory.Container[i].item.uiDisplay;
+            obj.GetComponentInChildren<Text>().text = Inventory.Container[i].amount.ToString("n0") + " ";
             ItemsDisplayed.Add(Inventory.Container[i], obj);
         }
     }
@@ -55,7 +57,8 @@ public class DisplayInventory : MonoBehaviour
             }
             else
             {
-                var obj = Instantiate(Inventory.Container[i].item.prefab, Vector3.zero, Quaternion.identity, transform);
+                var obj = Instantiate(InventoryPrefab, Vector3.zero, Quaternion.identity, transform);
+                obj.transform.GetChild(0).GetComponent<Image>().sprite = Inventory.Container[i].item.uiDisplay;
                 obj.GetComponentInChildren<Text>().text = Inventory.Container[i].amount.ToString("n0");
                 ItemsDisplayed.Add(Inventory.Container[i], obj);
             }
