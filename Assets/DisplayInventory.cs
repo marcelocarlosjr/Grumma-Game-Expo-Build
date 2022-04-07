@@ -6,16 +6,32 @@ using UnityEngine.UI;
 public class DisplayInventory : MonoBehaviour
 {
     public InventoryObject Inventory;
+    public bool InventoryLinked;
     Dictionary<InventorySlot, GameObject> ItemsDisplayed = new Dictionary<InventorySlot, GameObject>();
-    void Start()
-    {
-        CreateDisplay();
-    }
 
-    // Update is called once per frame
+    private void Start()
+    {
+        InventoryLinked = false;
+    }
     void Update()
     {
-        UpdateDisplay();
+        if (!InventoryLinked)
+        {
+            foreach(PlayerController pc in FindObjectsOfType<PlayerController>())
+            {
+                if(pc.Owner == FindObjectOfType<NetworkCore>().LocalConnectionID)
+                {
+                    Inventory = pc.Inventory;
+                    CreateDisplay();
+                    InventoryLinked = true;
+                }
+            }
+        }
+
+        if (InventoryLinked && FindObjectOfType<NetworkCore>().LocalConnectionID != -1)
+        {
+            UpdateDisplay();
+        }
     }
     public void CreateDisplay()
     {
@@ -28,6 +44,7 @@ public class DisplayInventory : MonoBehaviour
     }
     public void UpdateDisplay()
     {
+
         for (int i = 0; i < Inventory.Container.Count; i++)
         {
             if (ItemsDisplayed.ContainsKey(Inventory.Container[i]))

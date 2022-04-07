@@ -13,6 +13,7 @@ public abstract class PlayerController : NetworkComponent
     public Text NameBox;
     public GameObject ShadowBox;
     public InventoryObject Inventory;
+    public ItemDatabaseObject StaticItemDatabase;
 
     [Header("Player Inputs")]
     public Vector2 MoveInput;
@@ -60,6 +61,7 @@ public abstract class PlayerController : NetworkComponent
     protected float RFIRESTATE = 3;
     protected float TAKEDAMAGESTATE = 5;
     protected float DEADSTATE = 69;
+
 
     public override void HandleMessage(string flag, string value)
     {
@@ -111,6 +113,12 @@ public abstract class PlayerController : NetworkComponent
             MaxHealth = float.Parse(value);
             //update health bar
         }
+        if (flag == "UPDATEINV" && IsLocalPlayer)
+        {
+            string[] args = value.Split(',');
+            Debug.Log(args[0] + " " + args[1]);
+            Inventory.AddItem(Inventory.database.GetItem[int.Parse(args[0])], int.Parse(args[1]), -99);
+        }
     }
 
     public override void NetworkedStart()
@@ -119,6 +127,12 @@ public abstract class PlayerController : NetworkComponent
         {
             SendUpdate("HP", Health.ToString());
             SendUpdate("MAXHP", MaxHealth.ToString());
+        }
+
+        if (IsLocalPlayer)
+        {
+            Inventory = ScriptableObject.CreateInstance<InventoryObject>();
+            Inventory.database = StaticItemDatabase;
         }
     }
     public override IEnumerator SlowUpdate()
@@ -133,6 +147,14 @@ public abstract class PlayerController : NetworkComponent
             }
         }
         yield return new WaitForSeconds(0.01f);
+    }
+
+    public void UpdateInv(int _id, int _amount)
+    {
+        if (IsServer)
+        {
+            SendUpdate("UPDATEINV", _id + "," + _amount);
+        }
     }
     public void TakeDamage(float damage)
     {
@@ -394,6 +416,7 @@ public abstract class PlayerController : NetworkComponent
     public virtual void Start()
     {
         Inventory = ScriptableObject.CreateInstance<InventoryObject>();
+        Inventory.database = StaticItemDatabase;
         Health = MaxHealth;
         SprintMod = 1;
         MyRig = GetComponent<Rigidbody2D>();
@@ -475,7 +498,7 @@ public abstract class PlayerController : NetworkComponent
             var item = collision.GetComponent<Item>();
             if (item)
             {
-                Inventory.AddItem(item.item, 1);
+                Inventory.AddItem(item.item, 1, this.Owner);
                 MyCore.NetDestroyObject(collision.GetComponent<Item>().NetId);
             }
         }
