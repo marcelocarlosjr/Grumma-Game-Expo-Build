@@ -9,6 +9,21 @@ public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
     public List<InventorySlot> Container = new List<InventorySlot>();
     public void AddItem(ItemObject _item, int _amount, int _owner)
     {
+        if(_item.type != ItemType.Potion)
+        {
+            Container.Add(new InventorySlot(database.GetID[_item], _item, _amount));
+            if (_owner != -99)
+            {
+                foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+                {
+                    if (pc.Owner == _owner)
+                    {
+                        pc.UpdateInv(database.GetID[_item], _amount);
+                    }
+                }
+            }
+            return;
+        }
         for(int i = 0; i < Container.Count; i++)
         {
             if(Container[i].item == _item)
