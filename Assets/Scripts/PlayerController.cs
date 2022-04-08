@@ -118,6 +118,11 @@ public abstract class PlayerController : NetworkComponent
             string[] args = value.Split(',');
             Inventory.AddItem(Inventory.database.GetItem[int.Parse(args[0])], int.Parse(args[1]), -99);
         }
+        if (flag == "REMOVEINV" && IsServer)
+        {
+            string[] args = value.Split(','); Debug.Log(value);
+            Inventory.RemoveItem(int.Parse(args[0]), int.Parse(args[1]), int.Parse(args[2]), this.transform.position, this.transform.up, this.transform.right);
+        }
     }
 
     public override void NetworkedStart()
@@ -154,6 +159,15 @@ public abstract class PlayerController : NetworkComponent
         {
             SendUpdate("UPDATEINV", _id + "," + _amount);
         }
+    }
+    public void RemoveInv(int _index, int _id, int _amount)
+    {
+        if (IsLocalPlayer)
+        {
+            SendCommand("REMOVEINV", _index + "," + _id + "," + _amount);
+            Inventory.RemoveItem(_index, _id, _amount, Vector3.zero, Vector3.zero, Vector3.zero);
+        }
+
     }
     public void TakeDamage(float damage)
     {
@@ -495,7 +509,7 @@ public abstract class PlayerController : NetworkComponent
         if (IsServer)
         {
             var item = collision.GetComponent<Item>();
-            if (item)
+            if (item && Inventory.Container.Count <= 5)
             {
                 Inventory.AddItem(item.item, 1, this.Owner);
                 MyCore.NetDestroyObject(collision.GetComponent<Item>().NetId);
