@@ -533,6 +533,8 @@ MonoBehaviour:
   AnimController: {fileID: 0}
   NameBox: {fileID: 187939380863656837}
   ShadowBox: {fileID: 741731515484713383}
+  Inventory: {fileID: 0}
+  StaticItemDatabase: {fileID: 11400000, guid: 0773bb310c27acf4fafef43ed2e92b13, type: 2}
   MoveInput: {x: 0, y: 0}
   AimInput: {x: 0, y: 0}
   AimDir: {x: 0, y: 0}

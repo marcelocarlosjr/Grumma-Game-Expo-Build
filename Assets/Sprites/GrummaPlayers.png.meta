@@ -182,6 +182,9 @@ TextureImporter:
   - first:
       213: 6551999688832492367
     second: GrummaPlayers_64
+  - first:
+      213: -216954659081824729
+    second: BLANK
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -1550,6 +1553,27 @@ TextureImporter:
       bones: []
       spriteID: f43a455c0016dea50800000000000000
       internalID: 6551999688832492367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: BLANK
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 726df0513e83dfcf0800000000000000
+      internalID: -216954659081824729
       vertices: []
       indices: 
       edges: []
