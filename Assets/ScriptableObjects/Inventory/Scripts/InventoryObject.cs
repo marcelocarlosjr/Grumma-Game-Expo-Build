@@ -9,21 +9,6 @@ public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
     public List<InventorySlot> Container = new List<InventorySlot>();
     public void AddItem(ItemObject _item, int _amount, int _owner)
     {
-        if(_item.type != ItemType.Potion)
-        {
-            Container.Add(new InventorySlot(database.GetID[_item], _item, _amount));
-            if (_owner != -99)
-            {
-                foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
-                {
-                    if (pc.Owner == _owner)
-                    {
-                        pc.UpdateInv(database.GetID[_item], _amount);
-                    }
-                }
-            }
-            return;
-        }
         for(int i = 0; i < Container.Count; i++)
         {
             if(Container[i].item == _item)
@@ -53,6 +38,23 @@ public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
                 }
             }
         }
+    }
+
+    public void RemoveItem(int _index, int _id, int _amount, Vector3 position, Vector3 directionForward, Vector3 directionRight)
+    {
+        Container.RemoveAt(_index);
+
+        if(FindObjectOfType<NetworkCore>().LocalConnectionID == -1)
+        {
+            for (int i = 0; i < _amount; i++)
+            {
+
+                FindObjectOfType<NetworkCore>().NetCreateObject(database.GetItem[_id].SpawnPrefabInt, -1, (position + (directionForward * 2) + (directionRight * Random.Range(-1.5f, 1.5f))), Quaternion.identity);
+
+            }
+        }
+
+        return;
     }
 
     public void OnAfterDeserialize()

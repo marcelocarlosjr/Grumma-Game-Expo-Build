@@ -30,27 +30,13 @@ public enum Rarity
 
 public abstract class ItemObject : ScriptableObject
 {
+    public int SpawnPrefabInt;
     public Sprite uiDisplay;
     public ItemType type;
+    public Attribute attribute;
+    public Rarity rarity;
     [TextArea(15,20)]
     public string description;
-}
 
-public class ItemBuff
-{
-    public Attribute attribute;
-    public int value;
-    public int min;
-    public int max;
-
-    public ItemBuff(int _min, int _max)
-    {
-        min = _min;
-        max = _max;
-    }
-
-    public void GenerateValue()
-    {
-        value = UnityEngine.Random.Range(min, max);
-    }
+    public float amount;
 }
