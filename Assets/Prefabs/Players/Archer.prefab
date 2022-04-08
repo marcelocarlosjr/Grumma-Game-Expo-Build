@@ -587,7 +587,7 @@ MonoBehaviour:
   - {x: -0.25369585, y: -0.1772869, z: 0}
   m_ShapePathHash: 548867576
   m_Mesh: {fileID: 0}
-  m_InstanceId: 81586
+  m_InstanceId: 24828
 --- !u!1 &4785603723523000435
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,12 +632,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LightType: 3
-  m_BlendStyleIndex: 0
+  m_BlendStyleIndex: 1
   m_FalloffIntensity: 0.763
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.6
+  m_Intensity: 0.3
   m_LightVolumeOpacity: 0
-  m_ApplyToSortingLayers: 350a9855000000006f7bf88ba72c0546db021780
+  m_ApplyToSortingLayers: 350a9855a72c054600000000db0217806f7bf88bb3f2b862
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0
