@@ -70,6 +70,10 @@ public class DisplayInventory : MonoBehaviour
             {
                 ItemsDisplayed[Inventory.Container[i]].GetComponentInChildren<Text>().text = Inventory.Container[i].amount.ToString("n0");
                 ItemsDisplayed[Inventory.Container[i]].GetComponent<UIItemData>().Amount = Inventory.Container[i].amount;
+                foreach (UIItemData item in FindObjectsOfType<UIItemData>())
+                {
+                    item.index = item.gameObject.transform.GetSiblingIndex();
+                }
             }
             else
             {
@@ -89,6 +93,10 @@ public class DisplayInventory : MonoBehaviour
                 AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
 
                 ItemsDisplayed.Add(Inventory.Container[i], obj);
+                foreach (UIItemData item in FindObjectsOfType<UIItemData>())
+                {
+                    item.index = item.gameObject.transform.GetSiblingIndex();
+                }
             }
         }
     }

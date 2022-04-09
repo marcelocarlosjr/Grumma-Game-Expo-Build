@@ -30,11 +30,19 @@ public abstract class PlayerController : NetworkComponent
     public float Damage;
     public float HealthRegeneration;
     public float AttackSpeed;
-    public float XPMod;
     public float MaxStamina;
     public float Stamina;
     public float MoveSpeed;
     public float SprintMod = 1;
+
+    [Header("Player Item Mods")]
+    public float MoveSpeedMod;
+    public float HealthMod;
+    public float DamageMod;
+    public float HealthRegenerationMod;
+    public float AttackSpeedMod;
+    public float XPMod;
+    public float MaxStaminaMod;
 
     [Header("Player Info")]
     public string Name;
@@ -121,7 +129,7 @@ public abstract class PlayerController : NetworkComponent
         if (flag == "REMOVEINV" && IsServer)
         {
             string[] args = value.Split(','); Debug.Log(value);
-            Inventory.RemoveItem(int.Parse(args[0]), int.Parse(args[1]), int.Parse(args[2]), this.transform.position, this.transform.up, this.transform.right);
+            Inventory.RemoveItem(int.Parse(args[0]), int.Parse(args[1]), int.Parse(args[2]), this.Owner, this.transform.position, this.transform.up, this.transform.right);
         }
     }
 
@@ -131,6 +139,7 @@ public abstract class PlayerController : NetworkComponent
         {
             SendUpdate("HP", Health.ToString());
             SendUpdate("MAXHP", MaxHealth.ToString());
+            TouchingObjects = new List<Item>();
         }
 
         if (IsLocalPlayer)
@@ -161,22 +170,22 @@ public abstract class PlayerController : NetworkComponent
                 switch (_attribute)
                 {
                     case "Damage_Increase":
-                        Damage += 5;
+                        DamageMod += 5;
                         break;
                     case "Regen_Increase":
-                        HealthRegeneration += 5;
+                        HealthRegenerationMod += 5;
                         break;
                     case "Health_Increase":
-                        MaxHealth += 5;
+                        HealthMod += 5;
                         break;
                     case "MoveSpeed_Increase":
-                        MoveSpeed += 5;
+                        MoveSpeedMod += 5;
                         break;
                     case "AttackSpeed_Increase":
-                        AttackSpeed += 5;
+                        AttackSpeedMod += 5;
                         break;
                     case "Stamina_Increase":
-                        Stamina += 5;
+                        MaxStaminaMod += 5;
                         break;
                     case "Exp_Increase":
                         XPMod += 5;
@@ -187,22 +196,22 @@ public abstract class PlayerController : NetworkComponent
                 switch (_attribute)
                 {
                     case "Damage_Increase":
-                        Damage += 10;
+                        DamageMod += 10;
                         break;
                     case "Regen_Increase":
-                        HealthRegeneration += 10;
+                        HealthRegenerationMod += 10;
                         break;
                     case "Health_Increase":
-                        MaxHealth += 10;
+                        HealthMod += 10;
                         break;
                     case "MoveSpeed_Increase":
-                        MoveSpeed += 10;
+                        MoveSpeedMod += 10;
                         break;
                     case "AttackSpeed_Increase":
-                        AttackSpeed += 10;
+                        AttackSpeedMod += 10;
                         break;
                     case "Stamina_Increase":
-                        Stamina += 10;
+                        MaxStaminaMod += 10;
                         break;
                     case "Exp_Increase":
                         XPMod += 10;
@@ -213,22 +222,22 @@ public abstract class PlayerController : NetworkComponent
                 switch (_attribute)
                 {
                     case "Damage_Increase":
-                        Damage += 15;
+                        DamageMod += 15;
                         break;
                     case "Regen_Increase":
-                        HealthRegeneration += 15;
+                        HealthRegenerationMod += 15;
                         break;
                     case "Health_Increase":
-                        MaxHealth += 15;
+                        HealthMod += 15;
                         break;
                     case "MoveSpeed_Increase":
-                        MoveSpeed += 15;
+                        MoveSpeedMod += 15;
                         break;
                     case "AttackSpeed_Increase":
-                        AttackSpeed += 15;
+                        AttackSpeedMod += 15;
                         break;
                     case "Stamina_Increase":
-                        Stamina += 15;
+                        MaxStaminaMod += 15;
                         break;
                     case "Exp_Increase":
                         XPMod += 15;
@@ -239,25 +248,136 @@ public abstract class PlayerController : NetworkComponent
                 switch (_attribute)
                 {
                     case "Damage_Increase":
-                        Damage += 25;
+                        DamageMod += 25;
                         break;
                     case "Regen_Increase":
-                        HealthRegeneration += 25;
+                        HealthRegenerationMod += 25;
                         break;
                     case "Health_Increase":
-                        MaxHealth += 25;
+                        HealthMod += 25;
                         break;
                     case "MoveSpeed_Increase":
-                        MoveSpeed += 25;
+                        MoveSpeedMod += 25;
                         break;
                     case "AttackSpeed_Increase":
-                        AttackSpeed += 25;
+                        AttackSpeedMod += 25;
                         break;
                     case "Stamina_Increase":
-                        Stamina += 25;
+                        MaxStaminaMod += 25;
                         break;
                     case "Exp_Increase":
                         XPMod += 25;
+                        break;
+                }
+                break;
+        }
+    }
+
+    public void RemoveStat(string _attribute, string _rarity)
+    {
+        switch (_rarity)
+        {
+            case "Common":
+                switch (_attribute)
+                {
+                    case "Damage_Increase":
+                        DamageMod -= 5;
+                        break;
+                    case "Regen_Increase":
+                        HealthRegenerationMod -= 5;
+                        break;
+                    case "Health_Increase":
+                        HealthMod -= 5;
+                        break;
+                    case "MoveSpeed_Increase":
+                        MoveSpeedMod -= 5;
+                        break;
+                    case "AttackSpeed_Increase":
+                        AttackSpeedMod -= 5;
+                        break;
+                    case "Stamina_Increase":
+                        MaxStaminaMod -= 5;
+                        break;
+                    case "Exp_Increase":
+                        XPMod -= 5;
+                        break;
+                }
+                break;
+            case "Uncommon":
+                switch (_attribute)
+                {
+                    case "Damage_Increase":
+                        DamageMod -= 10;
+                        break;
+                    case "Regen_Increase":
+                        HealthRegenerationMod -= 10;
+                        break;
+                    case "Health_Increase":
+                        HealthMod -= 10;
+                        break;
+                    case "MoveSpeed_Increase":
+                        MoveSpeedMod -= 10;
+                        break;
+                    case "AttackSpeed_Increase":
+                        AttackSpeedMod -= 10;
+                        break;
+                    case "Stamina_Increase":
+                        MaxStaminaMod -= 10;
+                        break;
+                    case "Exp_Increase":
+                        XPMod -= 10;
+                        break;
+                }
+                break;
+            case "Rare":
+                switch (_attribute)
+                {
+                    case "Damage_Increase":
+                        DamageMod -= 15;
+                        break;
+                    case "Regen_Increase":
+                        HealthRegenerationMod -= 15;
+                        break;
+                    case "Health_Increase":
+                        HealthMod -= 15;
+                        break;
+                    case "MoveSpeed_Increase":
+                        MoveSpeedMod -= 15;
+                        break;
+                    case "AttackSpeed_Increase":
+                        AttackSpeedMod -= 15;
+                        break;
+                    case "Stamina_Increase":
+                        MaxStaminaMod -= 15;
+                        break;
+                    case "Exp_Increase":
+                        XPMod -= 15;
+                        break;
+                }
+                break;
+            case "Legendary":
+                switch (_attribute)
+                {
+                    case "Damage_Increase":
+                        DamageMod -= 25;
+                        break;
+                    case "Regen_Increase":
+                        HealthRegenerationMod -= 25;
+                        break;
+                    case "Health_Increase":
+                        HealthMod -= 25;
+                        break;
+                    case "MoveSpeed_Increase":
+                        MoveSpeedMod -= 25;
+                        break;
+                    case "AttackSpeed_Increase":
+                        AttackSpeedMod -= 25;
+                        break;
+                    case "Stamina_Increase":
+                        MaxStaminaMod -= 25;
+                        break;
+                    case "Exp_Increase":
+                        XPMod -= 25;
                         break;
                 }
                 break;
@@ -276,7 +396,7 @@ public abstract class PlayerController : NetworkComponent
         if (IsLocalPlayer)
         {
             SendCommand("REMOVEINV", _index + "," + _id + "," + _amount);
-            Inventory.RemoveItem(_index, _id, _amount, Vector3.zero, Vector3.zero, Vector3.zero);
+            Inventory.RemoveItem(_index, _id, _amount, this.Owner, Vector3.zero, Vector3.zero, Vector3.zero);
         }
 
     }
@@ -615,16 +735,55 @@ public abstract class PlayerController : NetworkComponent
         }
     }
 
+    public List<Item> TouchingObjects;
+    bool PickingUp;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (IsServer)
         {
-            var item = collision.GetComponent<Item>();
-            if (item && Inventory.Container.Count <= 5)
+            if (!TouchingObjects.Contains(collision.GetComponent<Item>()))
             {
-                Inventory.AddItem(item.item, 1, this.Owner);
-                MyCore.NetDestroyObject(collision.GetComponent<Item>().NetId);
+                TouchingObjects.Add(collision.GetComponent<Item>());
             }
         }
+        if (!PickingUp)
+        {
+            StartCoroutine(CollisionTimer());
+        }
+    }
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (!PickingUp && collision.GetComponent<Item>())
+        {
+            StartCoroutine(CollisionTimer());
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (IsServer)
+        {
+            if (TouchingObjects.Contains(other.GetComponent<Item>()))
+            {
+                TouchingObjects.Remove(other.GetComponent<Item>());
+            }
+        }
+    }
+
+    public IEnumerator CollisionTimer()
+    {
+        PickingUp = true;
+        yield return new WaitForSeconds(0.1f);
+        for (int i = 0; i < TouchingObjects.Count; i++)
+        {
+            var item = TouchingObjects[i];
+            if (item && Inventory.Container.Count <= 4)
+            {
+                Inventory.AddItem(item.item, 1, this.Owner);
+                MyCore.NetDestroyObject(item.NetId);
+            }
+            yield return new WaitForSeconds(0.15f);
+        }
+        PickingUp = false;
     }
 }
