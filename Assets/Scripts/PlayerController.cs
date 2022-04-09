@@ -153,6 +153,117 @@ public abstract class PlayerController : NetworkComponent
         yield return new WaitForSeconds(0.01f);
     }
 
+    public void AddStat(string _attribute, string _rarity)
+    {
+        switch (_rarity)
+        {
+            case "Common":
+                switch (_attribute)
+                {
+                    case "Damage_Increase":
+                        Damage += 5;
+                        break;
+                    case "Regen_Increase":
+                        HealthRegeneration += 5;
+                        break;
+                    case "Health_Increase":
+                        MaxHealth += 5;
+                        break;
+                    case "MoveSpeed_Increase":
+                        MoveSpeed += 5;
+                        break;
+                    case "AttackSpeed_Increase":
+                        AttackSpeed += 5;
+                        break;
+                    case "Stamina_Increase":
+                        Stamina += 5;
+                        break;
+                    case "Exp_Increase":
+                        XPMod += 5;
+                        break;
+                }
+                break;
+            case "Uncommon":
+                switch (_attribute)
+                {
+                    case "Damage_Increase":
+                        Damage += 10;
+                        break;
+                    case "Regen_Increase":
+                        HealthRegeneration += 10;
+                        break;
+                    case "Health_Increase":
+                        MaxHealth += 10;
+                        break;
+                    case "MoveSpeed_Increase":
+                        MoveSpeed += 10;
+                        break;
+                    case "AttackSpeed_Increase":
+                        AttackSpeed += 10;
+                        break;
+                    case "Stamina_Increase":
+                        Stamina += 10;
+                        break;
+                    case "Exp_Increase":
+                        XPMod += 10;
+                        break;
+                }
+                break;
+            case "Rare":
+                switch (_attribute)
+                {
+                    case "Damage_Increase":
+                        Damage += 15;
+                        break;
+                    case "Regen_Increase":
+                        HealthRegeneration += 15;
+                        break;
+                    case "Health_Increase":
+                        MaxHealth += 15;
+                        break;
+                    case "MoveSpeed_Increase":
+                        MoveSpeed += 15;
+                        break;
+                    case "AttackSpeed_Increase":
+                        AttackSpeed += 15;
+                        break;
+                    case "Stamina_Increase":
+                        Stamina += 15;
+                        break;
+                    case "Exp_Increase":
+                        XPMod += 15;
+                        break;
+                }
+                break;
+            case "Legendary":
+                switch (_attribute)
+                {
+                    case "Damage_Increase":
+                        Damage += 25;
+                        break;
+                    case "Regen_Increase":
+                        HealthRegeneration += 25;
+                        break;
+                    case "Health_Increase":
+                        MaxHealth += 25;
+                        break;
+                    case "MoveSpeed_Increase":
+                        MoveSpeed += 25;
+                        break;
+                    case "AttackSpeed_Increase":
+                        AttackSpeed += 25;
+                        break;
+                    case "Stamina_Increase":
+                        Stamina += 25;
+                        break;
+                    case "Exp_Increase":
+                        XPMod += 25;
+                        break;
+                }
+                break;
+        }
+    }
+
     public void UpdateInv(int _id, int _amount)
     {
         if (IsServer)

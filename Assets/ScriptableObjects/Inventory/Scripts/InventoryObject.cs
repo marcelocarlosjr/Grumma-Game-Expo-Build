@@ -28,12 +28,15 @@ public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
             }
         }
         Container.Add(new InventorySlot(database.GetID[_item], _item, _amount));
+        
         if (_owner != -99)
         {
             foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
             {
                 if (pc.Owner == _owner)
                 {
+                    pc.AddStat(_item.attribute.ToString(), _item.rarity.ToString()); ;
+
                     pc.UpdateInv(database.GetID[_item], _amount);
                 }
             }
