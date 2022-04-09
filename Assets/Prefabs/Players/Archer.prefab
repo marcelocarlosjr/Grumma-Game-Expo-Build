@@ -542,18 +542,35 @@ MonoBehaviour:
   RFireInput: 0
   SprintInput: 0
   AimRot: 0
-  MaxHealth: 50
+  MaxHealth: 0
   Health: 0
-  Damage: 2
+  Damage: 0
   HealthRegeneration: 0
   AttackSpeed: 0
-  XPMod: 0
   MaxStamina: 0
   Stamina: 0
-  MoveSpeed: 3
-  SprintMod: 1
+  MoveSpeed: 0
+  MaxEXP: 0
+  EXP: 0
+  EXPMulti: 0
+  SprintMod: 1.4
+  MoveSpeedBase: 3
+  HealthBase: 50
+  DamageBase: 10
+  HealthRegenerationBase: 1
+  AttackSpeedBase: 1
+  EXPBase: 1
+  StaminaBase: 1
+  MoveSpeedMod: 0
+  HealthMod: 0
+  DamageMod: 0
+  HealthRegenerationMod: 0
+  AttackSpeedMod: 0
+  EXPMod: 0
+  StaminaMod: 0
   Name: 
   InputType: 
+  TouchingObjects: []
   LFireDamage: 0
   RFireDamage: 0
   RFIRECOUNT: 1
@@ -587,7 +604,7 @@ MonoBehaviour:
   - {x: -0.25369585, y: -0.1772869, z: 0}
   m_ShapePathHash: 548867576
   m_Mesh: {fileID: 0}
-  m_InstanceId: 24828
+  m_InstanceId: 77676
 --- !u!1 &4785603723523000435
 GameObject:
   m_ObjectHideFlags: 0

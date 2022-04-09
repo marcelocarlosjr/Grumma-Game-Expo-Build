@@ -35,7 +35,7 @@ public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
             {
                 if (pc.Owner == _owner)
                 {
-                    pc.RemoveStat(database.GetItem[_index].attribute.ToString(), database.GetItem[_index].rarity.ToString());
+                    pc.RemoveStat(database.GetItem[_id].attribute.ToString(), database.GetItem[_index].rarity.ToString());
                 }
             }
 

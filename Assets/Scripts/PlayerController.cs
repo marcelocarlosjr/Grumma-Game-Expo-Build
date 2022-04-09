@@ -24,7 +24,7 @@ public abstract class PlayerController : NetworkComponent
     public bool SprintInput;
     public float AimRot;
 
-    [Header("Player Stats")]
+    [Header("Player Current Stats")]
     public float MaxHealth;
     public float Health;
     public float Damage;
@@ -33,7 +33,19 @@ public abstract class PlayerController : NetworkComponent
     public float MaxStamina;
     public float Stamina;
     public float MoveSpeed;
+    public float MaxEXP;
+    public float EXP;
+    public float EXPMulti;
     public float SprintMod = 1;
+
+    [Header("Player Base Stats")]
+    public float MoveSpeedBase;
+    public float HealthBase;
+    public float DamageBase;
+    public float HealthRegenerationBase;
+    public float AttackSpeedBase;
+    public float EXPBase;
+    public float StaminaBase;
 
     [Header("Player Item Mods")]
     public float MoveSpeedMod;
@@ -41,8 +53,8 @@ public abstract class PlayerController : NetworkComponent
     public float DamageMod;
     public float HealthRegenerationMod;
     public float AttackSpeedMod;
-    public float XPMod;
-    public float MaxStaminaMod;
+    public float EXPMod;
+    public float StaminaMod;
 
     [Header("Player Info")]
     public string Name;
@@ -185,10 +197,10 @@ public abstract class PlayerController : NetworkComponent
                         AttackSpeedMod += 5;
                         break;
                     case "Stamina_Increase":
-                        MaxStaminaMod += 5;
+                        StaminaMod += 5;
                         break;
                     case "Exp_Increase":
-                        XPMod += 5;
+                        EXPMod += 5;
                         break;
                 }
                 break;
@@ -211,10 +223,10 @@ public abstract class PlayerController : NetworkComponent
                         AttackSpeedMod += 10;
                         break;
                     case "Stamina_Increase":
-                        MaxStaminaMod += 10;
+                        StaminaMod += 10;
                         break;
                     case "Exp_Increase":
-                        XPMod += 10;
+                        EXPMod += 10;
                         break;
                 }
                 break;
@@ -237,10 +249,10 @@ public abstract class PlayerController : NetworkComponent
                         AttackSpeedMod += 15;
                         break;
                     case "Stamina_Increase":
-                        MaxStaminaMod += 15;
+                        StaminaMod += 15;
                         break;
                     case "Exp_Increase":
-                        XPMod += 15;
+                        EXPMod += 15;
                         break;
                 }
                 break;
@@ -263,10 +275,10 @@ public abstract class PlayerController : NetworkComponent
                         AttackSpeedMod += 25;
                         break;
                     case "Stamina_Increase":
-                        MaxStaminaMod += 25;
+                        StaminaMod += 25;
                         break;
                     case "Exp_Increase":
-                        XPMod += 25;
+                        EXPMod += 25;
                         break;
                 }
                 break;
@@ -296,10 +308,10 @@ public abstract class PlayerController : NetworkComponent
                         AttackSpeedMod -= 5;
                         break;
                     case "Stamina_Increase":
-                        MaxStaminaMod -= 5;
+                        StaminaMod -= 5;
                         break;
                     case "Exp_Increase":
-                        XPMod -= 5;
+                        EXPMod -= 5;
                         break;
                 }
                 break;
@@ -322,10 +334,10 @@ public abstract class PlayerController : NetworkComponent
                         AttackSpeedMod -= 10;
                         break;
                     case "Stamina_Increase":
-                        MaxStaminaMod -= 10;
+                        StaminaMod -= 10;
                         break;
                     case "Exp_Increase":
-                        XPMod -= 10;
+                        EXPMod -= 10;
                         break;
                 }
                 break;
@@ -348,10 +360,10 @@ public abstract class PlayerController : NetworkComponent
                         AttackSpeedMod -= 15;
                         break;
                     case "Stamina_Increase":
-                        MaxStaminaMod -= 15;
+                        StaminaMod -= 15;
                         break;
                     case "Exp_Increase":
-                        XPMod -= 15;
+                        EXPMod -= 15;
                         break;
                 }
                 break;
@@ -374,10 +386,10 @@ public abstract class PlayerController : NetworkComponent
                         AttackSpeedMod -= 25;
                         break;
                     case "Stamina_Increase":
-                        MaxStaminaMod -= 25;
+                        StaminaMod -= 25;
                         break;
                     case "Exp_Increase":
-                        XPMod -= 25;
+                        EXPMod -= 25;
                         break;
                 }
                 break;
@@ -520,7 +532,7 @@ public abstract class PlayerController : NetworkComponent
     {
         if (IsServer)
         {
-            XPMod += amount;
+            EXPMod += amount;
         }
     }
     public void IncreaseMaxStamina(float amount)
@@ -661,7 +673,8 @@ public abstract class PlayerController : NetworkComponent
     {
         Inventory = ScriptableObject.CreateInstance<InventoryObject>();
         Inventory.database = StaticItemDatabase;
-        Health = MaxHealth;
+        Health = HealthBase;
+        MaxHealth = HealthBase;
         SprintMod = 1;
         MyRig = GetComponent<Rigidbody2D>();
         if(MyRig == null)
@@ -699,6 +712,16 @@ public abstract class PlayerController : NetworkComponent
     {
         if (IsServer)
         {
+            Damage = DamageBase + ((DamageMod * .01f) * DamageBase);
+            MaxHealth = HealthBase + ((HealthMod * .01f) * HealthBase);
+            HealthRegeneration = HealthRegenerationBase + ((HealthRegenerationMod * .01f) * HealthRegenerationBase);
+            MoveSpeed = MoveSpeedBase + ((MoveSpeedMod * .01f) * MoveSpeedBase);
+            AttackSpeed = AttackSpeedBase + ((AttackSpeedMod * .01f) * AttackSpeedBase);
+            Stamina = StaminaBase + ((StaminaMod * .01f) * StaminaBase);
+            EXPMulti = EXPBase + ((EXPMod * .01f) * EXPBase);
+
+
+
             if (!Dead)
             {
                 MyRig.velocity = (MoveInput * MoveSpeed * SprintMod);
@@ -741,9 +764,16 @@ public abstract class PlayerController : NetworkComponent
     {
         if (IsServer)
         {
-            if (!TouchingObjects.Contains(collision.GetComponent<Item>()))
+            if (Inventory.Container.Count <= 4)
             {
-                TouchingObjects.Add(collision.GetComponent<Item>());
+                if (!TouchingObjects.Contains(collision.GetComponent<Item>()))
+                {
+                    TouchingObjects.Add(collision.GetComponent<Item>());
+                }
+            }
+            else
+            {
+                TouchingObjects.Clear();
             }
         }
         if (!PickingUp)
