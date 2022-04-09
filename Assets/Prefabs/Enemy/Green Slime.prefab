@@ -10,14 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1240758373250200178}
   - component: {fileID: 1240758373250200179}
-  - component: {fileID: 1240758373250200176}
   - component: {fileID: 1240758373250200173}
   - component: {fileID: 1527281420404441734}
   - component: {fileID: 4531826757151304619}
   - component: {fileID: 1164548877394098189}
   - component: {fileID: 4125910169328519796}
   - component: {fileID: 1240758373250200183}
-  - component: {fileID: 1286466891}
+  - component: {fileID: 1027775127246292113}
+  - component: {fileID: 4345575738792001741}
   m_Layer: 0
   m_Name: Green Slime
   m_TagString: Untagged
@@ -91,22 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &1240758373250200176
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1240758373250200180}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.73, y: 2.86}
-  m_Direction: 0
 --- !u!114 &1240758373250200173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,7 +186,7 @@ Animator:
   m_GameObject: {fileID: 1240758373250200180}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9d970dd6f8c0aa848b364d2054246b29, type: 2}
+  m_Controller: {fileID: 9100000, guid: c189883d1c31bda40acd4d729e7b6a36, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -239,7 +223,7 @@ MonoBehaviour:
   MaxHealth: 40
   Health: 0
   Damage: 5
---- !u!114 &1286466891
+--- !u!114 &1027775127246292113
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -258,32 +242,40 @@ MonoBehaviour:
   m_SelfShadows: 0
   m_ApplyToSortingLayers: 350a9855
   m_ShapePath:
-  - {x: 0.5206075, y: -1.10608, z: 0}
-  - {x: 0.7347069, y: -0.83914816, z: 0}
-  - {x: 0.8364072, y: -0.4921708, z: 0}
-  - {x: 0.5851474, y: -0.21698189, z: 0}
-  - {x: 0.5731826, y: 0.028295279, z: 0}
-  - {x: 0.7876339, y: 0.38049817, z: 0}
-  - {x: 0.7843509, y: 0.6630714, z: 0}
-  - {x: 0.39371157, y: 0.8299327, z: 0}
-  - {x: 0.33388805, y: 0.9196682, z: 0}
-  - {x: 0.3999958, y: 1.0642037, z: 0}
-  - {x: 0.08861065, y: 1.4221871, z: 0}
-  - {x: -0.085427284, y: 1.426966, z: 0}
-  - {x: -0.4258728, y: 1.0393157, z: 0}
-  - {x: -0.3361373, y: 0.95556235, z: 0}
-  - {x: -0.3421197, y: 0.8418975, z: 0}
-  - {x: -0.7823329, y: 0.6717043, z: 0}
-  - {x: -0.775969, y: 0.35891604, z: 0}
-  - {x: -0.5814142, y: 0.058207035, z: 0}
-  - {x: -0.5754323, y: -0.19903469, z: 0}
-  - {x: -0.8506212, y: -0.4682412, z: 0}
-  - {x: -0.6901822, y: -0.9416057, z: 0}
-  - {x: -0.44821978, y: -1.1473569, z: 0}
-  - {x: 0.016572952, y: -1.3588231, z: 0}
-  m_ShapePathHash: 225951267
+  - {x: -0.08692753, y: -0.6539609, z: 0}
+  - {x: 0.042399526, y: -0.53538066, z: 0}
+  - {x: 0.09464934, y: -0.39326975, z: 0}
+  - {x: 0.23192936, y: -0.29468983, z: 0}
+  - {x: 0.22954941, y: 0.097923726, z: 0}
+  - {x: 0.014335513, y: 0.0908581, z: 0}
+  - {x: -0.19263038, y: 0.08817475, z: 0}
+  - {x: -0.2665826, y: 0.269747, z: 0}
+  - {x: -0.41679728, y: 0.28257445, z: 0}
+  - {x: -0.38672864, y: 0.10655537, z: 0}
+  - {x: -0.34829032, y: -0.09014454, z: 0}
+  - {x: -0.28579342, y: -0.2696783, z: 0}
+  - {x: -0.20776448, y: -0.39759755, z: 0}
+  - {x: -0.13209769, y: -0.5318728, z: 0}
+  - {x: -0.21509588, y: -0.8012032, z: 0}
+  m_ShapePathHash: 717141474
   m_Mesh: {fileID: 0}
-  m_InstanceId: 64910
+  m_InstanceId: 63562
+--- !u!70 &4345575738792001741
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240758373250200180}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.038854003, y: -0.15894812}
+  m_Size: {x: 0.9317272, y: 1.1574887}
+  m_Direction: 0
 --- !u!1 &5569594213809543684
 GameObject:
   m_ObjectHideFlags: 0

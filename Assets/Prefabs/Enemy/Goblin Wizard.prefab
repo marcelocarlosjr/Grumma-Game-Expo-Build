@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1240758373250200178}
   - component: {fileID: 1240758373250200179}
-  - component: {fileID: 1240758373250200176}
   - component: {fileID: 1240758373250200173}
   - component: {fileID: 1527281420404441734}
   - component: {fileID: 4531826757151304619}
@@ -18,6 +17,7 @@ GameObject:
   - component: {fileID: 4125910169328519796}
   - component: {fileID: 1240758373250200183}
   - component: {fileID: 1286466891}
+  - component: {fileID: 1818309283900521343}
   m_Layer: 0
   m_Name: Goblin Wizard
   m_TagString: Untagged
@@ -91,22 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!70 &1240758373250200176
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1240758373250200180}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1.73, y: 2.86}
-  m_Direction: 0
 --- !u!114 &1240758373250200173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,7 +186,7 @@ Animator:
   m_GameObject: {fileID: 1240758373250200180}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9d970dd6f8c0aa848b364d2054246b29, type: 2}
+  m_Controller: {fileID: 9100000, guid: b4a6aa42f85b2fd4ca2694bdb31f5848, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -258,32 +242,40 @@ MonoBehaviour:
   m_SelfShadows: 0
   m_ApplyToSortingLayers: 350a9855
   m_ShapePath:
-  - {x: 0.5206075, y: -1.10608, z: 0}
-  - {x: 0.7347069, y: -0.83914816, z: 0}
-  - {x: 0.8364072, y: -0.4921708, z: 0}
-  - {x: 0.5851474, y: -0.21698189, z: 0}
-  - {x: 0.5731826, y: 0.028295279, z: 0}
-  - {x: 0.7876339, y: 0.38049817, z: 0}
-  - {x: 0.7843509, y: 0.6630714, z: 0}
-  - {x: 0.39371157, y: 0.8299327, z: 0}
-  - {x: 0.33388805, y: 0.9196682, z: 0}
-  - {x: 0.3999958, y: 1.0642037, z: 0}
-  - {x: 0.08861065, y: 1.4221871, z: 0}
-  - {x: -0.085427284, y: 1.426966, z: 0}
-  - {x: -0.4258728, y: 1.0393157, z: 0}
-  - {x: -0.3361373, y: 0.95556235, z: 0}
-  - {x: -0.3421197, y: 0.8418975, z: 0}
-  - {x: -0.7823329, y: 0.6717043, z: 0}
-  - {x: -0.775969, y: 0.35891604, z: 0}
-  - {x: -0.5814142, y: 0.058207035, z: 0}
-  - {x: -0.5754323, y: -0.19903469, z: 0}
-  - {x: -0.8506212, y: -0.4682412, z: 0}
-  - {x: -0.6901822, y: -0.9416057, z: 0}
-  - {x: -0.44821978, y: -1.1473569, z: 0}
-  - {x: 0.016572952, y: -1.3588231, z: 0}
-  m_ShapePathHash: 225951267
+  - {x: 0.17445381, y: 0.066603914, z: 0}
+  - {x: 0.09183669, y: 0.1624803, z: 0}
+  - {x: 0.03466686, y: 0.3602475, z: 0}
+  - {x: -0.11302978, y: 0.13422287, z: 0}
+  - {x: -0.3340361, y: -0.076853395, z: 0}
+  - {x: -0.27255806, y: -0.14647806, z: 0}
+  - {x: -0.2149612, y: -0.26720715, z: 0}
+  - {x: -0.28782767, y: -0.3384993, z: 0}
+  - {x: -0.09072602, y: -0.38990623, z: 0}
+  - {x: 0.08970004, y: -0.39391208, z: 0}
+  - {x: 0.2934841, y: -0.3403219, z: 0}
+  - {x: 0.23022604, y: -0.2845678, z: 0}
+  - {x: 0.24231344, y: -0.15746167, z: 0}
+  - {x: 0.4206966, y: -0.15128195, z: 0}
+  - {x: 0.41217718, y: 0.061113477, z: 0}
+  m_ShapePathHash: -965910177
   m_Mesh: {fileID: 0}
   m_InstanceId: 64910
+--- !u!70 &1818309283900521343
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240758373250200180}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: -0.05}
+  m_Size: {x: 0.74, y: 0.8}
+  m_Direction: 0
 --- !u!1 &5569594213809543684
 GameObject:
   m_ObjectHideFlags: 0
