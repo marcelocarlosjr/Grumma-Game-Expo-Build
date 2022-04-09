@@ -15,7 +15,7 @@ MonoBehaviour:
   SpawnPrefabInt: 7
   uiDisplay: {fileID: -555703656861768213, guid: 909ad8009cc008647bf670790a36450f, type: 3}
   type: 2
-  attribute: 0
+  attribute: 4
   rarity: 0
-  description: Increases player's _____ stat.
-  amount: 0
+  description: Increases player's Attack Speed stat.
+  amount: 5

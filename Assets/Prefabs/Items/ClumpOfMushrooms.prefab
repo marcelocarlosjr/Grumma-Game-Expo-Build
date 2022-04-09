@@ -136,7 +136,7 @@ MonoBehaviour:
   MyCore: {fileID: 0}
   MyId: {fileID: 0}
   IsDirty: 0
-  item: {fileID: 11400000, guid: b63ac6a466642f74ba1c5494fa780823, type: 2}
+  item: {fileID: 11400000, guid: 27443815a2c851c4cbebe3ffc9847c6d, type: 2}
 --- !u!114 &603235546488132291
 MonoBehaviour:
   m_ObjectHideFlags: 0
