@@ -278,7 +278,7 @@ MonoBehaviour:
   - {x: 0.21437506, y: -0.2779758, z: 0}
   m_ShapePathHash: 1248649759
   m_Mesh: {fileID: 0}
-  m_InstanceId: 85100
+  m_InstanceId: 118690
 --- !u!1 &5569594213809543684
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,7 +305,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5569594213809543684}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.145, z: 0}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1240758373250200178}
@@ -321,7 +321,7 @@ Animator:
   m_GameObject: {fileID: 5569594213809543684}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f027fd5281d58ec4ea0613e086b25b93, type: 2}
+  m_Controller: {fileID: 9100000, guid: a01b64f2a4d7ca74380e60016a460811, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
