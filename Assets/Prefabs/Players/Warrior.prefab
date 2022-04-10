@@ -573,9 +573,9 @@ MonoBehaviour:
   EXP: 0
   EXPMulti: 0
   SprintMod: 1.4
-  MoveSpeedBase: 3
+  MoveSpeedBase: 4
   HealthBase: 50
-  DamageBase: 10
+  DamageBase: 5
   HealthRegenerationBase: 1
   AttackSpeedBase: 1
   EXPBase: 1
@@ -587,6 +587,13 @@ MonoBehaviour:
   AttackSpeedMod: 0
   EXPMod: 0
   StaminaMod: 0
+  MoveSpeedUpgrade: 0
+  HealthUpgrade: 0
+  DamageUpgrade: 0
+  HealthRegenerationUpgrade: 0
+  AttackSpeedUpgrade: 0
+  EXPModUpgrade: 0
+  StaminaUpgrade: 0
   Name: 
   InputType: 
   TouchingObjects: []

@@ -56,6 +56,23 @@ public abstract class PlayerController : NetworkComponent
     public float EXPMod;
     public float StaminaMod;
 
+    [Header("Player Level Upgrades")]
+    public float MoveSpeedUpgrade;
+    public float HealthUpgrade;
+    public float DamageUpgrade;
+    public float HealthRegenerationUpgrade;
+    public float AttackSpeedUpgrade;
+    public float EXPModUpgrade;
+    public float StaminaUpgrade;
+
+    float MoveSpeedUpgradeMod = 0.2f;
+    float HealthUpgradeMod = 5;
+    float DamageUpgradeMod = 1;
+    float HealthRegenerationUpgradeMod = 0.25f;
+    float AttackSpeedUpgradeMod = 0;
+    float EXPModUpgradeMod = 0.1f;
+    float StaminaUpgradesMod = 0.1f;
+
     [Header("Player Info")]
     public string Name;
 
@@ -712,13 +729,13 @@ public abstract class PlayerController : NetworkComponent
     {
         if (IsServer)
         {
-            Damage = DamageBase + ((DamageMod * .01f) * DamageBase);
-            MaxHealth = HealthBase + ((HealthMod * .01f) * HealthBase);
-            HealthRegeneration = HealthRegenerationBase + ((HealthRegenerationMod * .01f) * HealthRegenerationBase);
-            MoveSpeed = MoveSpeedBase + ((MoveSpeedMod * .01f) * MoveSpeedBase);
-            AttackSpeed = AttackSpeedBase + ((AttackSpeedMod * .01f) * AttackSpeedBase);
-            Stamina = StaminaBase + ((StaminaMod * .01f) * StaminaBase);
-            EXPMulti = EXPBase + ((EXPMod * .01f) * EXPBase);
+            Damage = (DamageBase + (DamageUpgradeMod * DamageUpgrade)) + ((DamageMod * .01f) * (DamageBase + (DamageUpgradeMod * DamageUpgrade)));
+            MaxHealth = (HealthBase + (HealthUpgradeMod * HealthUpgrade)) + ((HealthMod * .01f) * (HealthBase + (HealthUpgradeMod * HealthUpgrade)));
+            HealthRegeneration = (HealthRegenerationBase + (HealthRegenerationUpgradeMod * HealthRegenerationUpgrade)) + ((HealthRegenerationMod * .01f) * (HealthRegenerationBase + (HealthRegenerationUpgradeMod * HealthRegenerationUpgrade)));
+            MoveSpeed = (MoveSpeedBase + (MoveSpeedUpgradeMod * MoveSpeedUpgrade)) + ((MoveSpeedMod * .01f) * (MoveSpeedBase + (MoveSpeedUpgradeMod * MoveSpeedUpgrade)));
+            AttackSpeed = (AttackSpeedBase + (AttackSpeedUpgradeMod * AttackSpeedUpgrade)) + ((AttackSpeedMod * .01f) * (AttackSpeedBase + (AttackSpeedUpgradeMod * AttackSpeedUpgrade)));
+            Stamina = (StaminaBase + (StaminaUpgradesMod * StaminaUpgrade)) + ((StaminaMod * .01f) * (StaminaBase + (StaminaUpgradesMod * StaminaUpgrade)));
+            EXPMulti = (EXPBase + (EXPModUpgradeMod * EXPModUpgrade)) + ((EXPMod * .01f) * (EXPBase + (EXPModUpgradeMod * EXPModUpgrade)));
 
 
 
@@ -807,7 +824,7 @@ public abstract class PlayerController : NetworkComponent
         for (int i = 0; i < TouchingObjects.Count; i++)
         {
             var item = TouchingObjects[i];
-            if (item && Inventory.Container.Count <= 4)
+            if (item && Inventory.Container.Count <= 4 && !item.move)
             {
                 Inventory.AddItem(item.item, 1, this.Owner);
                 MyCore.NetDestroyObject(item.NetId);

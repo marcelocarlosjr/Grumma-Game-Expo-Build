@@ -41,8 +41,9 @@ public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
 
             for (int i = 0; i < _amount; i++)
             {
-                FindObjectOfType<NetworkCore>().NetCreateObject(database.GetItem[_id].SpawnPrefabInt, -1, (position + (directionForward * 2) + (directionRight * Random.Range(-1.5f, 1.5f))), Quaternion.identity);
-
+                GameObject temp = FindObjectOfType<NetworkCore>().NetCreateObject(database.GetItem[_id].SpawnPrefabInt, -1, position, Quaternion.identity);
+                temp.GetComponent<Item>().ThrowItem((position + (directionForward * 2) + (directionRight * Random.Range(-1.5f, 1.5f))));
+                Debug.Log((position + (directionForward * 2) + (directionRight * Random.Range(-1.5f, 1.5f))));
             }
         }
 
