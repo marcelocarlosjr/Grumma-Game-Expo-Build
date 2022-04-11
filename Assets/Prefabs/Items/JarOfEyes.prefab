@@ -177,7 +177,7 @@ MonoBehaviour:
   - {x: -0.28988266, y: 0.052489042, z: 0}
   m_ShapePathHash: -2114715291
   m_Mesh: {fileID: 0}
-  m_InstanceId: 97492
+  m_InstanceId: 75642
 --- !u!50 &5854431923046035105
 Rigidbody2D:
   serializedVersion: 4
@@ -197,7 +197,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!114 &1600332731559945205
 MonoBehaviour:

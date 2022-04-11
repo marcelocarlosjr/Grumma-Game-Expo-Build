@@ -803,13 +803,6 @@ public abstract class PlayerController : NetworkComponent
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Inventory.Container.Count <= 4)
-        {
-            if (!TouchingObjects.Contains(collision.GetComponent<Item>()))
-            {
-                TouchingObjects.Add(collision.GetComponent<Item>());
-            }
-        }
         if (!PickingUp && collision.GetComponent<Item>())
         {
             StartCoroutine(CollisionTimer());
