@@ -1,3 +1,4 @@
+using NETWORK_ENGINE;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -126,6 +127,13 @@ public class WarriorController : PlayerController
                     collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(RFireDamage * (RFireTimer + 1));
                 }
             }
+            if (collision.collider.gameObject.GetComponent<EnemyAI>())
+            {
+                if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
+                {
+                    collision.collider.gameObject.GetComponent<EnemyAI>().TakeDamage(this.Owner, RFireDamage * (RFireTimer + 1));
+                }
+            }
         }
     }
     public void LFireRaycast()
@@ -142,6 +150,13 @@ public class WarriorController : PlayerController
                 if (collision.collider.gameObject.GetComponent<PlayerController>())
                 {
                     collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(LFireDamage);
+                }
+            }
+            if (collision.collider.gameObject.GetComponent<EnemyAI>())
+            {
+                if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
+                {
+                    collision.collider.gameObject.GetComponent<EnemyAI>().TakeDamage(this.Owner, LFireDamage);
                 }
             }
         }

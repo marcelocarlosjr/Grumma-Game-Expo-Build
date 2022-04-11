@@ -237,7 +237,7 @@ MonoBehaviour:
   Speed: 1.8
   AgroDistance: 6
   AgroTimer: 6
-  radius: 0.25
+  radius: 0.4
   distance: 0.55
   MaxHealth: 40
   Health: 0
@@ -269,7 +269,7 @@ MonoBehaviour:
   - {x: 0.011992056, y: -0.22436742, z: 0}
   m_ShapePathHash: 1949699992
   m_Mesh: {fileID: 0}
-  m_InstanceId: 49958
+  m_InstanceId: 89520
 --- !u!1 &5569594213809543684
 GameObject:
   m_ObjectHideFlags: 0
