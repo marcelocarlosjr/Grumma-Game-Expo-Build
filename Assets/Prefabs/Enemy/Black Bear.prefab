@@ -179,7 +179,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 1240758373250200180}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1
+  m_Radius: 0.89
   m_Speed: 1.5
   m_Acceleration: 4
   avoidancePriority: 50
@@ -226,6 +226,7 @@ MonoBehaviour:
   MyCore: {fileID: 0}
   MyId: {fileID: 0}
   IsDirty: 0
+  rangeType: 0
   MyAgent: {fileID: 0}
   MyRig: {fileID: 0}
   MyAnim: {fileID: 0}
@@ -236,6 +237,8 @@ MonoBehaviour:
   Speed: 1.8
   AgroDistance: 6
   AgroTimer: 6
+  radius: 0.6
+  distance: 1.85
   MaxHealth: 40
   Health: 0
   Damage: 5
@@ -283,7 +286,7 @@ MonoBehaviour:
   - {x: 0.016572952, y: -1.3588231, z: 0}
   m_ShapePathHash: 225951267
   m_Mesh: {fileID: 0}
-  m_InstanceId: 64910
+  m_InstanceId: 49452
 --- !u!1 &5569594213809543684
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,9 +375,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1946649745
+  m_SortingLayer: 2
+  m_SortingOrder: 5
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.74509805}
   m_FlipX: 0

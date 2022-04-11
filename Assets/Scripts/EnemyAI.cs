@@ -7,6 +7,14 @@ using UnityEngine.Experimental.Rendering.Universal;
 
 public class EnemyAI : NetworkComponent
 {
+    public enum RangeType
+    {
+        Melee,
+        Ranged
+    }
+
+    public RangeType rangeType;
+
     [Header("ENEMY COMPONENT")]
     public NavMeshAgent MyAgent;
     public Rigidbody2D MyRig;
@@ -21,6 +29,9 @@ public class EnemyAI : NetworkComponent
     public float AgroDistance = 6;
     public float AgroTimer = 6;
     Coroutine AgroCo;
+
+    public float radius;
+    public float distance;
 
     [Header("ENEMY STATS")]
     public float MaxHealth;
@@ -109,103 +120,101 @@ public class EnemyAI : NetworkComponent
         {
             MyAnim.SetFloat("SPEED", 5);
         }
-
-        if (IsServer && IsConnected && !Dead)
+        if (rangeType == RangeType.Melee)
         {
-            if(FindObjectsOfType<PlayerController>() != null && !Agro)
+            if (IsServer && IsConnected && !Dead)
             {
-                foreach (PlayerController p in FindObjectsOfType<PlayerController>())
+                if (FindObjectsOfType<PlayerController>() != null && !Agro)
                 {
-                    if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance)
+                    foreach (PlayerController p in FindObjectsOfType<PlayerController>())
                     {
-                        MyAgent.speed = Speed * 2;
-                        DestinationMet = true;
-                        FollowPlayer = true;
-                        Vector2 position = transform.position;
-                        Vector2 direction = this.transform.up;
-                        float radius = 0.6f;
-                        float distance = 1.85f;
+                        if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance)
+                        {
+                            MyAgent.speed = Speed * 2;
+                            DestinationMet = true;
+                            FollowPlayer = true;
+                            Vector2 position = transform.position;
+                            Vector2 direction = this.transform.up;
 
-                        DetectPlayer(position, radius, direction, distance);
+                            DetectPlayer(position, radius, direction, distance);
 
-                        MyAgent.SetDestination(p.gameObject.transform.position);
-                    }
-                    else
-                    {
-                        FollowPlayer = false;
-                        MyAgent.speed = Speed;
-                    }
+                            MyAgent.SetDestination(p.gameObject.transform.position);
+                        }
+                        else
+                        {
+                            FollowPlayer = false;
+                            MyAgent.speed = Speed;
+                        }
 
-                }
-            }
-
-            if (!FollowPlayer && !Agro)
-            {
-                MyAgent.speed = Speed;
-                if (DestinationMet)
-                {
-                    if (!StopTimer)
-                    {
-                        StopTimer = true;
-                        StartCoroutine(Stop(Random.Range(MinStopTime, MaxStopTime)));
-                    }
-
-                    if (!StopMove)
-                    {
-                        MyAgent.SetDestination(new Vector3(this.transform.position.x + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1), this.transform.position.y + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1)));
-                        DestinationMet = false;
-                        StopTimer = false;
                     }
                 }
-                if (!DestinationMet)
+
+                if (!FollowPlayer && !Agro)
                 {
-                    if (MyAgent.remainingDistance < 0.3f)
+                    MyAgent.speed = Speed;
+                    if (DestinationMet)
                     {
-                        DestinationMet = true;
+                        if (!StopTimer)
+                        {
+                            StopTimer = true;
+                            StartCoroutine(Stop(Random.Range(MinStopTime, MaxStopTime)));
+                        }
+
+                        if (!StopMove)
+                        {
+                            MyAgent.SetDestination(new Vector3(this.transform.position.x + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1), this.transform.position.y + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1)));
+                            DestinationMet = false;
+                            StopTimer = false;
+                        }
+                    }
+                    if (!DestinationMet)
+                    {
+                        if (MyAgent.remainingDistance < 0.3f)
+                        {
+                            DestinationMet = true;
+                        }
                     }
                 }
-            }
 
-            if (Agro)
-            {
-                foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+                if (Agro)
                 {
-                    if(pc.Owner == CurrentAgroID)
+                    foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
                     {
-                        MyAgent.speed = Speed * 2;
-                        Vector2 position = transform.position;
-                        Vector2 direction = this.transform.up;
-                        float radius = 0.6f;
-                        float distance = 1.85f;
+                        if (pc.Owner == CurrentAgroID)
+                        {
+                            MyAgent.speed = Speed * 2;
+                            Vector2 position = transform.position;
+                            Vector2 direction = this.transform.up;
 
-                        DetectPlayer(position, radius, direction, distance);
+                            DetectPlayer(position, radius, direction, distance);
 
-                        MyAgent.SetDestination(pc.gameObject.transform.position);
+                            MyAgent.SetDestination(pc.gameObject.transform.position);
+                        }
                     }
                 }
-            }
 
-            if (MyAgent.isStopped == false && !AttackAnim)
-            {
-                STATE = RUNSTATE;
-            }
-            else if (!AttackAnim && MyAgent.isStopped == true)
-            {
-                STATE = IDLESTATE;
-            }
+                if (MyAgent.isStopped == false && !AttackAnim)
+                {
+                    STATE = RUNSTATE;
+                }
+                else if (!AttackAnim && MyAgent.isStopped == true)
+                {
+                    STATE = IDLESTATE;
+                }
 
-            MyAnim.SetFloat("STATE", STATE);
-            MyAnim.SetInteger("ISTATE", (int)STATE);
-            AttackSprite.SetInteger("ISTATE", (int)STATE);
-            SendUpdate("STATE", STATE.ToString());
+                MyAnim.SetFloat("STATE", STATE);
+                MyAnim.SetInteger("ISTATE", (int)STATE);
+                AttackSprite.SetInteger("ISTATE", (int)STATE);
+                SendUpdate("STATE", STATE.ToString());
 
-            MyRig.velocity = MyAgent.velocity;
+                MyRig.velocity = MyAgent.velocity;
 
-            if(MyRig.velocity.magnitude > 0.2f)
-            {
-                Vector2 relative = MyAgent.velocity.normalized;
-                rotationAngle = (Mathf.Atan2(relative.y, relative.x) * Mathf.Rad2Deg) - 90;
-                MyRig.rotation = Mathf.LerpAngle(MyRig.rotation, rotationAngle, 2);
+                if (MyRig.velocity.magnitude > 0.2f)
+                {
+                    Vector2 relative = MyAgent.velocity.normalized;
+                    rotationAngle = (Mathf.Atan2(relative.y, relative.x) * Mathf.Rad2Deg) - 90;
+                    MyRig.rotation = Mathf.LerpAngle(MyRig.rotation, rotationAngle, 2);
+                }
             }
         }
         if (Dead)
