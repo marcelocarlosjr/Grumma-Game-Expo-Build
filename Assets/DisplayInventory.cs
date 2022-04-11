@@ -164,9 +164,9 @@ public class DisplayInventory : MonoBehaviour
         }
     }
 
-    public void GetMousePos(InputAction.CallbackContext context)
+    public void GetMousePos(Vector2 context)
     {
-        MousePos = context.ReadValue<Vector2>();
+        MousePos = context;
     }
 
     public class MouseItem

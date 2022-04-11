@@ -9,4 +9,4 @@ EditorBuildSettings:
     path: Assets/Scenes/LANMenu.unity
     guid: 1c15f2452767a5e44bbca5d7122dba90
   m_configObjects:
-    com.unity.input.settings: {fileID: 11400000, guid: 43a17a930e3f6084ca8bc4d83e620087, type: 2}
+    com.unity.input.settings: {fileID: 11400000, guid: d210736db60428044b5d95828f0d5699, type: 2}

@@ -14,6 +14,7 @@ public abstract class PlayerController : NetworkComponent
     public GameObject ShadowBox;
     public InventoryObject Inventory;
     public ItemDatabaseObject StaticItemDatabase;
+    public DisplayInventory DisplayUI;
 
     [Header("Player Inputs")]
     public Vector2 MoveInput;
@@ -173,6 +174,7 @@ public abstract class PlayerController : NetworkComponent
 
         if (IsLocalPlayer)
         {
+            DisplayUI = FindObjectOfType<DisplayInventory>();
             Inventory = ScriptableObject.CreateInstance<InventoryObject>();
             Inventory.database = StaticItemDatabase;
         }
@@ -642,6 +644,7 @@ public abstract class PlayerController : NetworkComponent
                     AimDir = Vector2.zero;
                 }
             }
+            DisplayUI.GetMousePos(AimInput);
         }
     }
     
@@ -800,6 +803,13 @@ public abstract class PlayerController : NetworkComponent
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (Inventory.Container.Count <= 4)
+        {
+            if (!TouchingObjects.Contains(collision.GetComponent<Item>()))
+            {
+                TouchingObjects.Add(collision.GetComponent<Item>());
+            }
+        }
         if (!PickingUp && collision.GetComponent<Item>())
         {
             StartCoroutine(CollisionTimer());

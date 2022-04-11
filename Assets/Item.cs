@@ -53,7 +53,7 @@ public class Item : NetworkComponent
             }
             else
             {
-                MyRig.velocity = Vector3.Lerp(MyRig.transform.position, (location - MyRig.transform.position).normalized, 0.5f);
+                MyRig.velocity = Vector3.Lerp(MyRig.velocity, (location - MyRig.transform.position).normalized * 3, 0.1f);
             }
         }
     }

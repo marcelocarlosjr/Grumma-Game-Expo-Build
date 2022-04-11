@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 1723203143017960812}
   - component: {fileID: 4901689559631760451}
   - component: {fileID: 603235546488132291}
+  - component: {fileID: 5773274154546315821}
+  - component: {fileID: 7556694511471937822}
   m_Layer: 0
   m_Name: ChunkOfMeat
   m_TagString: Untagged
@@ -137,6 +139,7 @@ MonoBehaviour:
   MyId: {fileID: 0}
   IsDirty: 0
   item: {fileID: 11400000, guid: 9d568df45b058b64a8c50e4bd4e092e0, type: 2}
+  move: 0
 --- !u!114 &603235546488132291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,4 +177,48 @@ MonoBehaviour:
   - {x: -0.28988266, y: 0.052489042, z: 0}
   m_ShapePathHash: -2114715291
   m_Mesh: {fileID: 0}
-  m_InstanceId: -12938
+  m_InstanceId: 67186
+--- !u!50 &5773274154546315821
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823951374592633727}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &7556694511471937822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823951374592633727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd3227abdf3978b4e95ba2d873df6d8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MyCore: {fileID: 0}
+  MyId: {fileID: 0}
+  IsDirty: 0
+  LastPosition: {x: 0, y: 0}
+  LastRotation: 0
+  LastVelocity: {x: 0, y: 0}
+  OffsetVelocity: {x: 0, y: 0}
+  Threshold: 0.1
+  EThreshold: 2.5
+  MyRig: {fileID: 0}
+  UseOffsetVelocity: 1
