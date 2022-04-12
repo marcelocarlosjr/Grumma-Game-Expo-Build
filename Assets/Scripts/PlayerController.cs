@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using NETWORK_ENGINE;
 using UnityEngine.UI;
+using UnityEngine.Animations;
 
 public abstract class PlayerController : NetworkComponent
 {
