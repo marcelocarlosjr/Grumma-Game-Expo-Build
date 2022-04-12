@@ -7,12 +7,16 @@ using NETWORK_ENGINE;
 public class NPM : NetworkComponent
 {
     public GameObject NPMcanvas;
+    public GameObject NPMpanel;
+    public GameObject TUTpanel;
     public string Name;
     public int Class;
     public bool Ready;
+    public bool Begin;
 
     public InputField NameInput;
     public Toggle ReadyInput;
+    public Button BeginButton;
 
     public override void HandleMessage(string flag, string value)
     {
@@ -32,22 +36,38 @@ public class NPM : NetworkComponent
                 SendUpdate("CLASS", Class.ToString());
             }
         }
-        if (flag == "READY")
+        if (flag == "READY") //this is new functionality for tutorial screen
         {
             Ready = bool.Parse(value);
             if (IsServer)
             {
                 SendUpdate("READY", Ready.ToString());
+            }
+            if (IsLocalPlayer)
+            {
                 if (Ready)
+                {
+                    ViewTutorial();
+                    RemoveCanvas();
+                }
+            }
+        }
+        if (flag == "BEGIN") //this is old "READY" changed all Ready to Begin
+        {
+            Begin = bool.Parse(value);
+            if (IsServer)
+            {
+                SendUpdate("BEGIN", Begin.ToString());
+                if (Begin)
                 {
                     SpawnPlayer();
                 }
             }
             if (IsLocalPlayer)
             {
-                if (Ready)
+                if (Begin)
                 {
-                    RemoveCanvas();
+                    RemoveTutorial();
                     ClearUI();
                 }
             }
@@ -75,6 +95,7 @@ public class NPM : NetworkComponent
                     SendUpdate("CLASS", Class.ToString());
                     SendUpdate("NAME", Name);
                     SendUpdate("READY", Ready.ToString());
+                    SendUpdate("BEGIN", Begin.ToString());
                     IsDirty = false;
                 }
             }
@@ -86,9 +107,12 @@ public class NPM : NetworkComponent
         if (IsLocalPlayer)
         {
             NPMcanvas = FindObjectOfType<UIInputManager>().gameObject;
+            NPMpanel = NPMcanvas.transform.GetChild(0).gameObject; //changed this to reflect scene hierarchy changes
+            TUTpanel = NPMcanvas.transform.GetChild(1).gameObject; //same thing as ^
             NPMcanvas.GetComponent<UIInputManager>().LocalNPM = this.gameObject;
             NameInput = NPMcanvas.GetComponent<UIInputManager>().NameInput;
             ReadyInput = NPMcanvas.GetComponent<UIInputManager>().ReadyInput;
+            BeginButton = NPMcanvas.GetComponent<UIInputManager>().BeginButton;
 
             ClearUI();
         }
@@ -99,6 +123,7 @@ public class NPM : NetworkComponent
         ReadyInput.isOn = false;
         ReadyInput.interactable = false;
         Ready = false;
+        Begin = false;
     }
     public void SpawnPlayer()
     {
@@ -131,10 +156,28 @@ public class NPM : NetworkComponent
             SendCommand("READY", Ready.ToString());
         }
     }
+    public void GetBegin() //added functionality for tutorial screen
+    {
+        if (IsLocalPlayer)
+        {
+            Begin = true;
+            BeginButton.interactable = false;
+            SendCommand("BEGIN", Begin.ToString());
+        }
+    }
 
+    public void ViewTutorial() //added functionality for tutorial screen
+    {
+        TUTpanel.gameObject.SetActive(true);
+        TUTpanel.gameObject.transform.GetChild(Class).gameObject.SetActive(true);
+    }
+    public void RemoveTutorial()
+    {
+        TUTpanel.gameObject.SetActive(false);
+    }
     public void RemoveCanvas()
     {
-        NPMcanvas.gameObject.SetActive(false);
+        NPMpanel.gameObject.SetActive(false);
     }
     public void ShowCanvas()
     {

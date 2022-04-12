@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - NPMCANVAS
+  - TUTCANVAS
   layers:
   - Default
   - TransparentFX

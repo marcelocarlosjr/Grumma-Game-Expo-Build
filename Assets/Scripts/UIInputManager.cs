@@ -8,6 +8,7 @@ public class UIInputManager : MonoBehaviour
     public GameObject LocalNPM;
     public InputField NameInput;
     public Toggle ReadyInput;
+    public Button BeginButton;
 
 
     public void GetName(string value)
@@ -29,6 +30,14 @@ public class UIInputManager : MonoBehaviour
         if(LocalNPM != null)
         {
             LocalNPM.GetComponent<NPM>().GetReady(value);
+        }
+    }
+    //Added functionality for Tutorial menu
+    public void GetBegin()
+    {
+        if(LocalNPM != null)
+        {
+            LocalNPM.GetComponent<NPM>().GetBegin();
         }
     }
 }
