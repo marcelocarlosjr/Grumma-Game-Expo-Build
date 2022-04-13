@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class Rotation : MonoBehaviour
 {
+    public GameObject FreezeRotGO;
+    public GameObject ParentGO;
+    public float YSpace;
     void Update()
     {
-        this.transform.rotation = Quaternion.AngleAxis(-1 * transform.parent.transform.rotation.z, Vector3.forward);
-        var zRot = transform.parent.transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
-        this.transform.localPosition = new Vector3(Mathf.Sin(zRot) * -1f, Mathf.Cos(zRot) * -1f, 0);
+        FreezeRotGO.transform.rotation = Quaternion.AngleAxis(-1 * ParentGO.transform.rotation.z, Vector3.forward);
+        var zRot = ParentGO.transform.rotation.eulerAngles.z * Mathf.Deg2Rad;
+        FreezeRotGO.transform.localPosition = new Vector3(Mathf.Sin(zRot) * YSpace, Mathf.Cos(zRot) * YSpace, 0);
     }
 }

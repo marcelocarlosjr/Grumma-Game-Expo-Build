@@ -16,6 +16,7 @@ public abstract class PlayerController : NetworkComponent
     public InventoryObject Inventory;
     public ItemDatabaseObject StaticItemDatabase;
     public DisplayInventory DisplayUI;
+    public int LastEnemyAttacked;
 
     [Header("Player Inputs")]
     public Vector2 MoveInput;
@@ -130,6 +131,14 @@ public abstract class PlayerController : NetworkComponent
         {
             SprintInput = bool.Parse(value);
             Sprint(SprintInput);
+            if (SprintInput)
+            {
+                StartCoroutine(SprintStamina());
+            }
+            else
+            {
+                StartCoroutine(SprintStaminaRegen());
+            }
         }
         if(flag == "STATE" && IsClient)
         {
@@ -145,7 +154,6 @@ public abstract class PlayerController : NetworkComponent
         if(flag == "HP" && IsClient)
         {
             Health = float.Parse(value);
-            //update health bar
         }
         if (flag == "MAXHP" && IsClient)
         {
@@ -162,6 +170,29 @@ public abstract class PlayerController : NetworkComponent
             string[] args = value.Split(','); Debug.Log(value);
             Inventory.RemoveItem(int.Parse(args[0]), int.Parse(args[1]), int.Parse(args[2]), this.Owner, this.transform.position, this.transform.up, this.transform.right);
         }
+        if (flag == "STAMINA" && IsLocalPlayer)
+        {
+            Stamina = float.Parse(value);
+        }
+        if (flag == "MAXSTAMINA" && IsLocalPlayer)
+        {
+            MaxStamina = float.Parse(value);
+        }
+        if (flag == "LASTENEMY" && IsLocalPlayer)
+        {
+            LastEnemyAttacked = int.Parse(value);
+            foreach (EnemyAI ID in FindObjectsOfType<EnemyAI>())
+            {
+                if (ID.NetId != LastEnemyAttacked)
+                {
+                    ID.gameObject.GetComponent<EnemyAI>().DisableHealthBar();
+                }
+                else if (ID.NetId == LastEnemyAttacked)
+                {
+                    ID.gameObject.GetComponent<EnemyAI>().EnableHealthBar(Owner);
+                }
+            }
+        }
     }
 
     public override void NetworkedStart()
@@ -175,6 +206,7 @@ public abstract class PlayerController : NetworkComponent
 
         if (IsLocalPlayer)
         {
+            FindObjectOfType<PlayerHealthUI>().SetPlayer(this);
             DisplayUI = FindObjectOfType<DisplayInventory>();
             Inventory = ScriptableObject.CreateInstance<InventoryObject>();
             Inventory.database = StaticItemDatabase;
@@ -192,6 +224,11 @@ public abstract class PlayerController : NetworkComponent
             }
         }
         yield return new WaitForSeconds(0.01f);
+    }
+
+    public void GetLastEnemy(int _id)
+    {
+        SendUpdate("LASTENEMY", _id.ToString());
     }
 
     public void AddStat(string _attribute, string _rarity)
@@ -679,15 +716,53 @@ public abstract class PlayerController : NetworkComponent
     }
     public abstract void LFire(bool state);
     public abstract void RFire(bool state);
+    bool NoStamina;
     public void Sprint(bool state)
     {
-        if (!state)
+        if (!state || NoStamina)
         {
             SprintMod = 1;
         }
-        if (state)
+        if (state && !NoStamina)
         {
             SprintMod = 1.6f;
+        }
+    }
+    bool Sprinting;
+    bool RegenStamina;
+    public IEnumerator SprintStamina()
+    {
+        while (SprintInput)
+        {
+            if(Stamina <= 0)
+            {
+                Stamina = 0;
+                NoStamina = true;
+            }
+            else if(Stamina > 0)
+            {
+                Stamina -= 0.004f;
+            }
+            SendUpdate("STAMINA", Stamina.ToString());
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+    public IEnumerator SprintStaminaRegen()
+    {
+        while (!SprintInput)
+        {
+            if(Stamina <= MaxStamina)
+            {
+                NoStamina = false;
+                Stamina += 0.001f;
+                SendUpdate("STAMINA", Stamina.ToString());
+            }
+            else
+            {
+                Stamina = MaxStamina;
+                SendUpdate("STAMINA", Stamina.ToString());
+            }
+            yield return new WaitForSeconds(0.01f);
         }
     }
     public virtual void Start()
@@ -696,6 +771,8 @@ public abstract class PlayerController : NetworkComponent
         Inventory.database = StaticItemDatabase;
         Health = HealthBase;
         MaxHealth = HealthBase;
+        MaxStamina = StaminaBase;
+        Stamina = StaminaBase;
         SprintMod = 1;
         MyRig = GetComponent<Rigidbody2D>();
         if(MyRig == null)
@@ -733,12 +810,18 @@ public abstract class PlayerController : NetworkComponent
     {
         if (IsServer)
         {
+            if (NoStamina)
+            {
+                SprintMod = 1;
+            }
+
+
             Damage = (DamageBase + (DamageUpgradeMod * DamageUpgrade)) + ((DamageMod * .01f) * (DamageBase + (DamageUpgradeMod * DamageUpgrade)));
             MaxHealth = (HealthBase + (HealthUpgradeMod * HealthUpgrade)) + ((HealthMod * .01f) * (HealthBase + (HealthUpgradeMod * HealthUpgrade)));
             HealthRegeneration = (HealthRegenerationBase + (HealthRegenerationUpgradeMod * HealthRegenerationUpgrade)) + ((HealthRegenerationMod * .01f) * (HealthRegenerationBase + (HealthRegenerationUpgradeMod * HealthRegenerationUpgrade)));
             MoveSpeed = (MoveSpeedBase + (MoveSpeedUpgradeMod * MoveSpeedUpgrade)) + ((MoveSpeedMod * .01f) * (MoveSpeedBase + (MoveSpeedUpgradeMod * MoveSpeedUpgrade)));
             AttackSpeed = (AttackSpeedBase + (AttackSpeedUpgradeMod * AttackSpeedUpgrade)) + ((AttackSpeedMod * .01f) * (AttackSpeedBase + (AttackSpeedUpgradeMod * AttackSpeedUpgrade)));
-            Stamina = (StaminaBase + (StaminaUpgradesMod * StaminaUpgrade)) + ((StaminaMod * .01f) * (StaminaBase + (StaminaUpgradesMod * StaminaUpgrade)));
+            MaxStamina = (StaminaBase + (StaminaUpgradesMod * StaminaUpgrade)) + ((StaminaMod * .01f) * (StaminaBase + (StaminaUpgradesMod * StaminaUpgrade)));
             EXPMulti = (EXPBase + (EXPModUpgradeMod * EXPModUpgrade)) + ((EXPMod * .01f) * (EXPBase + (EXPModUpgradeMod * EXPModUpgrade)));
 
 

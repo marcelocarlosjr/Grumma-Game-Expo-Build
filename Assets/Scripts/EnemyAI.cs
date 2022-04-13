@@ -4,6 +4,7 @@ using UnityEngine;
 using NETWORK_ENGINE;
 using UnityEngine.AI;
 using UnityEngine.Experimental.Rendering.Universal;
+using UnityEngine.UI;
 
 public class EnemyAI : NetworkComponent
 {
@@ -20,6 +21,7 @@ public class EnemyAI : NetworkComponent
     public Rigidbody2D MyRig;
     public Animator MyAnim;
     public Animator AttackSprite;
+    public GameObject HealthBar;
 
     [Header("ENEMY AI STATS")]
     public float RoamDistance = 5;
@@ -57,7 +59,7 @@ public class EnemyAI : NetworkComponent
     float DEADSTATE = 3;
     public override void HandleMessage(string flag, string value)
     {
-        if(flag == "STATE" && IsClient)
+        if (flag == "STATE" && IsClient)
         {
             STATE = float.Parse(value);
             MyAnim.SetFloat("STATE", STATE);
@@ -65,8 +67,14 @@ public class EnemyAI : NetworkComponent
             AttackSprite.SetInteger("ISTATE", (int)STATE);
             if (STATE == DEADSTATE)
             {
+                HealthBar.transform.GetChild(1).GetComponent<RectTransform>().localScale = new Vector3(0, 1, 1);
+                HealthBar.transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector3(0, 1, 1);
                 Die();
             }
+        }
+        if (flag == "HEALTH" && IsClient)
+        {
+            Health = float.Parse(value);
         }
     }
 
@@ -90,6 +98,7 @@ public class EnemyAI : NetworkComponent
             {
                 if (IsDirty)
                 {
+                    SendUpdate("HEALTH", Health.ToString());
                     SendUpdate("STATE", STATE.ToString());
                     IsDirty = false;
                 }
@@ -223,6 +232,9 @@ public class EnemyAI : NetworkComponent
             MyAgent.velocity = Vector3.zero;
             MyRig.velocity = MyAgent.velocity;
         }
+
+
+        HealthBar.transform.GetChild(1).GetComponent<RectTransform>().localScale = Vector3.Lerp(HealthBar.transform.GetChild(1).GetComponent<RectTransform>().localScale, new Vector3(Health / MaxHealth,1,1), 1f);
     }
 
     public IEnumerator Stop(float timer)
@@ -318,6 +330,7 @@ public class EnemyAI : NetworkComponent
             StopCoroutine(AgroCo);
         }
         Health -= damage;
+        SendUpdate("HEALTH", Health.ToString());
         if(Health <= 0)
         {
             STATE = DEADSTATE;
@@ -349,6 +362,18 @@ public class EnemyAI : NetworkComponent
             {
                 StartCoroutine(Stop(Random.Range(MinStopTime, MaxStopTime)));
             }
+        }
+    }
+
+    public void DisableHealthBar()
+    {
+        HealthBar.SetActive(false);
+    }
+    public void EnableHealthBar(int owner)
+    {
+        if (owner == MyCore.LocalPlayerId)
+        {
+            HealthBar.SetActive(true);
         }
     }
 }

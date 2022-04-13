@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1188529800}
   - component: {fileID: 1188529799}
   - component: {fileID: 1188529798}
+  - component: {fileID: 8611811816599721702}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -100,6 +101,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8611811816599721702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188529796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad15f0f4253e14e4e861783c70f9d9dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FreezeRotGO: {fileID: 1188529796}
+  ParentGO: {fileID: 139753977648684975}
+  YSpace: -0.7
 --- !u!1 &1815172041
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,8 +275,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1946649745
-  m_SortingLayer: 2
+  m_SortingLayerID: 316842655
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 556547805293976928, guid: f5df9d7886de77843b6f644c12401207, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -554,6 +570,8 @@ MonoBehaviour:
   ShadowBox: {fileID: 3949172433044235927}
   Inventory: {fileID: 0}
   StaticItemDatabase: {fileID: 11400000, guid: 0773bb310c27acf4fafef43ed2e92b13, type: 2}
+  DisplayUI: {fileID: 0}
+  LastEnemyAttacked: 0
   MoveInput: {x: 0, y: 0}
   AimInput: {x: 0, y: 0}
   AimDir: {x: 0, y: 0}
@@ -630,7 +648,7 @@ MonoBehaviour:
   - {x: -0.28041548, y: -0.14085102, z: 0}
   m_ShapePathHash: -284954151
   m_Mesh: {fileID: 0}
-  m_InstanceId: 77902
+  m_InstanceId: 130608
 --- !u!1 &1304422567858821777
 GameObject:
   m_ObjectHideFlags: 0
@@ -823,7 +841,7 @@ MonoBehaviour:
   m_LightCookieSprite: {fileID: 0}
   m_UseNormalMap: 0
   m_LightOrder: 0
-  m_AlphaBlendOnOverlap: 0
+  m_AlphaBlendOnOverlap: 1
   m_ShadowIntensity: 0.487
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 360
@@ -913,9 +931,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: -1946649745
+  m_SortingLayer: 2
+  m_SortingOrder: 9
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.6666667}
   m_FlipX: 0

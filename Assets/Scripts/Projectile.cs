@@ -51,6 +51,13 @@ public class Projectile : NetworkComponent
                 if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
                 {
                     collision.collider.gameObject.GetComponent<EnemyAI>().TakeDamage(this.Owner, Damage);
+                    foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+                    {
+                        if (pc.Owner == this.Owner)
+                        {
+                            pc.GetLastEnemy(collision.collider.GetComponent<NetworkID>().NetId);
+                        }
+                    }
                     MyCore.NetDestroyObject(this.NetId);
                 }
             }
@@ -60,7 +67,6 @@ public class Projectile : NetworkComponent
     {
         yield return new WaitForSeconds(Timer);
         MyAnim.SetBool("DIE", true);
-        Debug.Log("breh");
         yield return new WaitForSeconds(0.34f);
         if (IsServer)
         {

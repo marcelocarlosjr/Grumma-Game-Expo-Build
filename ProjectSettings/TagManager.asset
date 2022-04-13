@@ -58,3 +58,6 @@ TagManager:
   - name: Projectile
     uniqueID: 1656287923
     locked: 0
+  - name: GameSpaceUI
+    uniqueID: 316842655
+    locked: 0
