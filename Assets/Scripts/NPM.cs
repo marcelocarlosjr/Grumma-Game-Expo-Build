@@ -181,7 +181,7 @@ public class NPM : NetworkComponent
     }
     public void ShowCanvas()
     {
-        NPMcanvas.gameObject.SetActive(true);
+        NPMpanel.gameObject.SetActive(true);
     }
 
     private void Start()
