@@ -43,7 +43,29 @@ public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
             {
                 GameObject temp = FindObjectOfType<NetworkCore>().NetCreateObject(database.GetItem[_id].SpawnPrefabInt, -1, position, Quaternion.identity);
                 temp.GetComponent<Item>().ThrowItem((position + (directionForward * 2) + (directionRight * Random.Range(-.8f, .8f))));
-                Debug.Log((position + (directionForward * 2) + (directionRight * Random.Range(-1.5f, 1.5f))));
+            }
+        }
+
+        return;
+    }
+    public void RemoveALLItem(int _index, int _id, int _amount, int _owner, Vector3 position)
+    {
+        Container.RemoveAt(_index);
+
+        if (FindObjectOfType<NetworkCore>().LocalConnectionID == -1)
+        {
+            foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+            {
+                if (pc.Owner == _owner)
+                {
+                    pc.RemoveStat(database.GetItem[_id].attribute.ToString(), database.GetItem[_index].rarity.ToString());
+                }
+            }
+
+            for (int i = 0; i < _amount; i++)
+            {
+                GameObject temp = FindObjectOfType<NetworkCore>().NetCreateObject(database.GetItem[_id].SpawnPrefabInt, -1, position, Quaternion.identity);
+                temp.GetComponent<Item>().ThrowItem(position + (new Vector3(0,1,0) * Random.Range(-1.5f, 1.5f)) + (new Vector3(1, 0, 0) * Random.Range(-1.5f, 1.5f)));
             }
         }
 

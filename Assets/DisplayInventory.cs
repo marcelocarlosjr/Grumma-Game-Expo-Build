@@ -169,6 +169,22 @@ public class DisplayInventory : MonoBehaviour
         MousePos = context;
     }
 
+    public IEnumerator DropAllItems(PlayerController _localPlayer)
+    {
+        while(this.transform.childCount > 0)
+        {
+            UIItemData temp = transform.GetChild(0).GetComponent<UIItemData>();
+            ItemsDisplayed.Remove(Inventory.Container[temp.index]);
+            _localPlayer.RemoveAllInv(temp.index, temp.Id, temp.Amount);
+            Destroy(transform.GetChild(0).gameObject);
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+    public void CallDropAllItems(PlayerController _localPlayer)
+    {
+        StartCoroutine(DropAllItems(_localPlayer));
+    }
+
     public class MouseItem
     {
         public GameObject obj;

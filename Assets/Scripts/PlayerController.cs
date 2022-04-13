@@ -149,6 +149,10 @@ public abstract class PlayerController : NetworkComponent
             if(STATE == DEADSTATE)
             {
                 Die();
+                if (IsLocalPlayer)
+                {
+                    FindObjectOfType<DisplayInventory>().CallDropAllItems(this);
+                }
             }
         }
         if(flag == "HP" && IsClient)
@@ -169,6 +173,11 @@ public abstract class PlayerController : NetworkComponent
         {
             string[] args = value.Split(','); Debug.Log(value);
             Inventory.RemoveItem(int.Parse(args[0]), int.Parse(args[1]), int.Parse(args[2]), this.Owner, this.transform.position, this.transform.up, this.transform.right);
+        }
+        if (flag == "REMOVEAllINV" && IsServer)
+        {
+            string[] args = value.Split(','); Debug.Log(value);
+            Inventory.RemoveALLItem(int.Parse(args[0]), int.Parse(args[1]), int.Parse(args[2]), this.Owner, this.transform.position);
         }
         if (flag == "STAMINA" && IsLocalPlayer)
         {
@@ -467,7 +476,14 @@ public abstract class PlayerController : NetworkComponent
             SendCommand("REMOVEINV", _index + "," + _id + "," + _amount);
             Inventory.RemoveItem(_index, _id, _amount, this.Owner, Vector3.zero, Vector3.zero, Vector3.zero);
         }
-
+    }
+    public void RemoveAllInv(int _index, int _id, int _amount)
+    {
+        if (IsLocalPlayer)
+        {
+            SendCommand("REMOVEAllINV", _index + "," + _id + "," + _amount);
+            Inventory.RemoveItem(_index, _id, _amount, this.Owner, Vector3.zero, Vector3.zero, Vector3.zero);
+        }
     }
     public void TakeDamage(float damage)
     {
@@ -521,7 +537,6 @@ public abstract class PlayerController : NetworkComponent
                         NameBox.enabled = false;
                         ShadowBox.gameObject.SetActive(false);
                         this.GetComponent<NetworkID>().enabled = false;
-                        this.GetComponent<PlayerController>().enabled = false;
                     }
                 }
             }
