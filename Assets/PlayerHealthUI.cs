@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class PlayerHealthUI : MonoBehaviour
     public RectTransform HP;
     public Text HPText;
     public RectTransform Stamina;
+
+    public LevelSystemAnimated levelSystemAnimated;
 
     bool PlayerConnected;
 
@@ -27,5 +30,21 @@ public class PlayerHealthUI : MonoBehaviour
             Stamina.localScale = Vector3.Lerp(HP.localScale, new Vector3(LocalPlayer.Stamina / LocalPlayer.MaxStamina, 1, 1), 1f);
             HPText.text = LocalPlayer.Health + "/" + LocalPlayer.MaxHealth;
         }
+    }
+
+    public void SetLevelSystemAnimated(LevelSystemAnimated levelSystemAnimated)
+    {
+        //set values on network start
+        levelSystemAnimated.OnExperienceChanged += LevelSystem_OnExperienceChanged;
+        levelSystemAnimated.OnLevelChanged += LevelSystem_OnLevelChanged;
+    }
+
+    private void LevelSystem_OnExperienceChanged(object sender, EventArgs e)
+    {
+        //set experience bar
+    }
+    private void LevelSystem_OnLevelChanged(object sender, EventArgs e)
+    {
+        //set level num
     }
 }

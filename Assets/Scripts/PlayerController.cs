@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using NETWORK_ENGINE;
 using UnityEngine.UI;
 using UnityEngine.Animations;
+using System;
 
 public abstract class PlayerController : NetworkComponent
 {
@@ -17,6 +18,8 @@ public abstract class PlayerController : NetworkComponent
     public ItemDatabaseObject StaticItemDatabase;
     public DisplayInventory DisplayUI;
     public int LastEnemyAttacked;
+    public LevelSystem levelSystem;
+    public LevelSystemAnimated levelSystemAnimated;
 
     [Header("Player Inputs")]
     public Vector2 MoveInput;
@@ -36,10 +39,10 @@ public abstract class PlayerController : NetworkComponent
     public float MaxStamina;
     public float Stamina;
     public float MoveSpeed;
-    public float MaxEXP;
     public float EXP;
     public float EXPMulti;
     public float SprintMod = 1;
+    public int Level;
 
     [Header("Player Base Stats")]
     public float MoveSpeedBase;
@@ -201,6 +204,14 @@ public abstract class PlayerController : NetworkComponent
                     ID.gameObject.GetComponent<EnemyAI>().EnableHealthBar(Owner);
                 }
             }
+        }
+        if(flag == "EXPERIENCE" && IsLocalPlayer)
+        {
+            EXP = int.Parse(value);
+        }
+        if (flag == "LEVEL" && IsLocalPlayer)
+        {
+            Level = int.Parse(value);
         }
     }
 
@@ -809,7 +820,23 @@ public abstract class PlayerController : NetworkComponent
         }
 
         NameBox.text = Name;
+
+        levelSystem = new LevelSystem();
+        levelSystemAnimated = new LevelSystemAnimated(levelSystem);
+        levelSystemAnimated.OnLevelChanged += LevelSystem_OnLevelChanged;
+        levelSystemAnimated.OnExperienceChanged += LevelSystem_OnExperienceChanged;
     }
+
+    private void LevelSystem_OnExperienceChanged(object sender, EventArgs e)
+    {
+        SendUpdate("EXPERIENCE", levelSystemAnimated.experience.ToString());
+    }
+
+    private void LevelSystem_OnLevelChanged(object sender, EventArgs e)
+    {
+        SendUpdate("LEVEL", levelSystemAnimated.level.ToString());
+    }
+
     private void FixedUpdate()
     {
         if (IsLocalPlayer)
