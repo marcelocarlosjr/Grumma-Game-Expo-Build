@@ -39,9 +39,10 @@ public abstract class PlayerController : NetworkComponent
     public float MaxStamina;
     public float Stamina;
     public float MoveSpeed;
-    public float EXP;
     public float EXPMulti;
     public float SprintMod = 1;
+    public float EXP;
+    public float EXPToLevel;
     public int Level;
 
     [Header("Player Base Stats")]
@@ -207,7 +208,9 @@ public abstract class PlayerController : NetworkComponent
         }
         if(flag == "EXPERIENCE" && IsLocalPlayer)
         {
-            EXP = int.Parse(value);
+            string[] args = value.Split(',');
+            EXP = int.Parse(args[0]);
+            EXPToLevel = int.Parse(args[1]);
         }
         if (flag == "LEVEL" && IsLocalPlayer)
         {
@@ -829,7 +832,7 @@ public abstract class PlayerController : NetworkComponent
 
     private void LevelSystem_OnExperienceChanged(object sender, EventArgs e)
     {
-        SendUpdate("EXPERIENCE", levelSystemAnimated.experience.ToString());
+        SendUpdate("EXPERIENCE", levelSystemAnimated.experience + ","+ levelSystemAnimated.levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
     }
 
     private void LevelSystem_OnLevelChanged(object sender, EventArgs e)

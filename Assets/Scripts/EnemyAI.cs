@@ -36,9 +36,12 @@ public class EnemyAI : NetworkComponent
     public float distance;
 
     [Header("ENEMY STATS")]
+    public int Level;
+    public int ExpDrop;
     public float MaxHealth;
     public float Health;
     public float Damage;
+    public List<GameObject> ItemDrops;
 
     bool Dead = false;
     bool DeadCycle = false;

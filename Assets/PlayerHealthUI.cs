@@ -11,6 +11,8 @@ public class PlayerHealthUI : MonoBehaviour
     public RectTransform HP;
     public Text HPText;
     public RectTransform Stamina;
+    public RectTransform EXPBAR;
+    public Text Level;
 
     public LevelSystemAnimated levelSystemAnimated;
 
@@ -27,8 +29,10 @@ public class PlayerHealthUI : MonoBehaviour
         if(PlayerConnected)
         {
             HP.localScale = Vector3.Lerp(HP.localScale, new Vector3(LocalPlayer.Health / LocalPlayer.MaxHealth, 1, 1), 1f);
-            Stamina.localScale = Vector3.Lerp(HP.localScale, new Vector3(LocalPlayer.Stamina / LocalPlayer.MaxStamina, 1, 1), 1f);
+            Stamina.localScale = Vector3.Lerp(Stamina.localScale, new Vector3(LocalPlayer.Stamina / LocalPlayer.MaxStamina, 1, 1), 1f);
             HPText.text = LocalPlayer.Health + "/" + LocalPlayer.MaxHealth;
+            EXPBAR.localScale = Vector3.Lerp(HP.localScale, new Vector3(LocalPlayer.EXP / LocalPlayer.EXPToLevel, 1, 1), 1f);
+            Level.text = "Level " + LocalPlayer.Level;
         }
     }
 
