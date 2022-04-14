@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32e88e3c15a696a47afc7e28c1a4ff80, type: 3}
+  m_Name: ThreateningSkull
+  m_EditorClassIdentifier: 
+  SpawnPrefabInt: 53
+  uiDisplay: {fileID: -6454089123642629076, guid: 909ad8009cc008647bf670790a36450f, type: 3}
+  type: 2
+  attribute: 0
+  rarity: 3
+  description: Increases player's Damage stat.
+  amount: 25
