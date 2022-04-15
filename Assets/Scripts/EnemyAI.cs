@@ -248,13 +248,15 @@ public class EnemyAI : NetworkComponent
                     {
                         if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance)
                         {
+                            FollowPlayer = true;
                             Vector3 OppositePlayerDirection = ((p.transform.position - this.transform.position).normalized * -1);
                             NavMeshHit CheckBehind = new NavMeshHit();
                             bool hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
                             if (hit)
                             {
+                                MyAgent.isStopped = false;
                                 MyAgent.speed = Speed * 1.3f;
-                                MyAgent.SetDestination(transform.position + OppositePlayerDirection * 2);
+                                MyAgent.SetDestination(transform.position + OppositePlayerDirection);
                             }
                             else
                             {
@@ -263,8 +265,9 @@ public class EnemyAI : NetworkComponent
                                 hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
                                 if (hit)
                                 {
+                                    MyAgent.isStopped = false;
                                     MyAgent.speed = Speed * 1.3f;
-                                    MyAgent.SetDestination(transform.position + OppositePlayerDirection * 2);
+                                    MyAgent.SetDestination(transform.position + OppositePlayerDirection);
                                 }
                                 else
                                 {
@@ -273,19 +276,28 @@ public class EnemyAI : NetworkComponent
                                     hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
                                     if (hit)
                                     {
+                                        MyAgent.isStopped = false;
                                         MyAgent.speed = Speed * 1.3f;
-                                        MyAgent.SetDestination(transform.position + OppositePlayerDirection * 2);
+                                        MyAgent.SetDestination(transform.position + OppositePlayerDirection);
                                     }
                                 }
                             }
                             break;
                         }
-                        if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance + 5)
+                        else if(Vector2.Distance(this.transform.position, p.transform.position) > AgroDistance + 1.14 && Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance + AgroDistance/1.5f)
                         {
-                            //attack
-                            
-
-
+                            MyAgent.speed = Speed * 1.3f;
+                            FollowPlayer = true;
+                            MyAgent.isStopped = false;
+                            MyAgent.SetDestination(p.gameObject.transform.position);
+                        }
+                        else if (Vector2.Distance(this.transform.position, p.transform.position) > AgroDistance + 1 && Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance + 1.15)
+                        {
+                            MyAgent.speed = Speed * 1.3f;
+                            FollowPlayer = true;
+                            MyAgent.isStopped = true;
+                            MyAgent.velocity = Vector3.zero;
+                            //attack player
                         }
                         else
                         {
@@ -295,6 +307,103 @@ public class EnemyAI : NetworkComponent
 
                     }
                 }
+
+                if (!FollowPlayer && !Agro)
+                {
+                    MyAgent.speed = Speed;
+                    if (DestinationMet)
+                    {
+                        if (!StopTimer)
+                        {
+                            StopTimer = true;
+                            StartCoroutine(Stop(Random.Range(MinStopTime, MaxStopTime)));
+                        }
+
+                        if (!StopMove)
+                        {
+                            MyAgent.SetDestination(new Vector3(this.transform.position.x + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1), this.transform.position.y + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1)));
+                            DestinationMet = false;
+                            StopTimer = false;
+                        }
+                    }
+                    if (!DestinationMet)
+                    {
+                        if (MyAgent.remainingDistance < 0.3f)
+                        {
+                            DestinationMet = true;
+                        }
+                    }
+                }
+
+                if (Agro)
+                {
+                    foreach (PlayerController p in FindObjectsOfType<PlayerController>())
+                    {
+                        if (p.Owner == CurrentAgroID)
+                        {
+                            if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance)
+                            {
+                                FollowPlayer = true;
+                                Vector3 OppositePlayerDirection = ((p.transform.position - this.transform.position).normalized * -1);
+                                NavMeshHit CheckBehind = new NavMeshHit();
+                                bool hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
+                                if (hit)
+                                {
+                                    MyAgent.isStopped = false;
+                                    MyAgent.speed = Speed * 1.3f;
+                                    MyAgent.SetDestination(transform.position + OppositePlayerDirection);
+                                }
+                                else
+                                {
+                                    OppositePlayerDirection = Vector3.Cross((p.transform.position - this.transform.position).normalized, Vector3.up);
+                                    CheckBehind = new NavMeshHit();
+                                    hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
+                                    if (hit)
+                                    {
+                                        MyAgent.isStopped = false;
+                                        MyAgent.speed = Speed * 1.3f;
+                                        MyAgent.SetDestination(transform.position + OppositePlayerDirection);
+                                    }
+                                    else
+                                    {
+                                        OppositePlayerDirection = Vector3.Cross((p.transform.position - this.transform.position).normalized, Vector3.up) * -1;
+                                        CheckBehind = new NavMeshHit();
+                                        hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
+                                        if (hit)
+                                        {
+                                            MyAgent.isStopped = false;
+                                            MyAgent.speed = Speed * 1.3f;
+                                            MyAgent.SetDestination(transform.position + OppositePlayerDirection);
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                            else if (Vector2.Distance(this.transform.position, p.transform.position) > AgroDistance + 1.14)
+                            {
+                                MyAgent.speed = Speed * 1.3f;
+                                FollowPlayer = true;
+                                MyAgent.isStopped = false;
+                                MyAgent.SetDestination(p.gameObject.transform.position);
+                            }
+                            else if (Vector2.Distance(this.transform.position, p.transform.position) > AgroDistance + 1 && Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance + 1.15)
+                            {
+                                MyAgent.speed = Speed * 1.3f;
+                                FollowPlayer = true;
+                                MyAgent.isStopped = true;
+                                MyAgent.velocity = Vector3.zero;
+                                //attack player
+                            }
+                            else
+                            {
+                                FollowPlayer = false;
+                                MyAgent.speed = Speed;
+                            }
+
+                        }
+                    }
+                }
+
                 if (MyAgent.isStopped == false && !AttackAnim)
                 {
                     STATE = RUNSTATE;
@@ -384,7 +493,6 @@ public class EnemyAI : NetworkComponent
 
     public void Die()
     {
-        Debug.Log("Die");
         Dead = true;
         this.GetComponent<ShadowCaster2D>().enabled = false;
         this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
@@ -428,6 +536,10 @@ public class EnemyAI : NetworkComponent
         }
         if(rangeType == RangeType.Ranged)
         {
+            if (AgroCo != null)
+            {
+                StopCoroutine(AgroCo);
+            }
             Health -= damage;
             SendUpdate("HEALTH", Health.ToString());
             if (Health <= 0)
@@ -437,6 +549,9 @@ public class EnemyAI : NetworkComponent
                 SendUpdate("STATE", DEADSTATE.ToString());
                 return;
             }
+                        Agro = true;
+            CurrentAgroID = attackerid;
+            AgroCo = StartCoroutine(FollowPlayerTimer());
         }
     }
 

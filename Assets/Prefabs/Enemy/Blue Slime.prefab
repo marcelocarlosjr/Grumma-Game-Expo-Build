@@ -214,7 +214,7 @@ MonoBehaviour:
   MinStopTime: 1.5
   MaxStopTime: 5
   Speed: 1.8
-  AgroDistance: 6
+  AgroDistance: 5
   AgroTimer: 6
   radius: 0.5
   distance: 0
@@ -260,7 +260,7 @@ MonoBehaviour:
   - {x: -0.21509588, y: -0.8012032, z: 0}
   m_ShapePathHash: 717141474
   m_Mesh: {fileID: 0}
-  m_InstanceId: 43456
+  m_InstanceId: 236408
 --- !u!195 &809563459
 NavMeshAgent:
   m_ObjectHideFlags: 0
