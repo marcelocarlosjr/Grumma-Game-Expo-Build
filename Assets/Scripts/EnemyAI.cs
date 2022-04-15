@@ -44,7 +44,6 @@ public class EnemyAI : NetworkComponent
     public List<GameObject> ItemDrops;
 
     bool Dead = false;
-    bool DeadCycle = false;
     bool StopTimer;
     bool FollowPlayer;
     bool DestinationMet = false;
@@ -67,7 +66,10 @@ public class EnemyAI : NetworkComponent
             STATE = float.Parse(value);
             MyAnim.SetFloat("STATE", STATE);
             MyAnim.SetInteger("ISTATE", (int)STATE);
-            AttackSprite.SetInteger("ISTATE", (int)STATE);
+            if(rangeType == RangeType.Melee)
+            {
+                AttackSprite.SetInteger("ISTATE", (int)STATE);
+            }
             if (STATE == DEADSTATE)
             {
                 HealthBar.transform.GetChild(1).GetComponent<RectTransform>().localScale = new Vector3(0, 1, 1);
@@ -89,7 +91,10 @@ public class EnemyAI : NetworkComponent
             MyRig = GetComponent<Rigidbody2D>();
             MyAgent = GetComponent<NavMeshAgent>();
             MyAgent.enabled = false;
-            AttackSprite = transform.GetChild(0).GetComponent<Animator>();
+            if (rangeType == RangeType.Melee)
+            {
+                AttackSprite = transform.GetChild(0).GetComponent<Animator>();
+            }
         }
     }
 
@@ -118,7 +123,10 @@ public class EnemyAI : NetworkComponent
         MyAnim = GetComponent<Animator>();
         MyRig = GetComponent<Rigidbody2D>();
         MyAgent.speed = Speed;
-        AttackSprite = transform.GetChild(0).GetComponent<Animator>();
+        if (rangeType == RangeType.Melee)
+        {
+            AttackSprite = transform.GetChild(0).GetComponent<Animator>();
+        }
         Health = MaxHealth;
     }
 
@@ -229,11 +237,93 @@ public class EnemyAI : NetworkComponent
                 }
             }
         }
+
+        if (rangeType == RangeType.Ranged)
+        {
+            if (IsServer && IsConnected && !Dead)
+            {
+                if (FindObjectsOfType<PlayerController>() != null && !Agro)
+                {
+                    foreach (PlayerController p in FindObjectsOfType<PlayerController>())
+                    {
+                        if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance)
+                        {
+                            Vector3 OppositePlayerDirection = ((p.transform.position - this.transform.position).normalized * -1);
+                            NavMeshHit CheckBehind = new NavMeshHit();
+                            bool hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
+                            if (hit)
+                            {
+                                MyAgent.speed = Speed * 1.3f;
+                                MyAgent.SetDestination(transform.position + OppositePlayerDirection * 2);
+                            }
+                            else
+                            {
+                                OppositePlayerDirection = Vector3.Cross((p.transform.position - this.transform.position).normalized, Vector3.up);
+                                CheckBehind = new NavMeshHit();
+                                hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
+                                if (hit)
+                                {
+                                    MyAgent.speed = Speed * 1.3f;
+                                    MyAgent.SetDestination(transform.position + OppositePlayerDirection * 2);
+                                }
+                                else
+                                {
+                                    OppositePlayerDirection = Vector3.Cross((p.transform.position - this.transform.position).normalized, Vector3.up) * -1;
+                                    CheckBehind = new NavMeshHit();
+                                    hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
+                                    if (hit)
+                                    {
+                                        MyAgent.speed = Speed * 1.3f;
+                                        MyAgent.SetDestination(transform.position + OppositePlayerDirection * 2);
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                        if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance + 5)
+                        {
+                            //attack
+                            
+
+
+                        }
+                        else
+                        {
+                            FollowPlayer = false;
+                            MyAgent.speed = Speed;
+                        }
+
+                    }
+                }
+                if (MyAgent.isStopped == false && !AttackAnim)
+                {
+                    STATE = RUNSTATE;
+                }
+                else if (!AttackAnim && MyAgent.isStopped == true)
+                {
+                    STATE = IDLESTATE;
+                }
+                MyAnim.SetFloat("STATE", STATE);
+                MyAnim.SetInteger("ISTATE", (int)STATE);
+                SendUpdate("STATE", STATE.ToString());
+                MyRig.velocity = MyAgent.velocity;
+                if (MyRig.velocity.magnitude > 0.2f)
+                {
+                    Vector2 relative = MyAgent.velocity.normalized;
+                    rotationAngle = (Mathf.Atan2(relative.y, relative.x) * Mathf.Rad2Deg) - 90;
+                    MyRig.rotation = Mathf.LerpAngle(MyRig.rotation, rotationAngle, 2);
+                }
+            }
+        }
+
         if (Dead)
         {
-            MyAgent.isStopped = true;
-            MyAgent.velocity = Vector3.zero;
-            MyRig.velocity = MyAgent.velocity;
+            if (FindObjectOfType<NavMeshAgent>().enabled)
+            {
+                MyAgent.isStopped = true;
+                MyAgent.velocity = Vector3.zero;
+                MyRig.velocity = MyAgent.velocity;
+            }
         }
 
 
@@ -294,57 +384,60 @@ public class EnemyAI : NetworkComponent
 
     public void Die()
     {
+        Debug.Log("Die");
         Dead = true;
-        if (!IsLocalPlayer)
+        this.GetComponent<ShadowCaster2D>().enabled = false;
+        this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+        this.GetComponent<NetworkRigidBody2D>().enabled = false;
+        if (this.GetComponent<CapsuleCollider2D>())
         {
-            this.GetComponent<ShadowCaster2D>().enabled = false;
-            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-            this.GetComponent<NetworkRigidBody2D>().enabled = false;
             this.GetComponent<CapsuleCollider2D>().enabled = false;
-            this.GetComponent<NavMeshAgent>().enabled = false;
-            this.GetComponent<SpriteRenderer>().sortingLayerName = "Death";
-            this.GetComponent<SpriteRenderer>().sortingOrder = 0;
-            DeadCycle = true;
-            this.GetComponent<NetworkID>().enabled = false;
-            this.GetComponent<EnemyAI>().enabled = false;
         }
-        if (IsLocalPlayer)
+        if (this.GetComponent<CircleCollider2D>())
         {
-            if (!DeadCycle)
-            {
-                this.GetComponent<ShadowCaster2D>().enabled = false;
-                this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                this.GetComponent<NetworkRigidBody2D>().enabled = false;
-                this.GetComponent<CapsuleCollider2D>().enabled = false;
-                this.GetComponent<NavMeshAgent>().enabled = false;
-                this.GetComponent<SpriteRenderer>().sortingLayerName = "Death";
-                this.GetComponent<SpriteRenderer>().sortingOrder = 0;
-                DeadCycle = true;
-                this.GetComponent<NetworkID>().enabled = false;
-                this.GetComponent<EnemyAI>().enabled = false;
-            }
+            this.GetComponent<CircleCollider2D>().enabled = false;
         }
+        this.GetComponent<NavMeshAgent>().enabled = false;
+        this.GetComponent<SpriteRenderer>().sortingLayerName = "Death";
+        this.GetComponent<SpriteRenderer>().sortingOrder = 0;
+        //this.GetComponent<NetworkID>().enabled = false;
+        //this.GetComponent<EnemyAI>().enabled = false;
     }
 
     public void TakeDamage(int attackerid, float damage)
     {
-        if(AgroCo != null)
+        if (rangeType == RangeType.Melee)
         {
-            StopCoroutine(AgroCo);
-        }
-        Health -= damage;
-        SendUpdate("HEALTH", Health.ToString());
-        if(Health <= 0)
-        {
-            STATE = DEADSTATE;
-            Die();
-            SendUpdate("STATE", DEADSTATE.ToString());
-            return;
-        }
+            if (AgroCo != null)
+            {
+                StopCoroutine(AgroCo);
+            }
+            Health -= damage;
+            SendUpdate("HEALTH", Health.ToString());
+            if (Health <= 0)
+            {
+                STATE = DEADSTATE;
+                Die();
+                SendUpdate("STATE", DEADSTATE.ToString());
+                return;
+            }
 
-        Agro = true;
-        CurrentAgroID = attackerid;
-        AgroCo = StartCoroutine(FollowPlayerTimer());
+            Agro = true;
+            CurrentAgroID = attackerid;
+            AgroCo = StartCoroutine(FollowPlayerTimer());
+        }
+        if(rangeType == RangeType.Ranged)
+        {
+            Health -= damage;
+            SendUpdate("HEALTH", Health.ToString());
+            if (Health <= 0)
+            {
+                STATE = DEADSTATE;
+                Die();
+                SendUpdate("STATE", DEADSTATE.ToString());
+                return;
+            }
+        }
     }
 
     public IEnumerator FollowPlayerTimer()

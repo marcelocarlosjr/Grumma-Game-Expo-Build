@@ -552,10 +552,11 @@ MonoBehaviour:
   MaxStamina: 0
   Stamina: 0
   MoveSpeed: 0
-  MaxEXP: 0
-  EXP: 0
   EXPMulti: 0
   SprintMod: 1.4
+  EXP: 0
+  EXPToLevel: 1
+  Level: 1
   MoveSpeedBase: 4
   HealthBase: 50
   DamageBase: 5
@@ -613,7 +614,7 @@ MonoBehaviour:
   - {x: -0.25369585, y: -0.1772869, z: 0}
   m_ShapePathHash: 548867576
   m_Mesh: {fileID: 0}
-  m_InstanceId: 130374
+  m_InstanceId: 99622
 --- !u!1 &4785603723523000435
 GameObject:
   m_ObjectHideFlags: 0
