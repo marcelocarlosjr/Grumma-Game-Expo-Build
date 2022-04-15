@@ -44,11 +44,12 @@ public class Item : NetworkComponent
 
     private void Update()
     {
-        if (move)
+        if (move && IsServer)
         {
             if(Vector3.Distance(location, MyRig.transform.position) < 1f)
             {
                 MyRig.velocity = Vector3.zero;
+                MyRig.rotation = 0;
                 move = false;
             }
             else
@@ -60,5 +61,23 @@ public class Item : NetworkComponent
     private void Start()
     {
         MyRig = GetComponent<Rigidbody2D>();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (move && IsServer)
+        {
+            if (collision.gameObject.tag == "WALL")
+            {
+                MyRig.velocity = Vector3.zero;
+                MyRig.rotation = 0;
+                move = false;
+            }
+        }
+
+        if (collision.gameObject.GetComponent<PlayerController>())
+        {
+            Physics2D.IgnoreCollision(this.transform.GetChild(0).GetComponent<CircleCollider2D>(), collision.gameObject.GetComponent<CircleCollider2D>());
+        }
     }
 }

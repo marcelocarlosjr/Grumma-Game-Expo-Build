@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4265053417415706837}
   - component: {fileID: 1582374918662209497}
+  - component: {fileID: 1344975858933207809}
   m_Layer: 0
   m_Name: Rarity
   m_TagString: Untagged
@@ -68,9 +69,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1946649745
+  m_SortingLayer: 2
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 084984a0841d8f74b8a64808e754237e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.74509805}
   m_FlipX: 0
@@ -82,6 +83,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &1344975858933207809
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607714861795081600}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 94c57b553e009c74190cd86e49bf50dd, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.2
 --- !u!1 &823951374592633727
 GameObject:
   m_ObjectHideFlags: 0
@@ -266,7 +283,7 @@ MonoBehaviour:
   - {x: -0.36789277, y: -0.3046308, z: 0}
   m_ShapePathHash: -1956780332
   m_Mesh: {fileID: 0}
-  m_InstanceId: 104868
+  m_InstanceId: 54818
 --- !u!50 &1454132326141149968
 Rigidbody2D:
   serializedVersion: 4
@@ -287,7 +304,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &5702185696375543197
 MonoBehaviour:
   m_ObjectHideFlags: 0

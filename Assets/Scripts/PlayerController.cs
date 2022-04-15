@@ -175,12 +175,12 @@ public abstract class PlayerController : NetworkComponent
         }
         if (flag == "REMOVEINV" && IsServer)
         {
-            string[] args = value.Split(','); Debug.Log(value);
+            string[] args = value.Split(',');
             Inventory.RemoveItem(int.Parse(args[0]), int.Parse(args[1]), int.Parse(args[2]), this.Owner, this.transform.position, this.transform.up, this.transform.right);
         }
         if (flag == "REMOVEAllINV" && IsServer)
         {
-            string[] args = value.Split(','); Debug.Log(value);
+            string[] args = value.Split(',');
             Inventory.RemoveALLItem(int.Parse(args[0]), int.Parse(args[1]), int.Parse(args[2]), this.Owner, this.transform.position);
         }
         if (flag == "STAMINA" && IsLocalPlayer)
