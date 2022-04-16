@@ -68,7 +68,6 @@ public class DisplayInventory : MonoBehaviour
         {
             if (ItemsDisplayed.ContainsKey(Inventory.Container[i]))
             {
-                ItemsDisplayed[Inventory.Container[i]].GetComponentInChildren<Text>().text = Inventory.Container[i].amount.ToString("n0");
                 ItemsDisplayed[Inventory.Container[i]].GetComponent<UIItemData>().Amount = Inventory.Container[i].amount;
                 foreach (UIItemData item in FindObjectsOfType<UIItemData>())
                 {
@@ -78,13 +77,12 @@ public class DisplayInventory : MonoBehaviour
             else
             {
                 var obj = Instantiate(InventoryPrefab, Vector3.zero, Quaternion.identity, transform);
-                obj.transform.GetChild(0).GetComponent<Image>().sprite = Inventory.Container[i].item.uiDisplay;
+                obj.transform.GetChild(1).GetComponent<Image>().sprite = Inventory.Container[i].item.uiDisplay;
+                obj.transform.GetChild(0).GetComponent<Image>().sprite = Inventory.Container[i].item.uiRarity;
 
                 obj.GetComponent<UIItemData>().index = obj.transform.GetSiblingIndex();
                 obj.GetComponent<UIItemData>().Id = Inventory.Container[i].ID;
                 obj.GetComponent<UIItemData>().Amount = Inventory.Container[i].amount;
-
-                obj.GetComponentInChildren<Text>().text = Inventory.Container[i].amount.ToString("n0");
 
                 AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
                 AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });
@@ -131,7 +129,7 @@ public class DisplayInventory : MonoBehaviour
         if (obj.GetComponent<UIItemData>())
         {
             var img = mouseObject.AddComponent<Image>();
-            img.sprite = obj.transform.GetChild(0).GetComponent<Image>().sprite;
+            img.sprite = obj.transform.GetChild(1).GetComponent<Image>().sprite;
             img.raycastTarget = false;
         }
 

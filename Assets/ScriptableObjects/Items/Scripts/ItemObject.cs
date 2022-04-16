@@ -32,6 +32,7 @@ public abstract class ItemObject : ScriptableObject
 {
     public int SpawnPrefabInt;
     public Sprite uiDisplay;
+    public Sprite uiRarity;
     public ItemType type;
     public Attribute attribute;
     public Rarity rarity;

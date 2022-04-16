@@ -41,7 +41,8 @@ public class EnemyAI : NetworkComponent
     public float MaxHealth;
     public float Health;
     public float Damage;
-    public List<GameObject> ItemDrops;
+    public List<int> ItemDrops;
+    public int EmptyDrops;
 
     bool Dead = false;
     bool StopTimer;
@@ -525,6 +526,14 @@ public class EnemyAI : NetworkComponent
             if (Health <= 0)
             {
                 STATE = DEADSTATE;
+                foreach(PlayerController p in FindObjectsOfType<PlayerController>())
+                {
+                    if(p.Owner == attackerid)
+                    {
+                        p.levelSystem.AddExperience(ExpDrop);
+                    }
+                }
+                DropItem();
                 Die();
                 SendUpdate("STATE", DEADSTATE.ToString());
                 return;
@@ -545,6 +554,14 @@ public class EnemyAI : NetworkComponent
             if (Health <= 0)
             {
                 STATE = DEADSTATE;
+                foreach (PlayerController p in FindObjectsOfType<PlayerController>())
+                {
+                    if (p.Owner == attackerid)
+                    {
+                        p.levelSystem.AddExperience(ExpDrop);
+                    }
+                }
+                DropItem();
                 Die();
                 SendUpdate("STATE", DEADSTATE.ToString());
                 return;
@@ -552,6 +569,24 @@ public class EnemyAI : NetworkComponent
                         Agro = true;
             CurrentAgroID = attackerid;
             AgroCo = StartCoroutine(FollowPlayerTimer());
+        }
+    }
+    bool ItemDropped;
+    public void DropItem()
+    {
+        if (!ItemDropped)
+        {
+            int item = Random.Range(0, ItemDrops.Count + EmptyDrops);
+            if (item >= ItemDrops.Count)
+            {
+                return;
+            }
+            else if (item < ItemDrops.Count)
+            {
+                var temp = MyCore.NetCreateObject(ItemDrops[item], -1, this.transform.position, Quaternion.identity);
+                temp.GetComponent<Item>().ThrowItem(this.transform.position + (new Vector3(0, 1, 0) * Random.Range(-1.5f, 1.5f)) + (new Vector3(1, 0, 0) * Random.Range(-1.5f, 1.5f)));
+            }
+            ItemDropped = true;
         }
     }
 

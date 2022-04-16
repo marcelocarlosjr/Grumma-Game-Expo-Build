@@ -219,11 +219,12 @@ MonoBehaviour:
   radius: 0.5
   distance: 0
   Level: 0
-  ExpDrop: 0
+  ExpDrop: 150
   MaxHealth: 40
   Health: 0
   Damage: 5
-  ItemDrops: []
+  ItemDrops: 25000000
+  EmptyDrops: 0
 --- !u!114 &1286466891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -260,7 +261,7 @@ MonoBehaviour:
   - {x: -0.21509588, y: -0.8012032, z: 0}
   m_ShapePathHash: 717141474
   m_Mesh: {fileID: 0}
-  m_InstanceId: 236408
+  m_InstanceId: 161696
 --- !u!195 &809563459
 NavMeshAgent:
   m_ObjectHideFlags: 0
