@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32e88e3c15a696a47afc7e28c1a4ff80, type: 3}
-  m_Name: ChunkOfMeat
+  m_Name: 2JarOfEyes
   m_EditorClassIdentifier: 
-  SpawnPrefabInt: 48
-  uiDisplay: {fileID: 7361273088308036867, guid: 909ad8009cc008647bf670790a36450f, type: 3}
+  SpawnPrefabInt: 44
+  uiDisplay: {fileID: -555703656861768213, guid: 909ad8009cc008647bf670790a36450f, type: 3}
+  uiRarity: {fileID: 21300000, guid: 56d77b59b6fd5ce408b1e7fc34dc6aa2, type: 3}
   type: 2
-  attribute: 1
-  rarity: 3
-  description: Increases player's Health stat.
-  amount: 25
+  attribute: 4
+  rarity: 2
+  description: Increases player's Attack Speed stat.
+  amount: 15

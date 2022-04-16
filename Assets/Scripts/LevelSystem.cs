@@ -8,8 +8,10 @@ public class LevelSystem
     public event EventHandler OnExperienceChanged;
     public event EventHandler OnLevelChanged;
 
-    private int level;
-    private int experience;
+    public static readonly int[] LevelEXP = {100, 150, 200, 300};
+
+    public int level;
+    public int experience;
 
     public LevelSystem()
     {
@@ -18,13 +20,14 @@ public class LevelSystem
     }
     public void AddExperience(int _amount)
     {
+        Debug.Log("ExperienceAdded " + _amount);
         if (!IsMaxLevel())
         {
             experience += _amount;
             while (!IsMaxLevel() && experience >= GetExperienceToNextLevel(level))
             {
-                level++;
                 experience -= GetExperienceToNextLevel(level);
+                level++;
                 if (OnLevelChanged != null) OnLevelChanged(this, EventArgs.Empty);
             }
             if (OnExperienceChanged != null) OnExperienceChanged(this, EventArgs.Empty);
@@ -43,7 +46,7 @@ public class LevelSystem
 
     public int GetExperienceToNextLevel(int level)
     {
-        return (int)Mathf.Floor(100 * level * Mathf.Pow(level, 0.5f));
+        return LevelEXP[level];
     }
 
     public bool IsMaxLevel()

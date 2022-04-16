@@ -19,7 +19,6 @@ public abstract class PlayerController : NetworkComponent
     public DisplayInventory DisplayUI;
     public int LastEnemyAttacked;
     public LevelSystem levelSystem;
-    public LevelSystemAnimated levelSystemAnimated;
 
     [Header("Player Inputs")]
     public Vector2 MoveInput;
@@ -825,19 +824,20 @@ public abstract class PlayerController : NetworkComponent
         NameBox.text = Name;
 
         levelSystem = new LevelSystem();
-        levelSystemAnimated = new LevelSystemAnimated(levelSystem);
-        levelSystemAnimated.OnLevelChanged += LevelSystem_OnLevelChanged;
-        levelSystemAnimated.OnExperienceChanged += LevelSystem_OnExperienceChanged;
+        levelSystem.OnLevelChanged += LevelSystem_OnLevelChanged;
+        levelSystem.OnExperienceChanged += LevelSystem_OnExperienceChanged;
     }
 
-    private void LevelSystem_OnExperienceChanged(object sender, EventArgs e)
+    public void LevelSystem_OnExperienceChanged(object sender, EventArgs e)
     {
-        SendUpdate("EXPERIENCE", levelSystemAnimated.experience + ","+ levelSystemAnimated.levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
+        EXP = levelSystem.experience;
+        SendUpdate("EXPERIENCE", EXP + ","+ levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
     }
 
-    private void LevelSystem_OnLevelChanged(object sender, EventArgs e)
+    public void LevelSystem_OnLevelChanged(object sender, EventArgs e)
     {
-        SendUpdate("LEVEL", levelSystemAnimated.level.ToString());
+        Level = levelSystem.level + 1;
+        SendUpdate("LEVEL", Level.ToString());
     }
 
     private void FixedUpdate()

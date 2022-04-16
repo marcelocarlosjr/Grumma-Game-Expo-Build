@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 32e88e3c15a696a47afc7e28c1a4ff80, type: 3}
-  m_Name: JarOfEyes
+  m_Name: 1BoneStrungNecklace
   m_EditorClassIdentifier: 
-  SpawnPrefabInt: 51
-  uiDisplay: {fileID: -555703656861768213, guid: 909ad8009cc008647bf670790a36450f, type: 3}
+  SpawnPrefabInt: 33
+  uiDisplay: {fileID: -3659555549771782362, guid: 909ad8009cc008647bf670790a36450f, type: 3}
+  uiRarity: {fileID: 21300000, guid: 28ac1fb6d1aac6c439b0d28414a19a98, type: 3}
   type: 2
-  attribute: 4
-  rarity: 3
-  description: Increases player's Attack Speed stat.
-  amount: 25
+  attribute: 6
+  rarity: 1
+  description: Increases player's Experience Gain stat.
+  amount: 10
