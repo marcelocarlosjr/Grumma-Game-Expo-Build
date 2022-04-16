@@ -62,3 +62,6 @@ TagManager:
   - name: GameSpaceUI
     uniqueID: 316842655
     locked: 0
+  - name: Overlay
+    uniqueID: 3762307587
+    locked: 0
