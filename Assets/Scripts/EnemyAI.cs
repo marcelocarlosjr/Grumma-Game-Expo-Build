@@ -22,6 +22,7 @@ public class EnemyAI : NetworkComponent
     public Animator MyAnim;
     public Animator AttackSprite;
     public GameObject HealthBar;
+    public int ProjectilePrefab;
 
     [Header("ENEMY AI STATS")]
     public float RoamDistance = 5;
@@ -43,6 +44,7 @@ public class EnemyAI : NetworkComponent
     public float Damage;
     public List<int> ItemDrops;
     public int EmptyDrops;
+    public float AttackSpeed;
 
     bool Dead = false;
     bool StopTimer;
@@ -344,6 +346,10 @@ public class EnemyAI : NetworkComponent
                         {
                             if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance)
                             {
+                                if (!shooting)
+                                {
+                                    StartCoroutine(ShootEnemy((p.transform.position - this.transform.position).normalized));
+                                }
                                 FollowPlayer = true;
                                 Vector3 OppositePlayerDirection = ((p.transform.position - this.transform.position).normalized * -1);
                                 NavMeshHit CheckBehind = new NavMeshHit();
@@ -382,6 +388,7 @@ public class EnemyAI : NetworkComponent
                             }
                             else if (Vector2.Distance(this.transform.position, p.transform.position) > AgroDistance + 1.14)
                             {
+                                StartCoroutine(ShootEnemy((p.transform.position - this.transform.position).normalized));
                                 MyAgent.speed = Speed * 1.3f;
                                 FollowPlayer = true;
                                 MyAgent.isStopped = false;
@@ -389,6 +396,7 @@ public class EnemyAI : NetworkComponent
                             }
                             else if (Vector2.Distance(this.transform.position, p.transform.position) > AgroDistance + 1 && Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance + 1.15)
                             {
+                                StartCoroutine(ShootEnemy((p.transform.position - this.transform.position).normalized));
                                 MyAgent.speed = Speed * 1.3f;
                                 FollowPlayer = true;
                                 MyAgent.isStopped = true;
@@ -468,6 +476,14 @@ public class EnemyAI : NetworkComponent
         STATE = ATTACKSTATE;
         yield return new WaitForSeconds(0.1f);
         AttackAnim = false;
+    }
+    bool shooting;
+    public IEnumerator ShootEnemy(Vector3 direction)
+    {
+        shooting = true;
+        MyCore.NetCreateObject(ProjectilePrefab, -1, this.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(AttackSpeed);
+        shooting = false;
     }
 
      public void DetectPlayer(Vector2 position1, float radius1, Vector2 direction1, float distance1)
