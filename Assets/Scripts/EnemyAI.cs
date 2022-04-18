@@ -85,6 +85,10 @@ public class EnemyAI : NetworkComponent
         {
             Health = float.Parse(value);
         }
+        if(flag == "DAMAGE" && IsClient)
+        {
+            StartCoroutine(FlashRed());
+        }
     }
 
     public override void NetworkedStart()
@@ -136,6 +140,11 @@ public class EnemyAI : NetworkComponent
 
     void Update()
     {
+        if(Health <= 0 && IsLocalPlayer)
+        {
+            HealthBar.transform.GetChild(1).GetComponent<RectTransform>().localScale = new Vector3(0, 1, 1);
+            HealthBar.transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector3(0, 1, 1);
+        }
         if (STATE != IDLESTATE && !Dead)
         {
             MyAnim.SetFloat("SPEED", MyRig.velocity.magnitude);
@@ -241,11 +250,24 @@ public class EnemyAI : NetworkComponent
                 }
             }
         }
-
+        Coroutine shoot;
         if (rangeType == RangeType.Ranged)
         {
             if (IsServer && IsConnected && !Dead)
             {
+                if (FindObjectsOfType<PlayerController>() != null)
+                {
+                    foreach (PlayerController p in FindObjectsOfType<PlayerController>())
+                    {
+                        if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance + AgroDistance / 1.5f)
+                        {
+                            if (!shooting)
+                            {
+                                shoot = StartCoroutine(ShootEnemy((p.transform.position - this.transform.position).normalized));
+                            }
+                        }
+                    }
+                }
                 if (FindObjectsOfType<PlayerController>() != null && !Agro)
                 {
                     foreach (PlayerController p in FindObjectsOfType<PlayerController>())
@@ -347,10 +369,6 @@ public class EnemyAI : NetworkComponent
                         {
                             if (Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance)
                             {
-                                if (!shooting)
-                                {
-                                    StartCoroutine(ShootEnemy((p.transform.position - this.transform.position).normalized));
-                                }
                                 FollowPlayer = true;
                                 Vector3 OppositePlayerDirection = ((p.transform.position - this.transform.position).normalized * -1);
                                 NavMeshHit CheckBehind = new NavMeshHit();
@@ -389,7 +407,6 @@ public class EnemyAI : NetworkComponent
                             }
                             else if (Vector2.Distance(this.transform.position, p.transform.position) > AgroDistance + 1.14)
                             {
-                                StartCoroutine(ShootEnemy((p.transform.position - this.transform.position).normalized));
                                 MyAgent.speed = Speed * 1.3f;
                                 FollowPlayer = true;
                                 MyAgent.isStopped = false;
@@ -397,7 +414,6 @@ public class EnemyAI : NetworkComponent
                             }
                             else if (Vector2.Distance(this.transform.position, p.transform.position) > AgroDistance + 1 && Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance + 1.15)
                             {
-                                StartCoroutine(ShootEnemy((p.transform.position - this.transform.position).normalized));
                                 MyAgent.speed = Speed * 1.3f;
                                 FollowPlayer = true;
                                 MyAgent.isStopped = true;
@@ -482,7 +498,8 @@ public class EnemyAI : NetworkComponent
     public IEnumerator ShootEnemy(Vector3 direction)
     {
         shooting = true;
-        var temp = MyCore.NetCreateObject(ProjectilePrefab, -1, this.transform.position, Quaternion.identity);
+        StartCoroutine(AttackAnimation());
+        var temp = MyCore.NetCreateObject(ProjectilePrefab, -1, this.transform.position, Quaternion.LookRotation(transform.forward, direction));
         temp.GetComponent<EnemyProjectile>().SetData(ProjectileSpeed, Damage);
         yield return new WaitForSeconds(AttackSpeed);
         shooting = false;
@@ -530,9 +547,17 @@ public class EnemyAI : NetworkComponent
         //this.GetComponent<NetworkID>().enabled = false;
         //this.GetComponent<EnemyAI>().enabled = false;
     }
-
+    public IEnumerator FlashRed()
+    {
+        SpriteRenderer temp = GetComponent<SpriteRenderer>();
+        temp.color = new Color32(255, 0, 0, 255);
+        yield return new WaitForSeconds(0.1f);
+        temp.color = new Color32(255, 255, 255, 255);
+        yield return new WaitForSeconds(0.1f);
+    }
     public void TakeDamage(int attackerid, float damage)
     {
+        SendUpdate("DAMAGE", "1");
         if (rangeType == RangeType.Melee)
         {
             if (AgroCo != null)

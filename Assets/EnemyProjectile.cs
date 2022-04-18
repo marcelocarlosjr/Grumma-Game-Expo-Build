@@ -14,6 +14,7 @@ public class EnemyProjectile : NetworkComponent
     Vector3 direction;
     public float radius;
     public float distance;
+    public float DestroyTimer;
 
     public override void HandleMessage(string flag, string value)
     {
@@ -44,6 +45,24 @@ public class EnemyProjectile : NetworkComponent
             radius = 0.1875f;
             distance = 0.6875f;
             DectectCollisionCircleCast(position, radius, direction, distance);
+        }
+    }
+
+    private void Start()
+    {
+        if (IsServer)
+        {
+            MyRig = GetComponent<Rigidbody2D>();
+            StartCoroutine(Die());
+        }
+    }
+
+    public IEnumerator Die()
+    {
+        yield return new WaitForSeconds(DestroyTimer);
+        if (IsServer)
+        {
+            MyCore.NetDestroyObject(this.NetId);
         }
     }
 

@@ -105,6 +105,7 @@ MonoBehaviour:
   PositionMod: -0.1875
   radius: 0.09375
   distance: 0.3125
+  DestroyTimer: 1.5
 --- !u!50 &6993549974452137993
 Rigidbody2D:
   serializedVersion: 4

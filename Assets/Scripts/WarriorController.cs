@@ -139,7 +139,7 @@ public class WarriorController : PlayerController
     }
     public void LFireRaycast()
     {
-        Vector2 position = transform.position;
+        Vector2 position = transform.position + (transform.up * .2f);
         Vector2 direction = this.transform.up;
         float radius = .4f;
 
