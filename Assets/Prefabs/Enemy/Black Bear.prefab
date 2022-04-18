@@ -359,13 +359,13 @@ MonoBehaviour:
   AgroTimer: 6
   radius: 0.6
   distance: 1.85
-  Level: 0
-  ExpDrop: 0
-  MaxHealth: 40
+  Level: 45
+  ExpDrop: 1000
+  MaxHealth: 1000
   Health: 0
-  Damage: 5
-  ItemDrops: 
-  EmptyDrops: 0
+  Damage: 60
+  ItemDrops: 2d0000002e000000290000002a000000
+  EmptyDrops: 25
   AttackSpeed: 0
   ProjectileSpeed: 0
 --- !u!114 &1286466891

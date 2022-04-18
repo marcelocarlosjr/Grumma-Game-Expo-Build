@@ -244,7 +244,7 @@ MonoBehaviour:
   distance: 1.35
   Level: 50
   ExpDrop: 10000
-  MaxHealth: 2500
+  MaxHealth: 3000
   Health: 0
   Damage: 100
   ItemDrops: 2b0000002c0000002e000000
