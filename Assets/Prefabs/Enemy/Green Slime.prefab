@@ -194,6 +194,7 @@ MonoBehaviour:
   MyAnim: {fileID: 0}
   AttackSprite: {fileID: 0}
   HealthBar: {fileID: 6659377327416375423}
+  ProjectilePrefab: 0
   RoamDistance: 4
   MinStopTime: 1.5
   MaxStopTime: 5
@@ -202,9 +203,15 @@ MonoBehaviour:
   AgroTimer: 6
   radius: 0
   distance: 0
-  MaxHealth: 40
+  Level: 25
+  ExpDrop: 450
+  MaxHealth: 300
   Health: 0
-  Damage: 5
+  Damage: 20
+  ItemDrops: 22000000230000002400000025000000
+  EmptyDrops: 15
+  AttackSpeed: 0
+  ProjectileSpeed: 0
 --- !u!114 &1027775127246292113
 MonoBehaviour:
   m_ObjectHideFlags: 0
