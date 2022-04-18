@@ -316,23 +316,15 @@ MonoBehaviour:
   AgroTimer: 6
   radius: 0
   distance: 0
-  Level: 20
-  ExpDrop: 400
-  MaxHealth: 250
+  Level: 0
+  ExpDrop: 0
+  MaxHealth: 40
   Health: 0
-<<<<<<< Updated upstream
   Damage: 5
   ItemDrops: 
   EmptyDrops: 0
   AttackSpeed: 1.5
   ProjectileSpeed: 6
-=======
-  Damage: 20
-  ItemDrops: 220000002300000024000000250000002600000027000000
-  EmptyDrops: 20
-  AttackSpeed: 0
-  ProjectileSpeed: 0
->>>>>>> Stashed changes
 --- !u!114 &1286466891
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,11 +358,7 @@ MonoBehaviour:
   - {x: -0.17168128, y: -0.23143178, z: 0}
   m_ShapePathHash: -407770114
   m_Mesh: {fileID: 0}
-<<<<<<< Updated upstream
   m_InstanceId: 286964
-=======
-  m_InstanceId: 35974
->>>>>>> Stashed changes
 --- !u!1 &4134396268756963476
 GameObject:
   m_ObjectHideFlags: 0
