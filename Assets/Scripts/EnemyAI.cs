@@ -45,6 +45,7 @@ public class EnemyAI : NetworkComponent
     public List<int> ItemDrops;
     public int EmptyDrops;
     public float AttackSpeed;
+    public float ProjectileSpeed;
 
     bool Dead = false;
     bool StopTimer;
@@ -481,7 +482,8 @@ public class EnemyAI : NetworkComponent
     public IEnumerator ShootEnemy(Vector3 direction)
     {
         shooting = true;
-        MyCore.NetCreateObject(ProjectilePrefab, -1, this.transform.position, Quaternion.identity);
+        var temp = MyCore.NetCreateObject(ProjectilePrefab, -1, this.transform.position, Quaternion.identity);
+        temp.GetComponent<EnemyProjectile>().SetData(ProjectileSpeed, Damage);
         yield return new WaitForSeconds(AttackSpeed);
         shooting = false;
     }
