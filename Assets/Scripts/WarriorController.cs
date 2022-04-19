@@ -124,7 +124,7 @@ public class WarriorController : PlayerController
             {
                 if (collision.collider.gameObject.GetComponent<PlayerController>())
                 {
-                    collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(RFireDamage * (RFireTimer + 1));
+                    collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(RFireDamage * (RFireTimer + 1), Owner);
                 }
             }
             if (collision.collider.gameObject.GetComponent<EnemyAI>())
@@ -150,7 +150,7 @@ public class WarriorController : PlayerController
             {
                 if (collision.collider.gameObject.GetComponent<PlayerController>())
                 {
-                    collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(LFireDamage);
+                    collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(LFireDamage, Owner);
                 }
             }
             if (collision.collider.gameObject.GetComponent<EnemyAI>())

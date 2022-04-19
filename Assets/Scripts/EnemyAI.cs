@@ -514,6 +514,7 @@ public class EnemyAI : NetworkComponent
             {
                 MyAgent.isStopped = true;
                 MyAgent.velocity = Vector3.zero;
+                collision.collider.GetComponent<PlayerController>().TakeDamage(Damage, -1);
                 if (!Attacking)
                 {
                     StartCoroutine(Attack());

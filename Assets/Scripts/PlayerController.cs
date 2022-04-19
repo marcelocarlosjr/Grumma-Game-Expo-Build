@@ -105,6 +105,7 @@ public abstract class PlayerController : NetworkComponent
     protected float TAKEDAMAGESTATE = 5;
     protected float DEADSTATE = 69;
 
+    public static readonly int[] LevelEXP = { 100, 120, 160, 220, 300, 400, 520, 660, 820, 1000, 1200, 1420, 1660, 1920, 2200, 2500, 2820, 3160, 3520, 3900, 4300, 4720, 5160, 5620, 6100, 6600, 7120, 7660, 8220, 8800, 9400, 10020, 10660, 11320, 12000, 12700, 13420, 14160, 14920, 15700, 16500, 17320, 18160, 19020, 19900, 20800, 21720, 22660, 23620, 24600, 25600 };
 
     public override void HandleMessage(string flag, string value)
     {
@@ -498,7 +499,8 @@ public abstract class PlayerController : NetworkComponent
             Inventory.RemoveItem(_index, _id, _amount, this.Owner, Vector3.zero, Vector3.zero, Vector3.zero);
         }
     }
-    public void TakeDamage(float damage)
+    int tempEXP;
+    public void TakeDamage(float damage, int id)
     {
         if (IsServer)
         {
@@ -508,7 +510,20 @@ public abstract class PlayerController : NetworkComponent
             //screenshake
             if (Health <= 0 && !Dead)
             {
+                tempEXP = 0;
                 STATE = DEADSTATE;
+                foreach(PlayerController p in FindObjectsOfType<PlayerController>())
+                {
+                    if(p.Owner == id)
+                    {
+                        for (int i = 0; i < Level; i++)
+                        {
+                            tempEXP += LevelEXP[i];
+                        }
+
+                        p.levelSystem.AddExperience((int)tempEXP/3);
+                    }
+                }
                 Die();
                 SendUpdate("STATE", DEADSTATE.ToString());
             }
@@ -838,6 +853,10 @@ public abstract class PlayerController : NetworkComponent
     {
         Level = levelSystem.level + 1;
         SendUpdate("LEVEL", Level.ToString());
+
+        var temp = FindObjectOfType<UpgradeController>();
+        temp.FadeIN();
+        temp.SetCurrentUpgradeAmount(1);
     }
 
     private void FixedUpdate()
