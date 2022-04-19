@@ -24,6 +24,26 @@ public class InventoryObject : ScriptableObject, ISerializationCallbackReceiver
             }
         }
     }
+    public void AddItem(ItemObject _item, int _amount, int _owner, bool Add)
+    {
+        Container.Add(new InventorySlot(database.GetID[_item], _item, _amount));
+
+        if (_owner != -99)
+        {
+            foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+            {
+                if (pc.Owner == _owner)
+                {
+                    if (Add)
+                    {
+                        pc.AddStat(_item.attribute.ToString(), _item.rarity.ToString());
+                    }
+
+                    pc.UpdateInv(database.GetID[_item], _amount);
+                }
+            }
+        }
+    }
 
     public void RemoveItem(int _index, int _id, int _amount, int _owner, Vector3 position, Vector3 directionForward, Vector3 directionRight)
     {

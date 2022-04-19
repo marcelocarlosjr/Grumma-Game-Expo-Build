@@ -49,7 +49,7 @@ public class PlayerManagerScript : NetworkComponent
             if(lastScene != 0)
             {
                 temp = MyCore.NetCreateObject(type, Owner, spawnLocation.transform.position, Quaternion.identity);
-                var tempPC = temp.GetComponent<PlayerController>();
+                PlayerController tempPC = temp.GetComponent<PlayerController>();
                 tempPC.Name = pn;
                 tempPC.Health = Health;
                 tempPC.Stamina = Stamina;
@@ -73,11 +73,7 @@ public class PlayerManagerScript : NetworkComponent
                 tempPC.EXPModUpgrade = EXPModUpgrade;
                 tempPC.StaminaUpgrade = StaminaUpgrade;
 
-                tempPC.Inventory.AddItem(tempPC.Inventory.database.GetItem[item1ID], 1, tempPC.Owner);
-                tempPC.Inventory.AddItem(tempPC.Inventory.database.GetItem[item2ID], 1, tempPC.Owner);
-                tempPC.Inventory.AddItem(tempPC.Inventory.database.GetItem[item3ID], 1, tempPC.Owner);
-                tempPC.Inventory.AddItem(tempPC.Inventory.database.GetItem[item4ID], 1, tempPC.Owner);
-                tempPC.Inventory.AddItem(tempPC.Inventory.database.GetItem[item5ID], 1, tempPC.Owner);
+                tempPC.StartCoroutine(tempPC.ReplaceItems(item1ID, item2ID, item3ID, item4ID, item5ID));
 
             }
             else

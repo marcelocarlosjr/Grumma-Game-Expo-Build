@@ -1059,4 +1059,34 @@ public abstract class PlayerController : NetworkComponent
         }
         PickingUp = false;
     }
+
+    public IEnumerator ReplaceItems(int item1, int item2, int item3, int item4, int item5)
+    {
+        yield return new WaitForSeconds(.5f);
+        if (item1 != 0)
+        {
+            Inventory.AddItem(Inventory.database.GetItem[item1], 1, Owner, false);
+            yield return new WaitForSeconds(0.1f);
+        }
+        if (item2 != 0)
+        {
+            Inventory.AddItem(Inventory.database.GetItem[item2], 1, Owner, false);
+            yield return new WaitForSeconds(0.1f);
+        }
+        if (item3 != 0)
+        {
+            Inventory.AddItem(Inventory.database.GetItem[item3], 1, Owner, false);
+            yield return new WaitForSeconds(0.1f);
+        }
+        if (item4 != 0)
+        {
+            Inventory.AddItem(Inventory.database.GetItem[item4], 1, Owner, false);
+            yield return new WaitForSeconds(0.1f);
+        }
+        if (item5 != 0)
+        {
+            Inventory.AddItem(Inventory.database.GetItem[item5], 1, Owner, false);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
 }
