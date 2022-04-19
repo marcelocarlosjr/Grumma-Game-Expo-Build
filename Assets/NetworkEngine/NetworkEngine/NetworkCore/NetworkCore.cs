@@ -95,7 +95,7 @@ public class NetworkCore     : GenericNetworkCore
         {
             if(GameObject.FindObjectOfType<LobbyManager>()== null && UseMenuManager)
             {
-                StartCoroutine(MenuManager());
+                //StartCoroutine(MenuManager());
             }
         }
     }
@@ -127,7 +127,7 @@ public class NetworkCore     : GenericNetworkCore
         {   
             if (GameObject.FindObjectOfType<LobbyManager>() == null)
             {
-                SceneManager.LoadScene(DefaultReturnScene);
+                //SceneManager.LoadScene(DefaultReturnScene);
             }
         }
     }

@@ -6,7 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/LANMenu.unity
+    path: Assets/Scenes/0_MainMenue.unity
+    guid: 083b57c95a008874a8f229b1c64cfce3
+  - enabled: 1
+    path: Assets/Scenes/1_Overworld.unity
     guid: 1c15f2452767a5e44bbca5d7122dba90
+  - enabled: 1
+    path: Assets/Scenes/2_Mines.unity
+    guid: eea83bc9399c5cf4b99b98bc9015d1a5
+  - enabled: 1
+    path: Assets/Scenes/3_Swamp.unity
+    guid: fe5e82e840a9d0a4eb895f9dae439993
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d210736db60428044b5d95828f0d5699, type: 2}

@@ -943,17 +943,49 @@ public abstract class PlayerController : NetworkComponent
             {
                 TouchingObjects.Clear();
             }
+
+            if (!PickingUp)
+            {
+                StartCoroutine(CollisionTimer());
+            }
         }
-        if (!PickingUp)
+
+        if (collision.gameObject.tag == "DOOR" && IsLocalPlayer)
         {
-            StartCoroutine(CollisionTimer());
+            OfflinePlayerHolder temp = FindObjectOfType<OfflinePlayerHolder>();
+            OfflinePlayerHolder.Health = Health;
+            OfflinePlayerHolder.Stamina = Stamina;
+            OfflinePlayerHolder.EXP = EXP;
+            OfflinePlayerHolder.EXPToLevel = EXPToLevel;
+            OfflinePlayerHolder.Level = Level;
+
+            OfflinePlayerHolder.MoveSpeedMod = MoveSpeedMod;
+            OfflinePlayerHolder.HealthMod = HealthMod;
+            OfflinePlayerHolder.DamageMod = DamageMod;
+            OfflinePlayerHolder.HealthRegenerationMod = HealthRegenerationMod;
+            OfflinePlayerHolder.AttackSpeedMod = AttackSpeedMod;
+            OfflinePlayerHolder.EXPMod = EXPMod;
+            OfflinePlayerHolder.StaminaMod = StaminaMod;
+
+            OfflinePlayerHolder.MoveSpeedUpgrade = MoveSpeedUpgrade;
+            OfflinePlayerHolder.HealthUpgrade = HealthUpgrade;
+            OfflinePlayerHolder.DamageUpgrade = DamageUpgrade;
+            OfflinePlayerHolder.HealthRegenerationUpgrade = HealthRegenerationUpgrade;
+            OfflinePlayerHolder.AttackSpeedUpgrade = AttackSpeedUpgrade;
+            OfflinePlayerHolder.EXPModUpgrade = EXPModUpgrade;
+            OfflinePlayerHolder.StaminaUpgrade = StaminaUpgrade;
+
+            temp.StartCoroutine(temp.Teleport(int.Parse(collision.gameObject.name)));
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (!PickingUp && collision.GetComponent<Item>())
+        if (IsServer)
         {
-            StartCoroutine(CollisionTimer());
+            if (!PickingUp && collision.GetComponent<Item>())
+            {
+                StartCoroutine(CollisionTimer());
+            }
         }
     }
 
@@ -965,6 +997,11 @@ public abstract class PlayerController : NetworkComponent
             {
                 TouchingObjects.Remove(other.GetComponent<Item>());
             }
+        }
+
+        if (other.gameObject.tag == "DOOR" && IsLocalPlayer)
+        {
+            GameObject.FindObjectOfType<OfflinePlayerHolder>().IsTeleporting = false;
         }
     }
 
