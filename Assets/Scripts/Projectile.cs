@@ -42,7 +42,7 @@ public class Projectile : NetworkComponent
             {
                 if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
                 {
-                    collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(Damage);
+                    collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(Damage, Owner);
                     MyCore.NetDestroyObject(this.NetId);
                 }
             }

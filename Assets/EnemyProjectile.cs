@@ -81,7 +81,7 @@ public class EnemyProjectile : NetworkComponent
             {
                 if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
                 {
-                    collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(Damage);
+                    collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(Damage, -1);
                     MyCore.NetDestroyObject(this.NetId);
                 }
             }
