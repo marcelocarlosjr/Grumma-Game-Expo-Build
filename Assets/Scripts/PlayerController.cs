@@ -1026,7 +1026,7 @@ public abstract class PlayerController : NetworkComponent
             }
         }
 
-        if (other.gameObject.tag == "DOOR" && IsLocalPlayer)
+        if (other.gameObject.tag == "DOOR" && IsServer)
         {
             GameObject.FindObjectOfType<OfflinePlayerHolder>().IsTeleporting = false;
         }
