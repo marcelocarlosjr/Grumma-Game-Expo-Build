@@ -244,6 +244,11 @@ public abstract class PlayerController : NetworkComponent
             temp.EXPModUpgrade = float.Parse(args[17]);
             temp.StaminaUpgrade = float.Parse(args[18]);
             int SceneNum = int.Parse(args[19]);
+            temp.item1ID = int.Parse(args[20]);
+            temp.item2ID = int.Parse(args[21]);
+            temp.item3ID = int.Parse(args[22]);
+            temp.item4ID = int.Parse(args[23]);
+            temp.item5ID = int.Parse(args[24]);
 
             temp.StartCoroutine(temp.Teleport(SceneNum));
         }
@@ -983,6 +988,12 @@ public abstract class PlayerController : NetworkComponent
 
         if (collision.gameObject.tag == "DOOR" && IsServer)
         {
+            int[] ids = {0,0,0,0,0 };
+            for (int i = 0; i < Inventory.Container.Count; i++)
+            {
+                ids[i] = Inventory.database.GetID[Inventory.Container[i].item];
+            }
+
             SendUpdate("TELEPORT",
                 Health + "," +
                 Stamina + "," +
@@ -1002,7 +1013,7 @@ public abstract class PlayerController : NetworkComponent
                 HealthRegenerationUpgrade + "," +
                 AttackSpeedUpgrade + "," +
                 EXPModUpgrade + "," +
-                StaminaUpgrade + "," + collision.gameObject.name);
+                StaminaUpgrade + "," + collision.gameObject.name + "," + ids[0] + "," + ids[1] + "," + ids[2] + "," + ids[3] + "," + ids[4]);
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
@@ -1026,7 +1037,7 @@ public abstract class PlayerController : NetworkComponent
             }
         }
 
-        if (other.gameObject.tag == "DOOR" && IsServer)
+        if (other.gameObject.tag == "DOOR" && IsLocalPlayer)
         {
             GameObject.FindObjectOfType<OfflinePlayerHolder>().IsTeleporting = false;
         }

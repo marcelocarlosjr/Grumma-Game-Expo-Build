@@ -44,6 +44,13 @@ public class OfflinePlayerHolder : MonoBehaviour
     public float EXPModUpgrade = 0;
     public float StaminaUpgrade = 0;
 
+    public int item1ID;
+    public int item2ID;
+    public int item3ID;
+    public int item4ID;
+    public int item5ID;
+
+
     public void Awake()
     {
         DontDestroyOnLoad(this.gameObject);

@@ -33,6 +33,12 @@ public class PlayerManagerScript : NetworkComponent
             float EXPModUpgrade = float.Parse(args[20]);
             float StaminaUpgrade = float.Parse(args[21]);
 
+            int item1ID = int.Parse(args[22]);
+            int item2ID = int.Parse(args[23]);
+            int item3ID = int.Parse(args[24]);
+            int item4ID = int.Parse(args[25]);
+            int item5ID = int.Parse(args[26]);
+
 
             GameObject spawnLocation = GameObject.Find(lastScene.ToString());
             if(spawnLocation == null && lastScene != 0)
@@ -66,6 +72,13 @@ public class PlayerManagerScript : NetworkComponent
                 tempPC.AttackSpeedUpgrade = AttackSpeedUpgrade;
                 tempPC.EXPModUpgrade = EXPModUpgrade;
                 tempPC.StaminaUpgrade = StaminaUpgrade;
+
+                tempPC.Inventory.AddItem(tempPC.Inventory.database.GetItem[item1ID], 1, tempPC.Owner);
+                tempPC.Inventory.AddItem(tempPC.Inventory.database.GetItem[item2ID], 1, tempPC.Owner);
+                tempPC.Inventory.AddItem(tempPC.Inventory.database.GetItem[item3ID], 1, tempPC.Owner);
+                tempPC.Inventory.AddItem(tempPC.Inventory.database.GetItem[item4ID], 1, tempPC.Owner);
+                tempPC.Inventory.AddItem(tempPC.Inventory.database.GetItem[item5ID], 1, tempPC.Owner);
+
             }
             else
             {
@@ -100,7 +113,8 @@ public class PlayerManagerScript : NetworkComponent
                 temp.HealthRegenerationUpgrade + "," +
                 temp.AttackSpeedUpgrade + "," +
                 temp.EXPModUpgrade + "," +
-                temp.StaminaUpgrade);
+                temp.StaminaUpgrade + "," +
+                temp.item1ID + "," + temp.item2ID + "," + temp.item3ID + "," + temp.item4ID + "," + temp.item5ID);
         }
     }
 
