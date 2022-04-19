@@ -20,29 +20,29 @@ public class OfflinePlayerHolder : MonoBehaviour
     public static string PName = "Default Player";
 
     [Header("Player Current Stats")]
-    public static float Health;
-    public static float Stamina;
-    public static float EXP;
-    public static float EXPToLevel;
-    public static int Level;
+    public float Health;
+    public float Stamina;
+    public float EXP;
+    public float EXPToLevel;
+    public int Level;
 
     [Header("Player Item Mods")]
-    public static float MoveSpeedMod = 0;
-    public static float HealthMod = 0;
-    public static float DamageMod = 0;
-    public static float HealthRegenerationMod = 0;
-    public static float AttackSpeedMod = 0;
-    public static float EXPMod = 0;
-    public static float StaminaMod = 0;
+    public float MoveSpeedMod = 0;
+    public float HealthMod = 0;
+    public float DamageMod = 0;
+    public float HealthRegenerationMod = 0;
+    public float AttackSpeedMod = 0;
+    public float EXPMod = 0;
+    public float StaminaMod = 0;
 
     [Header("Player Level Upgrades")]
-    public static float MoveSpeedUpgrade = 0;
-    public static float HealthUpgrade = 0;
-    public static float DamageUpgrade = 0;
-    public static float HealthRegenerationUpgrade = 0;
-    public static float AttackSpeedUpgrade = 0;
-    public static float EXPModUpgrade = 0;
-    public static float StaminaUpgrade = 0;
+    public float MoveSpeedUpgrade = 0;
+    public float HealthUpgrade = 0;
+    public float DamageUpgrade = 0;
+    public float HealthRegenerationUpgrade = 0;
+    public float AttackSpeedUpgrade = 0;
+    public float EXPModUpgrade = 0;
+    public float StaminaUpgrade = 0;
 
     public void Awake()
     {

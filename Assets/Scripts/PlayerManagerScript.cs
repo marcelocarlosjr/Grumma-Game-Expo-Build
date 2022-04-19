@@ -43,35 +43,35 @@ public class PlayerManagerScript : NetworkComponent
             if(lastScene != 0)
             {
                 temp = MyCore.NetCreateObject(type, Owner, spawnLocation.transform.position, Quaternion.identity);
+                var tempPC = temp.GetComponent<PlayerController>();
+                tempPC.Name = pn;
+                tempPC.Health = Health;
+                tempPC.Stamina = Stamina;
+                tempPC.EXP = EXP;
+                tempPC.EXPToLevel = EXPToLevel;
+                tempPC.Level = Level;
+
+                tempPC.MoveSpeedMod = MoveSpeedMod;
+                tempPC.HealthMod = HealthMod;
+                tempPC.DamageMod = DamageMod;
+                tempPC.HealthRegenerationMod = HealthRegenerationMod;
+                tempPC.AttackSpeedMod = AttackSpeedMod;
+                tempPC.EXPMod = EXPMod;
+                tempPC.StaminaMod = StaminaMod;
+
+                tempPC.MoveSpeedUpgrade = MoveSpeedUpgrade;
+                tempPC.HealthUpgrade = HealthUpgrade;
+                tempPC.DamageUpgrade = DamageUpgrade;
+                tempPC.HealthRegenerationUpgrade = HealthRegenerationUpgrade;
+                tempPC.AttackSpeedUpgrade = AttackSpeedUpgrade;
+                tempPC.EXPModUpgrade = EXPModUpgrade;
+                tempPC.StaminaUpgrade = StaminaUpgrade;
             }
             else
             {
                 temp = MyCore.NetCreateObject(type, Owner, Vector3.zero, Quaternion.identity);
 
             }
-            var tempPC = temp.GetComponent<PlayerController>();
-            tempPC.Name = pn;
-            tempPC.Health = Health;
-            tempPC.Stamina = Stamina;
-            tempPC.EXP = EXP;
-            tempPC.EXPToLevel = EXPToLevel;
-            tempPC.Level = Level;
-
-            tempPC.MoveSpeedMod = MoveSpeedMod;
-            tempPC.HealthMod = HealthMod;
-            tempPC.DamageMod = DamageMod;
-            tempPC.HealthRegenerationMod = HealthRegenerationMod;
-            tempPC.AttackSpeedMod = AttackSpeedMod;
-            tempPC.EXPMod = EXPMod;
-            tempPC.StaminaMod = StaminaMod;
-
-            tempPC.MoveSpeedUpgrade = MoveSpeedUpgrade;
-            tempPC.HealthUpgrade = HealthUpgrade;
-            tempPC.DamageUpgrade = DamageUpgrade;
-            tempPC.HealthRegenerationUpgrade = HealthRegenerationUpgrade;
-            tempPC.AttackSpeedUpgrade = AttackSpeedUpgrade;
-            tempPC.EXPModUpgrade = EXPModUpgrade;
-            tempPC.StaminaUpgrade = StaminaUpgrade;
         }
     }
 
@@ -79,28 +79,28 @@ public class PlayerManagerScript : NetworkComponent
     {
         if (IsLocalPlayer)
         {
-
+            var temp = FindObjectOfType<OfflinePlayerHolder>();
             SendCommand("LOGIN",
                 OfflinePlayerHolder.PlayerPrefab + "," + OfflinePlayerHolder.PreviousScene + "," + OfflinePlayerHolder.PName + "," +
-                OfflinePlayerHolder.Health + "," +
-                OfflinePlayerHolder.Stamina + "," +
-                OfflinePlayerHolder.EXP + "," +
-                OfflinePlayerHolder.EXPToLevel + "," +
-                OfflinePlayerHolder.Level + "," +
-                OfflinePlayerHolder.MoveSpeedMod + "," +
-                OfflinePlayerHolder.HealthMod + "," +
-                OfflinePlayerHolder.DamageMod + "," +
-                OfflinePlayerHolder.HealthRegenerationMod + "," +
-                OfflinePlayerHolder.AttackSpeedMod + "," +
-                OfflinePlayerHolder.EXPMod + "," +
-                OfflinePlayerHolder.StaminaMod + "," +
-                OfflinePlayerHolder.MoveSpeedUpgrade + "," +
-                OfflinePlayerHolder.HealthUpgrade + "," +
-                OfflinePlayerHolder.DamageUpgrade + "," +
-                OfflinePlayerHolder.HealthRegenerationUpgrade + "," +
-                OfflinePlayerHolder.AttackSpeedUpgrade + "," +
-                OfflinePlayerHolder.EXPModUpgrade + "," +
-                OfflinePlayerHolder.StaminaUpgrade);
+                temp.Health + "," +
+                temp.Stamina + "," +
+                temp.EXP + "," +
+                temp.EXPToLevel + "," +
+                temp.Level + "," +
+                temp.MoveSpeedMod + "," +
+                temp.HealthMod + "," +
+                temp.DamageMod + "," +
+                temp.HealthRegenerationMod + "," +
+                temp.AttackSpeedMod + "," +
+                temp.EXPMod + "," +
+                temp.StaminaMod + "," +
+                temp.MoveSpeedUpgrade + "," +
+                temp.HealthUpgrade + "," +
+                temp.DamageUpgrade + "," +
+                temp.HealthRegenerationUpgrade + "," +
+                temp.AttackSpeedUpgrade + "," +
+                temp.EXPModUpgrade + "," +
+                temp.StaminaUpgrade);
         }
     }
 

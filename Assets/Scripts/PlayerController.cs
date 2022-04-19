@@ -81,6 +81,7 @@ public abstract class PlayerController : NetworkComponent
 
     [Header("Player Info")]
     public string Name;
+    public int type;
 
     [Header("Current Input")]
     public string InputType;
@@ -215,6 +216,36 @@ public abstract class PlayerController : NetworkComponent
         if (flag == "LEVEL" && IsLocalPlayer)
         {
             Level = int.Parse(value);
+        }
+
+        if(flag == "TELEPORT" && IsLocalPlayer)
+        {
+
+            OfflinePlayerHolder temp = FindObjectOfType<OfflinePlayerHolder>();
+
+            string[] args = value.Split(',');
+            temp.Health = float.Parse(args[0]);
+            temp.Stamina = float.Parse(args[1]);
+            temp.EXP = float.Parse(args[2]);
+            temp.EXPToLevel = float.Parse(args[3]);
+            temp.Level = int.Parse(args[4]);
+            temp.MoveSpeedMod = float.Parse(args[5]);
+            temp.HealthMod = float.Parse(args[6]);
+            temp.DamageMod = float.Parse(args[7]);
+            temp.HealthRegenerationMod = float.Parse(args[8]);
+            temp.AttackSpeedMod = float.Parse(args[9]);
+            temp.EXPMod = float.Parse(args[10]);
+            temp.StaminaMod = float.Parse(args[11]);
+            temp.MoveSpeedUpgrade = float.Parse(args[12]);
+            temp.HealthUpgrade = float.Parse(args[13]);
+            temp.DamageUpgrade = float.Parse(args[14]);
+            temp.HealthRegenerationUpgrade = float.Parse(args[15]);
+            temp.AttackSpeedUpgrade = float.Parse(args[16]);
+            temp.EXPModUpgrade = float.Parse(args[17]);
+            temp.StaminaUpgrade = float.Parse(args[18]);
+            int SceneNum = int.Parse(args[19]);
+
+            temp.StartCoroutine(temp.Teleport(SceneNum));
         }
     }
 
@@ -950,32 +981,28 @@ public abstract class PlayerController : NetworkComponent
             }
         }
 
-        if (collision.gameObject.tag == "DOOR" && IsLocalPlayer)
+        if (collision.gameObject.tag == "DOOR" && IsServer)
         {
-            OfflinePlayerHolder temp = FindObjectOfType<OfflinePlayerHolder>();
-            OfflinePlayerHolder.Health = Health;
-            OfflinePlayerHolder.Stamina = Stamina;
-            OfflinePlayerHolder.EXP = EXP;
-            OfflinePlayerHolder.EXPToLevel = EXPToLevel;
-            OfflinePlayerHolder.Level = Level;
-
-            OfflinePlayerHolder.MoveSpeedMod = MoveSpeedMod;
-            OfflinePlayerHolder.HealthMod = HealthMod;
-            OfflinePlayerHolder.DamageMod = DamageMod;
-            OfflinePlayerHolder.HealthRegenerationMod = HealthRegenerationMod;
-            OfflinePlayerHolder.AttackSpeedMod = AttackSpeedMod;
-            OfflinePlayerHolder.EXPMod = EXPMod;
-            OfflinePlayerHolder.StaminaMod = StaminaMod;
-
-            OfflinePlayerHolder.MoveSpeedUpgrade = MoveSpeedUpgrade;
-            OfflinePlayerHolder.HealthUpgrade = HealthUpgrade;
-            OfflinePlayerHolder.DamageUpgrade = DamageUpgrade;
-            OfflinePlayerHolder.HealthRegenerationUpgrade = HealthRegenerationUpgrade;
-            OfflinePlayerHolder.AttackSpeedUpgrade = AttackSpeedUpgrade;
-            OfflinePlayerHolder.EXPModUpgrade = EXPModUpgrade;
-            OfflinePlayerHolder.StaminaUpgrade = StaminaUpgrade;
-
-            temp.StartCoroutine(temp.Teleport(int.Parse(collision.gameObject.name)));
+            SendUpdate("TELEPORT",
+                Health + "," +
+                Stamina + "," +
+                EXP + "," +
+                EXPToLevel + "," +
+                Level + "," +
+                MoveSpeedMod + "," +
+                HealthMod + "," +
+                DamageMod + "," +
+                HealthRegenerationMod + "," +
+                AttackSpeedMod + "," +
+                EXPMod + "," +
+                StaminaMod + "," +
+                MoveSpeedUpgrade + "," +
+                HealthUpgrade + "," +
+                DamageUpgrade + "," +
+                HealthRegenerationUpgrade + "," +
+                AttackSpeedUpgrade + "," +
+                EXPModUpgrade + "," +
+                StaminaUpgrade + "," + collision.gameObject.name);
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
