@@ -688,7 +688,9 @@ MonoBehaviour:
   EXPModUpgrade: 0
   StaminaUpgrade: 0
   Name: 
+  type: 2
   InputType: 
+  teleport: 0
   TouchingObjects: []
   LFireDamage: 0
   RFireDamage: 0
@@ -722,7 +724,7 @@ MonoBehaviour:
   - {x: -0.28041548, y: -0.14085102, z: 0}
   m_ShapePathHash: -284954151
   m_Mesh: {fileID: 0}
-  m_InstanceId: 99514
+  m_InstanceId: 149548
 --- !u!1 &8083701499504539744
 GameObject:
   m_ObjectHideFlags: 0

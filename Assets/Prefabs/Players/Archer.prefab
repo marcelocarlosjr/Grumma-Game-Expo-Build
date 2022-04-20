@@ -579,7 +579,9 @@ MonoBehaviour:
   EXPModUpgrade: 0
   StaminaUpgrade: 0
   Name: 
+  type: 1
   InputType: 
+  teleport: 0
   TouchingObjects: []
   LFireDamage: 0
   RFireDamage: 0

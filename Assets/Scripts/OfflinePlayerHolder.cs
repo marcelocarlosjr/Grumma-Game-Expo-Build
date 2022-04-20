@@ -13,7 +13,7 @@ public class OfflinePlayerHolder : MonoBehaviour
     public bool IsTeleporting = false;
 
     public static int PreviousScene = 0;
-    public static int PlayerPrefab = 0;
+    public static int PlayerPrefab;
 
     public bool IsServer = false;
 
