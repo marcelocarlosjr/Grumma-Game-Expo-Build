@@ -1,0 +1,342 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3234630328636868245
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1205483817814441999}
+  - component: {fileID: 442482360159928995}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1205483817814441999
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234630328636868245}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 65.187965, y: 19.366434, z: -1140.8464}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &442482360159928995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3234630328636868245}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90487004b84627f468f305b4d393a72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musicVolume: 0
+  sfxVolume: 0
+  sounds:
+  - name: Music
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 1
+    soundType: 0
+    source: {fileID: 0}
+  - name: ClickUI
+    clip: {fileID: 8300000, guid: 26bc5d94a70f6284c8283546614e19c7, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: ItemPickUp
+    clip: {fileID: 8300000, guid: 5a08f5ecae3335d4699dc3410d6837e1, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: PlayerLevel
+    clip: {fileID: 8300000, guid: 43dc2c2a68d2572449624701c52f78da, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: Walk
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 1
+    soundType: 1
+    source: {fileID: 0}
+  - name: WarriorA
+    clip: {fileID: 8300000, guid: f05d648b794af294f87a429f8e57feb6, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: WarriorS
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: ArcherA
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: ArcherS
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: MageA
+    clip: {fileID: 8300000, guid: cbb59393285a6c341bbc64a202271093, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: MageS
+    clip: {fileID: 8300000, guid: 304a145df5ab4f547b62f81060480cfc, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: PlayerTD
+    clip: {fileID: 8300000, guid: a59d9b98f144de841a45d9b6823cc9f5, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: PlayerD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: GolemA
+    clip: {fileID: 8300000, guid: 5566ca93bccf0c444a3e49006d2980a5, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: GolemTD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: GolemD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: GoblinA
+    clip: {fileID: 8300000, guid: 37432e2efa9612a4f989d8a4ad221b7b, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: GoblinWizardA
+    clip: {fileID: 8300000, guid: 624f05f22464e6d4d884c8caa42ac2fe, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: GoblinWarriorA
+    clip: {fileID: 8300000, guid: d9cd908b88e9e24468a3eb1e97b11a4a, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: GoblinTD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: GoblinD
+    clip: {fileID: 8300000, guid: 5212bbb7abbabc24dbadf1b6d2793655, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: CrabA
+    clip: {fileID: 8300000, guid: d6f364f5f06c2f44ba39f2fb0bcfd48b, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: CrabTD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: CrabD
+    clip: {fileID: 8300000, guid: 5dbf29342be07ae4098d34dd6ba9535a, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: BearA
+    clip: {fileID: 8300000, guid: 2ea6240e54124b7458e52fdb2828f37e, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: BearTD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: BearD
+    clip: {fileID: 8300000, guid: c74da1fbee66efa409069c0bf0bfbb8c, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: SpiderA
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: SpiderTD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: SpiderD
+    clip: {fileID: 8300000, guid: 7753c382f6a1b08448248315e156f205, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: BroodMotherA
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: BroodMotherTD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: BroodMotherD
+    clip: {fileID: 8300000, guid: 5436a72a4172f2840bdd0a1020f7d95c, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: SkeletonA
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: SkeletonTD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: SkeletonD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: SlimeA
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: SlimeTD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: SlimeD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: WolfA
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: WolfTD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: WolfD
+    clip: {fileID: 0}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
