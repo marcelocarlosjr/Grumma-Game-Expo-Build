@@ -112,6 +112,30 @@ public abstract class PlayerController : NetworkComponent
 
     public override void HandleMessage(string flag, string value)
     {
+        if(flag == "UPGRADE" && IsServer)
+        {
+            switch (value)
+            {
+                case "damage":
+                    DamageUpgrade += 1;
+                    break;
+                case "health":
+                    HealthUpgrade += 1;
+                    break;
+                case "speed":
+                    MoveSpeedUpgrade += 1;
+                    break;
+                case "stamina":
+                    StaminaUpgrade += 1;
+                    break;
+                case "regen":
+                    HealthRegenerationUpgrade += 1;
+                    break;
+                case "exp":
+                    EXPModUpgrade += 1;
+                    break;
+            }
+        }
         if(flag == "MOVE" && IsServer)
         {
             MoveInput = VectorFromString(value);
@@ -220,6 +244,10 @@ public abstract class PlayerController : NetworkComponent
         if (flag == "LEVEL" && IsLocalPlayer)
         {
             Level = int.Parse(value);
+            var temp = FindObjectOfType<UpgradeController>();
+            temp.setPlayer(this);
+            temp.Show();
+            temp.SetCurrentUpgradeAmount(1);
         }
 
         if(flag == "TELEPORT" && IsLocalPlayer)
@@ -910,10 +938,6 @@ public abstract class PlayerController : NetworkComponent
         FindObjectOfType<AudioManager>().Play("PlayerLevel");
         Level = levelSystem.level + 1;
         SendUpdate("LEVEL", Level.ToString());
-
-        var temp = FindObjectOfType<UpgradeController>();
-        temp.FadeIN();
-        temp.SetCurrentUpgradeAmount(1);
     }
 
     private void FixedUpdate()
@@ -952,10 +976,10 @@ public abstract class PlayerController : NetworkComponent
             {
                 SprintMod = 1;
             }
-            EXP = levelSystem.experience;
-            SendUpdate("EXPERIENCE", EXP + "," + levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
-            Level = levelSystem.level + 1;
-            SendUpdate("LEVEL", Level.ToString());
+            //EXP = levelSystem.experience;
+            //SendUpdate("EXPERIENCE", EXP + "," + levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
+            //Level = levelSystem.level + 1;
+            //SendUpdate("LEVEL", Level.ToString());
 
 
             Damage = (DamageBase + (DamageUpgradeMod * DamageUpgrade)) + ((DamageMod * .01f) * (DamageBase + (DamageUpgradeMod * DamageUpgrade)));
@@ -1146,7 +1170,12 @@ public abstract class PlayerController : NetworkComponent
         SendUpdate("STAMINA", Stamina.ToString());
         SendUpdate("MAXSTAMINA", MaxStamina.ToString());
         SendUpdate("EXPERIENCE", EXP.ToString());
-        SendUpdate("LEVEL", Level.ToString());
+        //SendUpdate("LEVEL", Level.ToString());
 
+    }
+
+    public void SendUpgrade(string _upgrade)
+    {
+        SendCommand("UPGRADE", _upgrade);
     }
 }
