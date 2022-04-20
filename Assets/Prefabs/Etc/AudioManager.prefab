@@ -46,8 +46,29 @@ MonoBehaviour:
   musicVolume: 0
   sfxVolume: 0
   sounds:
-  - name: Music
-    clip: {fileID: 0}
+  - name: MainMenuLoop
+    clip: {fileID: 8300000, guid: 86af1621179fc464ca71e7a6c3759b13, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 1
+    soundType: 0
+    source: {fileID: 0}
+  - name: InstanceLoop
+    clip: {fileID: 8300000, guid: 76a439aae2474bc438dbebd2dbd1ebf0, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 1
+    soundType: 0
+    source: {fileID: 0}
+  - name: OverworldLoop
+    clip: {fileID: 8300000, guid: 6e2c0173850f25c49b0b98d7efff6a78, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 1
+    soundType: 0
+    source: {fileID: 0}
+  - name: TownLoop
+    clip: {fileID: 8300000, guid: 48d5e964847bb144d9e6944a19fcdcbd, type: 3}
     volume: 0
     pitch: 0
     loop: 1

@@ -41,6 +41,7 @@ public class LevelSystem
             {
                 experience -= GetExperienceToNextLevel(level);
                 level++;
+                FindObjectOfType<AudioManager>().Play("PlayerLevel");
                 if (OnLevelChanged != null) OnLevelChanged(this, EventArgs.Empty);
             }
             if (OnExperienceChanged != null) OnExperienceChanged(this, EventArgs.Empty);

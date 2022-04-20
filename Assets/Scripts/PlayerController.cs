@@ -156,6 +156,7 @@ public abstract class PlayerController : NetworkComponent
             if(STATE == DEADSTATE)
             {
                 Die();
+                FindObjectOfType<AudioManager>().Play("PlayerD");
                 if (IsLocalPlayer)
                 {
                     FindObjectOfType<DisplayInventory>().CallDropAllItems(this);
@@ -594,6 +595,7 @@ public abstract class PlayerController : NetworkComponent
                 {
                     if (!DeadCycle)
                     {
+                        FindObjectOfType<AudioManager>().Play("PlayerD");
                         npm.ShowCanvas();
                         this.GetComponent<PlayerInput>().enabled = false;
                         this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
@@ -614,6 +616,7 @@ public abstract class PlayerController : NetworkComponent
     {
         TakingDamage = true;
         STATE = TAKEDAMAGESTATE;
+        FindObjectOfType<AudioManager>().Play("PlayerTD");
         yield return new WaitForSeconds(0.10f);
         TakingDamage = false;
     }
@@ -741,6 +744,7 @@ public abstract class PlayerController : NetworkComponent
         if (IsLocalPlayer && !Dead)
         {
             MoveInput = context.ReadValue<Vector2>();
+            FindObjectOfType<AudioManager>().Play("Walk");
             SendCommand("MOVE", MoveInput.ToString());
         }
     }
@@ -909,6 +913,7 @@ public abstract class PlayerController : NetworkComponent
 
     public void LevelSystem_OnLevelChanged(object sender, EventArgs e)
     {
+        FindObjectOfType<AudioManager>().Play("PlayerLevel");
         Level = levelSystem.level + 1;
         SendUpdate("LEVEL", Level.ToString());
 
@@ -1001,10 +1006,12 @@ public abstract class PlayerController : NetworkComponent
             if(STATE != IDLESTATE && !Dead)
             {
                 AnimController.SetFloat("SPEED", MyRig.velocity.magnitude);
+                FindObjectOfType<AudioManager>().Play("Walk");
             }
             else
             {
                 AnimController.SetFloat("SPEED", 5);
+                FindObjectOfType<AudioManager>().Pause("Walk");
             }
         }
     }
@@ -1099,6 +1106,7 @@ public abstract class PlayerController : NetworkComponent
             var item = TouchingObjects[i];
             if (item && Inventory.Container.Count <= 4 && !item.move)
             {
+                FindObjectOfType<AudioManager>().Play("ItemPickUp");
                 Inventory.AddItem(item.item, 1, this.Owner);
                 MyCore.NetDestroyObject(item.NetId);
             }

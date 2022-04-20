@@ -17,12 +17,14 @@ public class UI_MainMenu : MonoBehaviour
     {
         Char = c;
         OfflinePlayerHolder.PlayerPrefab = c;
+        FindObjectOfType<AudioManager>().Play("ClickUI");
     }
 
     public void Connect()
     {
         if(Pname != "" && Char != -1)
         {
+            FindObjectOfType<AudioManager>().Play("ClickUI");
             SceneManager.LoadScene(1);
         }
     }
