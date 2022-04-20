@@ -582,6 +582,7 @@ public abstract class PlayerController : NetworkComponent
     public void Die()
     {
         Dead = true;
+        FindObjectOfType<AudioManager>().Play("PlayerD");
         if (!IsLocalPlayer)
         {
             this.GetComponent<PlayerInput>().enabled = false;
