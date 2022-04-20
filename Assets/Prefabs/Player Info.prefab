@@ -357,6 +357,10 @@ MonoBehaviour:
   Stamina: {fileID: 8967654244089863859}
   EXPBAR: {fileID: 8967654243729639213}
   Level: {fileID: 8967654243213512112}
+  UIImage: {fileID: 1219316147835967000}
+  Warrior: {fileID: 21300000, guid: 02102a85996c37b43bd670e192c09abc, type: 3}
+  Archer: {fileID: 21300000, guid: 207591991636a1e4b99b9f75d04c47c4, type: 3}
+  Mage: {fileID: 21300000, guid: 193d6a9cd4dec774fbfb83d4fdf566ce, type: 3}
 --- !u!1 &8967654243332368792
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,8 +650,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 252.87305, y: 87.80005}
+  m_SizeDelta: {x: 181.4858, y: 30.6181}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &8967654243467479587
 CanvasRenderer:
@@ -1269,8 +1273,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 203.6582, y: -4.699951}
+  m_SizeDelta: {x: 327.1435, y: 25.55}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &8967654243827594852
 CanvasRenderer:
@@ -2528,8 +2532,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 252.87012, y: 39.899902}
+  m_SizeDelta: {x: 181.49, y: 23.1}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &8967654244565972164
 CanvasRenderer:

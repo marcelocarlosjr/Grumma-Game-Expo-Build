@@ -159,6 +159,7 @@ public abstract class PlayerController : NetworkComponent
                 if (IsLocalPlayer)
                 {
                     FindObjectOfType<DisplayInventory>().CallDropAllItems(this);
+                    StartCoroutine(ShowRespawn());
                 }
             }
         }
@@ -257,6 +258,12 @@ public abstract class PlayerController : NetworkComponent
         }
     }
 
+    public IEnumerator ShowRespawn()
+    {
+        yield return new WaitForSeconds(5);
+        FindObjectOfType<RespawnUI>().Show();
+    }
+
     public override void NetworkedStart()
     {
         if (IsServer)
@@ -273,6 +280,8 @@ public abstract class PlayerController : NetworkComponent
             DisplayUI = FindObjectOfType<DisplayInventory>();
             Inventory = ScriptableObject.CreateInstance<InventoryObject>();
             Inventory.database = StaticItemDatabase;
+
+            FindObjectOfType<PlayerHealthUI>().SetPlayerImage(type);
         }
     }
     public override IEnumerator SlowUpdate()
@@ -575,7 +584,7 @@ public abstract class PlayerController : NetworkComponent
         if (!IsLocalPlayer)
         {
             this.GetComponent<PlayerInput>().enabled = false;
-            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+            this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             this.GetComponent<NetworkRigidBody2D>().enabled = false;
             this.GetComponent<CircleCollider2D>().enabled = false;
             this.GetComponent<SpriteRenderer>().sortingLayerName = "Death";
@@ -588,25 +597,18 @@ public abstract class PlayerController : NetworkComponent
         }
         if (IsLocalPlayer)
         {
-            foreach(NPM npm in FindObjectsOfType<NPM>())
+            if (!DeadCycle)
             {
-                if(npm.GetComponent<NPM>().Owner == this.Owner)
-                {
-                    if (!DeadCycle)
-                    {
-                        npm.ShowCanvas();
-                        this.GetComponent<PlayerInput>().enabled = false;
-                        this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
-                        this.GetComponent<NetworkRigidBody2D>().enabled = false;
-                        this.GetComponent<CircleCollider2D>().enabled = false;
-                        this.GetComponent<SpriteRenderer>().sortingLayerName = "Death";
-                        this.GetComponent<SpriteRenderer>().sortingOrder = 0;
-                        DeadCycle = true;
-                        NameBox.enabled = false;
-                        ShadowBox.gameObject.SetActive(false);
-                        this.GetComponent<NetworkID>().enabled = false;
-                    }
-                }
+                this.GetComponent<PlayerInput>().enabled = false;
+                this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                this.GetComponent<NetworkRigidBody2D>().enabled = false;
+                this.GetComponent<CircleCollider2D>().enabled = false;
+                this.GetComponent<SpriteRenderer>().sortingLayerName = "Death";
+                this.GetComponent<SpriteRenderer>().sortingOrder = 0;
+                DeadCycle = true;
+                NameBox.enabled = false;
+                ShadowBox.gameObject.SetActive(false);
+                this.GetComponent<NetworkID>().enabled = false;
             }
         }
     }
@@ -869,14 +871,6 @@ public abstract class PlayerController : NetworkComponent
         if (AnimController == null)
         {
             throw new System.Exception("ERROR: Could not find Animator!");
-        }
-
-        foreach(NPM npm in FindObjectsOfType<NPM>())
-        {
-            if(npm.Owner == this.Owner)
-            {
-                Name = npm.Name;
-            }
         }
 
         NameBox.text = Name;
