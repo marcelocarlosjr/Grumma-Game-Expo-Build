@@ -95,7 +95,7 @@ public class PlayerManagerScript : NetworkComponent
             temp = MyCore.NetCreateObject(type, Owner, spawnLocation.transform.position, Quaternion.identity);
             PlayerController tempPC = temp.GetComponent<PlayerController>();
 
-            tempPC.SetName(pn);
+            tempPC.StartCoroutine(tempPC.SetName(pn));
             tempPC.Health = Health;
             tempPC.Stamina = Stamina;
 
