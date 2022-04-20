@@ -285,6 +285,12 @@ public abstract class PlayerController : NetworkComponent
 
             temp.StartCoroutine(temp.Teleport(SceneNum));
         }
+
+        if(flag == "NAME" && IsClient)
+        {
+            Name = value;
+            NameBox.text = Name;
+        }
     }
 
     public IEnumerator ShowRespawn()
@@ -321,6 +327,7 @@ public abstract class PlayerController : NetworkComponent
             {
                 SendUpdate("HP", Health.ToString());
                 SendUpdate("MAXHP", MaxHealth.ToString());
+                SendUpdate("NAME", Name);
                 IsDirty = false;
             }
         }
@@ -905,8 +912,6 @@ public abstract class PlayerController : NetworkComponent
             throw new System.Exception("ERROR: Could not find Animator!");
         }
 
-        NameBox.text = Name;
-
         if (teleport)
         {
             return;
@@ -981,7 +986,6 @@ public abstract class PlayerController : NetworkComponent
             //Level = levelSystem.level + 1;
             //SendUpdate("LEVEL", Level.ToString());
 
-
             Damage = (DamageBase + (DamageUpgradeMod * DamageUpgrade)) + ((DamageMod * .01f) * (DamageBase + (DamageUpgradeMod * DamageUpgrade)));
             MaxHealth = (HealthBase + (HealthUpgradeMod * HealthUpgrade)) + ((HealthMod * .01f) * (HealthBase + (HealthUpgradeMod * HealthUpgrade)));
             HealthRegeneration = (HealthRegenerationBase + (HealthRegenerationUpgradeMod * HealthRegenerationUpgrade)) + ((HealthRegenerationMod * .01f) * (HealthRegenerationBase + (HealthRegenerationUpgradeMod * HealthRegenerationUpgrade)));
@@ -1021,7 +1025,7 @@ public abstract class PlayerController : NetworkComponent
 
         if (IsClient)
         {
-            if(STATE != IDLESTATE && !Dead)
+            if (STATE != IDLESTATE && !Dead)
             {
                 AnimController.SetFloat("SPEED", MyRig.velocity.magnitude);
                 FindObjectOfType<AudioManager>().Play("Walk");
@@ -1177,5 +1181,13 @@ public abstract class PlayerController : NetworkComponent
     public void SendUpgrade(string _upgrade)
     {
         SendCommand("UPGRADE", _upgrade);
+    }
+
+    public IEnumerator SetName(string _name)
+    {
+        yield return new WaitUntil(() => IsConnected);
+        yield return new WaitForSeconds(0.5f);
+        Name = _name;
+        SendUpdate("NAME", Name);
     }
 }

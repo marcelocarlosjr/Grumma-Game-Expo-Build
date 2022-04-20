@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using NETWORK_ENGINE;
+using UnityEngine.UI;
 
 public class PlayerManagerScript : NetworkComponent
 {
     string[] args;
+    public List<Vector3> locations;
     public override void HandleMessage(string flag, string value)
     {
         if(flag == "LOGIN" && IsServer)
@@ -21,7 +23,7 @@ public class PlayerManagerScript : NetworkComponent
         {
             var temp = FindObjectOfType<OfflinePlayerHolder>();
             SendCommand("LOGIN",
-                OfflinePlayerHolder.PlayerPrefab + "," + OfflinePlayerHolder.PreviousScene + "," + OfflinePlayerHolder.PName + "," +
+                OfflinePlayerHolder.PlayerPrefab + "," + OfflinePlayerHolder.PreviousScene + "," + temp.PName + "," +
                 temp.Health + "," +
                 temp.Stamina + "," +
                 temp.EXP + "," +
@@ -93,7 +95,7 @@ public class PlayerManagerScript : NetworkComponent
             temp = MyCore.NetCreateObject(type, Owner, spawnLocation.transform.position, Quaternion.identity);
             PlayerController tempPC = temp.GetComponent<PlayerController>();
 
-            tempPC.Name = pn;
+            tempPC.SetName(pn);
             tempPC.Health = Health;
             tempPC.Stamina = Stamina;
 
@@ -119,7 +121,16 @@ public class PlayerManagerScript : NetworkComponent
         }
         else
         {
-            temp = MyCore.NetCreateObject(type, Owner, Vector3.zero, Quaternion.identity);
+            locations.Clear();
+            foreach (GameObject l in GameObject.FindGameObjectsWithTag("PLAYERSPAWN"))
+            {
+                locations.Add(l.transform.position);
+            }
+
+            int rand = Random.Range(0, locations.Count);
+
+            temp = MyCore.NetCreateObject(type, Owner, locations[rand], Quaternion.identity);
+            temp.GetComponent<PlayerController>().StartCoroutine(temp.GetComponent<PlayerController>().SetName(pn));
         }
     }
 }

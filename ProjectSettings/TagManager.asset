@@ -8,6 +8,7 @@ TagManager:
   - TUTCANVAS
   - WALL
   - DOOR
+  - PLAYERSPAWN
   layers:
   - Default
   - TransparentFX

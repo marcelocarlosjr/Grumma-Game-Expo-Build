@@ -17,7 +17,7 @@ public class OfflinePlayerHolder : MonoBehaviour
 
     public bool IsServer = false;
 
-    public static string PName = "Default Player";
+    public string PName;
 
     [Header("Player Current Stats")]
     public float Health;
@@ -49,6 +49,11 @@ public class OfflinePlayerHolder : MonoBehaviour
     public int item3ID;
     public int item4ID;
     public int item5ID;
+
+    public void setPNAME(string _name)
+    {
+        PName = _name;
+    }
 
     public void Awake()
     {

@@ -148,7 +148,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: 9ab1e783b3392c549b1134bc24b0506a, type: 3}
     m_FontSize: 8
     m_FontStyle: 1
     m_BestFit: 1
@@ -616,7 +616,7 @@ MonoBehaviour:
   - {x: -0.25369585, y: -0.1772869, z: 0}
   m_ShapePathHash: 548867576
   m_Mesh: {fileID: 0}
-  m_InstanceId: 99622
+  m_InstanceId: 372116
 --- !u!1 &4785603723523000435
 GameObject:
   m_ObjectHideFlags: 0

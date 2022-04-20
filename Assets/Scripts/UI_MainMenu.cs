@@ -10,7 +10,7 @@ public class UI_MainMenu : MonoBehaviour
     public void SetPName(string n)
     {
         Pname = n;
-        OfflinePlayerHolder.PName = n;
+        FindObjectOfType<OfflinePlayerHolder>().setPNAME(n);
     }
 
     public void SetChar(int c)
