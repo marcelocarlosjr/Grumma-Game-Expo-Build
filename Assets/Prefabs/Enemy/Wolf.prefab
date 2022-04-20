@@ -286,7 +286,7 @@ MonoBehaviour:
   Damage: 5
   ItemDrops: 0700000008000000090000000a0000000c0000000d000000
   EmptyDrops: 25
-  AttackSpeed: 0
+  AttackSpeed: 5
   ProjectileSpeed: 0
 --- !u!70 &4740784333156670638
 CapsuleCollider2D:
@@ -343,7 +343,7 @@ MonoBehaviour:
   - {x: 0.21437506, y: -0.2779758, z: 0}
   m_ShapePathHash: 1248649759
   m_Mesh: {fileID: 0}
-  m_InstanceId: 63660
+  m_InstanceId: 235120
 --- !u!195 &5200601907222810812
 NavMeshAgent:
   m_ObjectHideFlags: 0

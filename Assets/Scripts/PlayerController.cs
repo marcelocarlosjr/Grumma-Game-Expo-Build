@@ -40,8 +40,8 @@ public abstract class PlayerController : NetworkComponent
     public float MoveSpeed;
     public float EXPMulti;
     public float SprintMod = 1;
-    public float EXP;
-    public float EXPToLevel;
+    public int EXP;
+    public int EXPToLevel;
     public int Level;
 
     [Header("Player Base Stats")]
@@ -105,6 +105,8 @@ public abstract class PlayerController : NetworkComponent
     protected float RFIRESTATE = 3;
     protected float TAKEDAMAGESTATE = 5;
     protected float DEADSTATE = 69;
+
+    public bool teleport;
 
     public static readonly int[] LevelEXP = { 100, 120, 160, 220, 300, 400, 520, 660, 820, 1000, 1200, 1420, 1660, 1920, 2200, 2500, 2820, 3160, 3520, 3900, 4300, 4720, 5160, 5620, 6100, 6600, 7120, 7660, 8220, 8800, 9400, 10020, 10660, 11320, 12000, 12700, 13420, 14160, 14920, 15700, 16500, 17320, 18160, 19020, 19900, 20800, 21720, 22660, 23620, 24600, 25600 };
 
@@ -222,6 +224,7 @@ public abstract class PlayerController : NetworkComponent
         {
 
             OfflinePlayerHolder temp = FindObjectOfType<OfflinePlayerHolder>();
+            FindObjectOfType<PlayerHealthUI>().RemovePlayer();
 
             string[] args = value.Split(',');
             temp.Health = float.Parse(args[0]);
@@ -261,6 +264,7 @@ public abstract class PlayerController : NetworkComponent
             SendUpdate("HP", Health.ToString());
             SendUpdate("MAXHP", MaxHealth.ToString());
             TouchingObjects = new List<Item>();
+            Invoke("UpDateLocal", 0.5f);
         }
 
         if (IsLocalPlayer)
@@ -848,10 +852,13 @@ public abstract class PlayerController : NetworkComponent
     {
         Inventory = ScriptableObject.CreateInstance<InventoryObject>();
         Inventory.database = StaticItemDatabase;
-        Health = HealthBase;
-        MaxHealth = HealthBase;
-        MaxStamina = StaminaBase;
-        Stamina = StaminaBase;
+        if (!teleport)
+        {
+            Health = HealthBase;
+            MaxHealth = HealthBase;
+            MaxStamina = StaminaBase;
+            Stamina = StaminaBase;
+        }
         SprintMod = 1;
         MyRig = GetComponent<Rigidbody2D>();
         if(MyRig == null)
@@ -874,7 +881,22 @@ public abstract class PlayerController : NetworkComponent
 
         NameBox.text = Name;
 
-        levelSystem = new LevelSystem();
+        if (teleport)
+        {
+            return;
+        }
+        else if(!teleport)
+        {
+            levelSystem = new LevelSystem();
+            levelSystem.OnLevelChanged += LevelSystem_OnLevelChanged;
+            levelSystem.OnExperienceChanged += LevelSystem_OnExperienceChanged;
+        }
+    }
+
+    public IEnumerator LevelTimer(int _level, int _exp)
+    {
+        yield return new WaitForSeconds(0.5f);
+        levelSystem = new LevelSystem(true, _level, _exp);
         levelSystem.OnLevelChanged += LevelSystem_OnLevelChanged;
         levelSystem.OnExperienceChanged += LevelSystem_OnExperienceChanged;
     }
@@ -906,6 +928,23 @@ public abstract class PlayerController : NetworkComponent
             Camera.main.transform.forward = new Vector3(0, 0, 1);
         }
     }
+    bool RegenHealth;
+    public IEnumerator HealthRegen()
+    {
+        RegenHealth = true;
+        if(Health + HealthRegeneration <= MaxHealth)
+        {
+            Health += HealthRegeneration;
+            SendUpdate("HP", Health.ToString());
+        }
+        else
+        {
+            SendUpdate("HP", MaxHealth.ToString());
+        }
+        yield return new WaitForSeconds(5);
+        RegenHealth = false;
+    }
+
     private void Update()
     {
         if (IsServer)
@@ -914,6 +953,10 @@ public abstract class PlayerController : NetworkComponent
             {
                 SprintMod = 1;
             }
+            EXP = levelSystem.experience;
+            SendUpdate("EXPERIENCE", EXP + "," + levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
+            Level = levelSystem.level + 1;
+            SendUpdate("LEVEL", Level.ToString());
 
 
             Damage = (DamageBase + (DamageUpgradeMod * DamageUpgrade)) + ((DamageMod * .01f) * (DamageBase + (DamageUpgradeMod * DamageUpgrade)));
@@ -924,6 +967,10 @@ public abstract class PlayerController : NetworkComponent
             MaxStamina = (StaminaBase + (StaminaUpgradesMod * StaminaUpgrade)) + ((StaminaMod * .01f) * (StaminaBase + (StaminaUpgradesMod * StaminaUpgrade)));
             EXPMulti = (EXPBase + (EXPModUpgradeMod * EXPModUpgrade)) + ((EXPMod * .01f) * (EXPBase + (EXPModUpgradeMod * EXPModUpgrade)));
 
+            if (!RegenHealth)
+            {
+                StartCoroutine(HealthRegen());
+            }
 
 
             if (!Dead)
@@ -997,9 +1044,9 @@ public abstract class PlayerController : NetworkComponent
             SendUpdate("TELEPORT",
                 Health + "," +
                 Stamina + "," +
-                EXP + "," +
-                EXPToLevel + "," +
-                Level + "," +
+                levelSystem.GetExperience() + "," +
+                levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()) + "," +
+                (levelSystem.GetLevelNumber()+1) + "," +
                 MoveSpeedMod + "," +
                 HealthMod + "," +
                 DamageMod + "," +
@@ -1062,31 +1109,42 @@ public abstract class PlayerController : NetworkComponent
 
     public IEnumerator ReplaceItems(int item1, int item2, int item3, int item4, int item5)
     {
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitUntil(() => IsConnected);
+        yield return new WaitForSeconds(0.4f);
         if (item1 != 0)
         {
             Inventory.AddItem(Inventory.database.GetItem[item1], 1, Owner, false);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.15f);
         }
         if (item2 != 0)
         {
             Inventory.AddItem(Inventory.database.GetItem[item2], 1, Owner, false);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.15f);
         }
         if (item3 != 0)
         {
             Inventory.AddItem(Inventory.database.GetItem[item3], 1, Owner, false);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.15f);
         }
         if (item4 != 0)
         {
             Inventory.AddItem(Inventory.database.GetItem[item4], 1, Owner, false);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.15f);
         }
         if (item5 != 0)
         {
             Inventory.AddItem(Inventory.database.GetItem[item5], 1, Owner, false);
-            yield return new WaitForSeconds(0.1f);
         }
+    }
+
+    public void UpDateLocal()
+    {
+        SendUpdate("HP", Health.ToString());
+        SendUpdate("MAXHP", MaxHealth.ToString());
+        SendUpdate("STAMINA", Stamina.ToString());
+        SendUpdate("MAXSTAMINA", MaxStamina.ToString());
+        SendUpdate("EXPERIENCE", EXP.ToString());
+        SendUpdate("LEVEL", Level.ToString());
+
     }
 }

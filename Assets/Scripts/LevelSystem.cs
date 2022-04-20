@@ -19,9 +19,21 @@ public class LevelSystem
         level = 0;
         experience = 0;
     }
+    public LevelSystem(bool _teleport, int _level, int _exp)
+    {
+        if (_teleport)
+        {
+            int totalexp = 0;
+            for (int i = 0; i < _level - 1; i++)
+            {
+                totalexp += this.GetExperienceToNextLevel(i);
+            }
+            totalexp += _exp;
+            this.AddExperience(totalexp);
+        }
+    }
     public void AddExperience(int _amount)
     {
-        Debug.Log("ExperienceAdded " + _amount);
         if (!IsMaxLevel())
         {
             experience += _amount;

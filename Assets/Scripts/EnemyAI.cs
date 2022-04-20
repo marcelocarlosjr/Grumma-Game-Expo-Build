@@ -483,7 +483,7 @@ public class EnemyAI : NetworkComponent
         Attacking = true;
         StartCoroutine(AttackAnimation());
         //raycast to check to do damage
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(AttackSpeed);
         Attacking = false;
 
     }
@@ -514,9 +514,9 @@ public class EnemyAI : NetworkComponent
             {
                 MyAgent.isStopped = true;
                 MyAgent.velocity = Vector3.zero;
-                collision.collider.GetComponent<PlayerController>().TakeDamage(Damage, -1);
                 if (!Attacking)
                 {
+                    collision.collider.GetComponent<PlayerController>().TakeDamage(Damage, -1);
                     StartCoroutine(Attack());
                 }
             }
@@ -545,6 +545,10 @@ public class EnemyAI : NetworkComponent
         this.GetComponent<NavMeshAgent>().enabled = false;
         this.GetComponent<SpriteRenderer>().sortingLayerName = "Death";
         this.GetComponent<SpriteRenderer>().sortingOrder = 0;
+        if (IsServer)
+        {
+            Invoke("DestroyBody", 10f);
+        }
         //this.GetComponent<NetworkID>().enabled = false;
         //this.GetComponent<EnemyAI>().enabled = false;
     }
@@ -653,6 +657,11 @@ public class EnemyAI : NetworkComponent
                 StartCoroutine(Stop(Random.Range(MinStopTime, MaxStopTime)));
             }
         }
+    }
+
+    public void DestroyBody()
+    {
+        MyCore.NetDestroyObject(NetId);
     }
 
     public void DisableHealthBar()

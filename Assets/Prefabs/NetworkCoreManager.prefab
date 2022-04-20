@@ -106,6 +106,7 @@ MonoBehaviour:
   - {fileID: 1723203143017960812, guid: ba80bedcf9d45aa43a6083827cca0f77, type: 3}
   - {fileID: 1723203143017960812, guid: c7695dec71dc879468a6e50350f8b0ca, type: 3}
   - {fileID: 6993549974452137992, guid: d853f411a518ec04788850bfd0639b77, type: 3}
+  - {fileID: 1172798643212750672, guid: 9212dae8d3d56be479286e7e1d58c9f9, type: 3}
   NetworkPlayerManager: {fileID: 1126729145116361208, guid: bd3a151c46ef85946b8232ea1f281cf0, type: 3}
   DefaultReturnScene: 0
 --- !u!114 &6229089209922792820

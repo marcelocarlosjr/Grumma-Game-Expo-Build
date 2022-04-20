@@ -50,7 +50,6 @@ public class OfflinePlayerHolder : MonoBehaviour
     public int item4ID;
     public int item5ID;
 
-
     public void Awake()
     {
         DontDestroyOnLoad(this.gameObject);

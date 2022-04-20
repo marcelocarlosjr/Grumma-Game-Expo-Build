@@ -5,18 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class UI_MainMenu : MonoBehaviour
 {
+    string Pname = "";
+    int Char = -1;
     public void SetPName(string n)
     {
+        Pname = n;
         OfflinePlayerHolder.PName = n;
     }
 
     public void SetChar(int c)
     {
+        Char = c;
         OfflinePlayerHolder.PlayerPrefab = c;
     }
 
     public void Connect()
     {
-        SceneManager.LoadScene(1);
+        if(Pname != "" && Char != -1)
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 }
