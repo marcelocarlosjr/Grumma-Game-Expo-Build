@@ -18,5 +18,5 @@ MonoBehaviour:
   type: 2
   attribute: 2
   rarity: 3
-  description: Increases player's Health Regen stat.
+  description: Increases player's Health Regen stat by 25%.
   amount: 25

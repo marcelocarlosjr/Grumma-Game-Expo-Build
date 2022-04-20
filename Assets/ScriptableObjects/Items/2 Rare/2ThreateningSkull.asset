@@ -18,5 +18,5 @@ MonoBehaviour:
   type: 2
   attribute: 0
   rarity: 2
-  description: Increases player's Damage stat.
+  description: Increases player's Damage stat by 15%.
   amount: 15

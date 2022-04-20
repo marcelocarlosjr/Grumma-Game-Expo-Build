@@ -18,5 +18,5 @@ MonoBehaviour:
   type: 2
   attribute: 1
   rarity: 0
-  description: Increases player's Health stat.
+  description: Increases player's Health stat by 5%.
   amount: 5

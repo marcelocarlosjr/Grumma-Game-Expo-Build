@@ -18,5 +18,5 @@ MonoBehaviour:
   type: 2
   attribute: 5
   rarity: 2
-  description: Increases player's Stamina stat.
+  description: Increases player's Stamina stat by 15%.
   amount: 15

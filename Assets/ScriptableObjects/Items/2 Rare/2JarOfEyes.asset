@@ -18,5 +18,5 @@ MonoBehaviour:
   type: 2
   attribute: 6
   rarity: 2
-  description: Increases player's Experience Gain stat.
+  description: Increases player's Experience Gain stat by 15%.
   amount: 15
