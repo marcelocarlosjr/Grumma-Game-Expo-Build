@@ -144,22 +144,33 @@ public class EnemyAI : NetworkComponent
     }
 
     bool SetActiveMove;
-
+    bool CheckForPlayer;
+    public IEnumerator CheckPlayerTimer()
+    {
+        CheckForPlayer = true;
+        foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+        {
+            if (Vector3.Distance(pc.transform.position, this.transform.position) < 15)
+            {
+                SetActiveMove = true;
+            }
+            else
+            {
+                SetActiveMove = false;
+            }
+        }
+        yield return new WaitForSeconds(2);
+        CheckForPlayer = false;
+    }
     void Update()
     {
         if (IsServer)
         {
-            foreach(PlayerController pc in FindObjectsOfType<PlayerController>())
+            if (!CheckForPlayer)
             {
-                if(Vector3.Distance(pc.transform.position,this.transform.position) < 15)
-                {
-                    SetActiveMove = true;
-                }
-                else
-                {
-                    SetActiveMove = false;
-                }
+                StartCoroutine(CheckPlayerTimer());
             }
+            
         }
 
         if(Health <= 0 && IsLocalPlayer)

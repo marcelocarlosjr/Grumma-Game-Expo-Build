@@ -14,23 +14,60 @@ public class EnemySpawner : MonoBehaviour
 
     bool IsServer;
 
+    bool CheckPlayer;
+
+
     private void Update()
     {
         if (IsServer)
         {
-            if(LinkedEnemy == null)
+            if (!CheckPlayer)
             {
-                if (!Timer)
+                StartCoroutine(CheckPlayerTimer());
+            }
+        }
+    }
+    Coroutine Despawn;
+    public IEnumerator CheckPlayerTimer()
+    {
+        CheckPlayer = true;
+        foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+        {
+            if(Vector3.Distance(this.transform.position, pc.transform.position) < 15)
+            {
+                if (Despawn != null)
                 {
-                    StartCoroutine(SpawnTimer());
+                    StopCoroutine(Despawn);
+                }
+                if (LinkedEnemy == null)
+                {
+                    if (!Timer)
+                    {
+                        StartCoroutine(SpawnTimer());
+                    }
+                }
+            }
+            else
+            {
+                if (LinkedEnemy)
+                {
+                    Despawn = StartCoroutine(DespawnEnemy());
                 }
             }
         }
+        yield return new WaitForSeconds(2);
+        CheckPlayer = false;
     }
 
     private void Start()
     {
         StartCoroutine(GetIsServer());
+    }
+
+    public IEnumerator DespawnEnemy()
+    {
+        yield return new WaitForSeconds(10);
+        FindObjectOfType<NetworkCore>().NetDestroyObject(LinkedEnemy.GetComponent<NetworkID>().NetId);
     }
 
     public IEnumerator SpawnTimer()

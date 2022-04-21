@@ -187,7 +187,6 @@ public abstract class PlayerController : NetworkComponent
             STATE = float.Parse(value);
             AnimController.SetFloat("STATE", STATE);
             AnimController.SetInteger("ISTATE", (int)STATE);
-            //SlashAnim.SetInteger("SLASH", (int)STATE);
             if(STATE == DEADSTATE)
             {
                 Die();
@@ -254,11 +253,15 @@ public abstract class PlayerController : NetworkComponent
         }
         if (flag == "LEVEL" && IsLocalPlayer)
         {
+            if(int.Parse(value) > Level)
+            {
+                var temp = FindObjectOfType<UpgradeController>();
+                temp.setPlayer(this);
+                temp.Show();
+                temp.SetCurrentUpgradeAmount(1);
+            }
+
             Level = int.Parse(value);
-            var temp = FindObjectOfType<UpgradeController>();
-            temp.setPlayer(this);
-            temp.Show();
-            temp.SetCurrentUpgradeAmount(1);
         }
 
         if(flag == "TELEPORT" && IsLocalPlayer)
