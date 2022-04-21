@@ -81,6 +81,10 @@ public class EnemyAI : NetworkComponent
                 HealthBar.transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector3(0, 1, 1);
                 Die();
             }
+            else if (STATE == ATTACKSTATE)
+            {
+                StartCoroutine(AttackSFX());
+            }
         }
         if (flag == "HEALTH" && IsClient)
         {
@@ -482,7 +486,7 @@ public class EnemyAI : NetworkComponent
     public IEnumerator Attack()
     {
         Attacking = true;
-        StartCoroutine(AttackSFX());
+        //StartCoroutine(AttackSFX()); //not used
         StartCoroutine(AttackAnimation());
         //raycast to check to do damage
         yield return new WaitForSeconds(AttackSpeed);
@@ -547,7 +551,7 @@ public class EnemyAI : NetworkComponent
         shooting = false;
     }
 
-     public void DetectPlayer(Vector2 position1, float radius1, Vector2 direction1, float distance1)
+    public void DetectPlayer(Vector2 position1, float radius1, Vector2 direction1, float distance1)
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(position1, radius1, direction1, (distance1 - radius1));
         foreach (RaycastHit2D collision in hits)
