@@ -233,6 +233,7 @@ MonoBehaviour:
   MyAnim: {fileID: 0}
   AttackSprite: {fileID: 0}
   HealthBar: {fileID: 5682241360359395159}
+  EnemyPrefab: 1
   ProjectilePrefab: 0
   RoamDistance: 4
   MinStopTime: 1.5
