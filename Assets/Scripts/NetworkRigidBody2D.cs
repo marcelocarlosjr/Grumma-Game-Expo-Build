@@ -85,7 +85,7 @@ public class NetworkRigidBody2D : NetworkComponent
                     IsDirty = false;
                 }
             }
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.05f);
         }
     }
 
