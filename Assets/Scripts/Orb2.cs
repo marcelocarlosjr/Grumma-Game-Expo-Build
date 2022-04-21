@@ -6,6 +6,8 @@ public class Orb2 : Projectile
 {
     public GameObject OuterRing;
 
+    public int type;
+
     public float RotationSpeed;
 
     public bool Outer;
@@ -50,7 +52,7 @@ public class Orb2 : Projectile
 
                 MyRig.rotation += RotationSpeed;
             } 
-            DectectCollisionCircleCast(position, radius, direction, distance);
+            DectectCollisionCircleCast(position, radius, direction, distance, type);
         }
     }
 

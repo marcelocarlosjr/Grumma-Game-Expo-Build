@@ -277,6 +277,7 @@ MonoBehaviour:
   Speed: 7
   Timer: 4
   OuterRing: {fileID: 7269611349438378849}
+  type: 1
   RotationSpeed: 1
   Outer: 0
   MoveDir: {x: 0, y: 0}

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Orb : Projectile
 {
+    public int type;
+
     protected override void Start()
     {
         if (IsServer)
@@ -21,7 +23,7 @@ public class Orb : Projectile
             radius = 0.1875f;
             distance = 0.625f;
             base.Update();
-            DectectCollisionCircleCast(position, radius, direction, distance);
+            DectectCollisionCircleCast(position, radius, direction, distance, type);
         }
     }
 }
