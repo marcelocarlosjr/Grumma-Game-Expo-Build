@@ -9,6 +9,7 @@ TagManager:
   - WALL
   - DOOR
   - PLAYERSPAWN
+  - SAFE
   layers:
   - Default
   - TransparentFX

@@ -186,6 +186,53 @@ public class OfflinePlayerHolder : MonoBehaviour
         FindObjectOfType<NetworkCore>().IP = IP;
         FindObjectOfType<NetworkCore>().UI_StartClient();
     }
+    /*public IEnumerator SlowAgentStart()
+    {
+        bool UsePublic = false;
+        bool UseFlorida = false;
+        string IP = "127.0.0.1";
+
+        //Ping Public Ip address to see if we are external..........
+        System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping();
+        System.Net.NetworkInformation.PingOptions po = new System.Net.NetworkInformation.PingOptions();
+        po.DontFragment = true;
+        string data = "HELLLLOOOOO!";
+        byte[] buffer = ASCIIEncoding.ASCII.GetBytes(data);
+        int timeout = 500;
+        System.Net.NetworkInformation.PingReply pr = ping.Send(PublicIP, timeout, buffer, po);
+        yield return new WaitForSeconds(1.5f);
+        if (pr.Status == System.Net.NetworkInformation.IPStatus.Success)
+        {
+            UsePublic = true;
+            IP = PublicIP;
+        }
+        else
+        {
+            UsePublic = false;
+        }
+        //-------------------If not public, ping Florida Poly for internal access.
+        if (!UsePublic)
+        {
+            pr = ping.Send(FloridaPolyIP, timeout, buffer, po);
+            yield return new WaitForSeconds(1.5f);
+            if (pr.Status.ToString() == "Success")
+            {
+                UseFlorida = true;
+                IP = FloridaPolyIP;
+            }
+            else
+            {
+                UseFlorida = false;
+            }
+        }
+        //Otherwise use local host, assume testing.
+        if (!UsePublic && !UseFlorida)
+        {
+            IP = "127.0.0.1";
+        }
+        FindObjectOfType<NetworkCore>().IP = IP;
+        FindObjectOfType<NetworkCore>().UI_StartClient();
+    }*/
 
     public IEnumerator Teleport(int scene)
     {

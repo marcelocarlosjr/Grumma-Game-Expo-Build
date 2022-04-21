@@ -82,6 +82,7 @@ public abstract class PlayerController : NetworkComponent
     [Header("Player Info")]
     public string Name;
     public int type;
+    public bool IsSafe;
 
     [Header("Current Input")]
     public string InputType;
@@ -291,6 +292,11 @@ public abstract class PlayerController : NetworkComponent
             Name = value;
             NameBox.text = Name;
         }
+
+        if(flag == "SAFE" && IsClient)
+        {
+            IsSafe = bool.Parse(value);
+        }
     }
 
     public IEnumerator ShowRespawn()
@@ -328,6 +334,7 @@ public abstract class PlayerController : NetworkComponent
                 SendUpdate("HP", Health.ToString());
                 SendUpdate("MAXHP", MaxHealth.ToString());
                 SendUpdate("NAME", Name);
+                SendUpdate("SAFE", IsSafe.ToString());
                 IsDirty = false;
             }
         }
@@ -589,10 +596,27 @@ public abstract class PlayerController : NetworkComponent
     {
         if (IsServer)
         {
-            Health -= damage;
-            SendUpdate("HP", Health.ToString());
-            StartCoroutine(TakeDamageTimer());
-            //screenshake
+            if(id == -1)
+            {
+                Health -= damage;
+                SendUpdate("HP", Health.ToString());
+                StartCoroutine(TakeDamageTimer());
+            }
+            else
+            {
+                if (!IsSafe)
+                {
+                    Health -= damage;
+                    SendUpdate("HP", Health.ToString());
+                    StartCoroutine(TakeDamageTimer());
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+
             if (Health <= 0 && !Dead)
             {
                 tempEXP = 0;
@@ -1092,6 +1116,9 @@ public abstract class PlayerController : NetworkComponent
                 StaminaUpgrade + "," + collision.gameObject.name + "," + ids[0] + "," + ids[1] + "," + ids[2] + "," + ids[3] + "," + ids[4]);
         }
     }
+
+    bool SafeSet;
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (IsServer)
@@ -1099,6 +1126,16 @@ public abstract class PlayerController : NetworkComponent
             if (!PickingUp && collision.GetComponent<Item>())
             {
                 StartCoroutine(CollisionTimer());
+            }
+
+            if(collision.gameObject.tag == "SAFE")
+            {
+                if (!SafeSet)
+                {
+                    IsSafe = true;
+                    SendUpdate("SAFE", IsSafe.ToString());
+                    SafeSet = true;
+                }
             }
         }
     }
@@ -1116,6 +1153,16 @@ public abstract class PlayerController : NetworkComponent
         if (other.gameObject.tag == "DOOR" && IsLocalPlayer)
         {
             GameObject.FindObjectOfType<OfflinePlayerHolder>().IsTeleporting = false;
+        }
+
+        if (other.gameObject.tag == "SAFE")
+        {
+            if (SafeSet)
+            {
+                IsSafe = false;
+                SendUpdate("SAFE", IsSafe.ToString());
+                SafeSet = false;
+            }
         }
     }
 
