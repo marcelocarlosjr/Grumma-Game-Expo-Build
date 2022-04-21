@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using NETWORK_ENGINE;
 
-public class EnemySpawner : NetworkComponent
+public class EnemySpawner : MonoBehaviour
 {
     public int SpawnPrefab;
     public float RespawnTimer;
@@ -12,24 +12,9 @@ public class EnemySpawner : NetworkComponent
 
     bool Timer;
 
-    public override void HandleMessage(string flag, string value)
-    {
-        
-    }
-
-    public override void NetworkedStart()
-    {
-
-    }
-
-    public override IEnumerator SlowUpdate()
-    {
-        yield return new WaitForSeconds(0.1f);
-    }
-
     private void Update()
     {
-        if (IsServer)
+        if (FindObjectOfType<NetworkCore>() && FindObjectOfType<NetworkCore>().IsServer)
         {
             if(LinkedEnemy == null)
             {
@@ -45,7 +30,7 @@ public class EnemySpawner : NetworkComponent
     {
         Timer = true;
         yield return new WaitForSeconds(RespawnTimer);
-        LinkedEnemy = MyCore.NetCreateObject(SpawnPrefab, -1, this.transform.position, Quaternion.identity);
+        LinkedEnemy = FindObjectOfType<NetworkCore>().NetCreateObject(SpawnPrefab, -1, this.transform.position, Quaternion.identity);
         Timer = false;
 
     }

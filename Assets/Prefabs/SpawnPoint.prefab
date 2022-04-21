@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1172798643212750673}
   - component: {fileID: 1172798643212750674}
-  - component: {fileID: 1172798643212750672}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -44,28 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b63b517b827fca546b29e846e78b4b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MyCore: {fileID: 0}
-  MyId: {fileID: 0}
-  IsDirty: 0
   SpawnPrefab: 31
   RespawnTimer: 5
   LinkedEnemy: {fileID: 0}
---- !u!114 &1172798643212750672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1172798643212750675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f34ca87a457962d459c49c36b9753ca5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Type: 0
-  Owner: -10
-  NetId: -10
-  IsInit: 0
-  IsLocalPlayer: 0
-  UpdateFrequency: 0.1
-  MyCore: {fileID: 0}
