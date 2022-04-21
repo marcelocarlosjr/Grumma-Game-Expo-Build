@@ -47,7 +47,7 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        FindObjectOfType<AudioManager>().Play("themeHamuhh");
+        FindObjectOfType<AudioManager>().Play("MainMenuLoop");
     }
 
     private void Update()
@@ -65,18 +65,18 @@ public class AudioManager : MonoBehaviour
         }
 
 
-        if (SceneManager.GetActiveScene().name != "MainMenu")
+        if (SceneManager.GetActiveScene().name != "0_MainMenue")
         {
             if (InGame == false)
             {
-                FindObjectOfType<AudioManager>().Play("roomFire");
+                FindObjectOfType<AudioManager>().Play("OverworldLoop");
                 InGame = true;
             }
         }
         else
         {
-            FindObjectOfType<AudioManager>().Pause("roomFire");
             InGame = false;
+            FindObjectOfType<AudioManager>().Play("MainMenuLoop");
         }
     }
 
