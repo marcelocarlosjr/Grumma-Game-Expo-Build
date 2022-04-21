@@ -48,295 +48,295 @@ MonoBehaviour:
   sounds:
   - name: MainMenuLoop
     clip: {fileID: 8300000, guid: 86af1621179fc464ca71e7a6c3759b13, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 1
     soundType: 0
     source: {fileID: 0}
   - name: InstanceLoop
     clip: {fileID: 8300000, guid: 76a439aae2474bc438dbebd2dbd1ebf0, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 1
     soundType: 0
     source: {fileID: 0}
   - name: OverworldLoop
     clip: {fileID: 8300000, guid: 6e2c0173850f25c49b0b98d7efff6a78, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 1
     soundType: 0
     source: {fileID: 0}
   - name: TownLoop
     clip: {fileID: 8300000, guid: 48d5e964847bb144d9e6944a19fcdcbd, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 1
     soundType: 0
     source: {fileID: 0}
   - name: ClickUI
     clip: {fileID: 8300000, guid: 26bc5d94a70f6284c8283546614e19c7, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: ItemPickUp
     clip: {fileID: 8300000, guid: 5a08f5ecae3335d4699dc3410d6837e1, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: PlayerLevel
     clip: {fileID: 8300000, guid: 43dc2c2a68d2572449624701c52f78da, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: Walk
     clip: {fileID: 8300000, guid: 7d9e32498809fdb479740b1936b133a1, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 1
     soundType: 1
     source: {fileID: 0}
   - name: WarriorA
     clip: {fileID: 8300000, guid: f05d648b794af294f87a429f8e57feb6, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: WarriorS
     clip: {fileID: 8300000, guid: f7a95427d6ab91b4d94beeb88dbad88b, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: ArcherA
     clip: {fileID: 8300000, guid: aa22044a9436f764fb9fade805dd38bd, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: ArcherS
     clip: {fileID: 8300000, guid: 34c27ed88a006ee4ab82a299451b9c9a, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: MageA
     clip: {fileID: 8300000, guid: cbb59393285a6c341bbc64a202271093, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: MageS
     clip: {fileID: 8300000, guid: 304a145df5ab4f547b62f81060480cfc, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: PlayerTD
     clip: {fileID: 8300000, guid: a59d9b98f144de841a45d9b6823cc9f5, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: PlayerD
     clip: {fileID: 8300000, guid: 0d457cc1f77104540ab711a1ef77b5ca, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: GolemA
     clip: {fileID: 8300000, guid: bf64f6e109a31fd4eb396e67f6497591, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: GolemD
     clip: {fileID: 8300000, guid: c63afe2528d09bf4385fdb2990aa8f60, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: GoblinA
     clip: {fileID: 8300000, guid: 37432e2efa9612a4f989d8a4ad221b7b, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: GoblinWizardA
     clip: {fileID: 8300000, guid: 624f05f22464e6d4d884c8caa42ac2fe, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: GoblinWarriorA
     clip: {fileID: 8300000, guid: d9cd908b88e9e24468a3eb1e97b11a4a, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: GoblinD
     clip: {fileID: 8300000, guid: 5212bbb7abbabc24dbadf1b6d2793655, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: CrabA
     clip: {fileID: 8300000, guid: d6f364f5f06c2f44ba39f2fb0bcfd48b, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: CrabD
     clip: {fileID: 8300000, guid: 5dbf29342be07ae4098d34dd6ba9535a, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: BearA
     clip: {fileID: 8300000, guid: 2ea6240e54124b7458e52fdb2828f37e, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: BearD
     clip: {fileID: 8300000, guid: c74da1fbee66efa409069c0bf0bfbb8c, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: SpiderA
     clip: {fileID: 8300000, guid: a7dcc1288cce29941b266b1277ca7be8, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: SpiderD
     clip: {fileID: 8300000, guid: 7753c382f6a1b08448248315e156f205, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: BroodMotherA
     clip: {fileID: 8300000, guid: dbf4ae7ad6dc7d4459218e0f5feb34e3, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: BroodMotherD
     clip: {fileID: 8300000, guid: 5436a72a4172f2840bdd0a1020f7d95c, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: SkeletonA
     clip: {fileID: 8300000, guid: 9b82218c698d87e498fc93a636928c77, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: SkeletonD
     clip: {fileID: 8300000, guid: 679d1d5d4fce77f41a71307f396c24f9, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: SlimeA
     clip: {fileID: 8300000, guid: 468b974964cc8d84ca632d15a2dae656, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: SlimeD
     clip: {fileID: 8300000, guid: a0065872724686c439bbca5d37291af3, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: WolfA
     clip: {fileID: 8300000, guid: 95e3d750bf97a6b4ebf143b785f2908a, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: WolfD
     clip: {fileID: 8300000, guid: 8cd1973525eb0e44b9c41e175dc70353, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: ArrowProjectileHit
     clip: {fileID: 8300000, guid: 6e4ae5466e1473244a065ffcfe1a9280, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: MagicProjectileHit
     clip: {fileID: 8300000, guid: 78cabb7067f3eea4b9cdf32897de2112, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: SpearProjectileHit
     clip: {fileID: 8300000, guid: d9cd908b88e9e24468a3eb1e97b11a4a, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: FireProjectileHit
     clip: {fileID: 8300000, guid: 624f05f22464e6d4d884c8caa42ac2fe, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: BoneProjectileHit
     clip: {fileID: 8300000, guid: dbd71378a9f07d74895e2077029bf42b, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: SlimeProjectileHit
     clip: {fileID: 8300000, guid: 71bdfb2b30c7a4747b4e485e9eed0720, type: 3}
-    volume: 0
-    pitch: 0
+    volume: 1
+    pitch: 1
     loop: 0
     soundType: 1
     source: {fileID: 0}
