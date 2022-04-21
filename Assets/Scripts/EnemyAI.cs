@@ -22,6 +22,7 @@ public class EnemyAI : NetworkComponent
     public Animator MyAnim;
     public Animator AttackSprite;
     public GameObject HealthBar;
+    public int EnemyPrefab;
     public int ProjectilePrefab;
 
     [Header("ENEMY AI STATS")]
@@ -481,11 +482,52 @@ public class EnemyAI : NetworkComponent
     public IEnumerator Attack()
     {
         Attacking = true;
+        StartCoroutine(AttackSFX());
         StartCoroutine(AttackAnimation());
         //raycast to check to do damage
         yield return new WaitForSeconds(AttackSpeed);
         Attacking = false;
 
+    }
+    public IEnumerator AttackSFX()
+    {
+        switch (EnemyPrefab)
+        {
+            case 0:
+                FindObjectOfType<AudioManager>().Play("BearA");
+                break;
+            case 1:
+                FindObjectOfType<AudioManager>().Play("WolfA");
+                break;
+            case 2:
+                FindObjectOfType<AudioManager>().Play("GoblinA");
+                break;
+            case 3:
+                FindObjectOfType<AudioManager>().Play("GoblinWarriorA");
+                break;
+            case 4:
+                FindObjectOfType<AudioManager>().Play("GoblinWizardA");
+                break;
+            case 5:
+                FindObjectOfType<AudioManager>().Play("CrabA");
+                break;
+            case 6:
+                FindObjectOfType<AudioManager>().Play("SpiderA");
+                break;
+            case 7:
+                FindObjectOfType<AudioManager>().Play("BroodMotherA");
+                break;
+            case 8:
+                FindObjectOfType<AudioManager>().Play("GolemA");
+                break;
+            case 9:
+                FindObjectOfType<AudioManager>().Play("SlimeA");
+                break;
+            case 10:
+                FindObjectOfType<AudioManager>().Play("SkeletonA");
+                break;
+        }
+        yield return new WaitForSeconds(0.05f);
     }
     public IEnumerator AttackAnimation()
     {
@@ -531,6 +573,42 @@ public class EnemyAI : NetworkComponent
     public void Die()
     {
         Dead = true;
+        switch (EnemyPrefab)
+        {
+            case 0:
+                FindObjectOfType<AudioManager>().Play("BearD");
+                break;
+            case 1:
+                FindObjectOfType<AudioManager>().Play("WolfD");
+                break;
+            case 2:
+                FindObjectOfType<AudioManager>().Play("GoblinD");
+                break;
+            case 3:
+                FindObjectOfType<AudioManager>().Play("GoblinD");
+                break;
+            case 4:
+                FindObjectOfType<AudioManager>().Play("GoblinD");
+                break;
+            case 5:
+                FindObjectOfType<AudioManager>().Play("CrabD");
+                break;
+            case 6:
+                FindObjectOfType<AudioManager>().Play("SpiderD");
+                break;
+            case 7:
+                FindObjectOfType<AudioManager>().Play("BroodMotherD");
+                break;
+            case 8:
+                FindObjectOfType<AudioManager>().Play("GolemD");
+                break;
+            case 9:
+                FindObjectOfType<AudioManager>().Play("SlimeD");
+                break;
+            case 10:
+                FindObjectOfType<AudioManager>().Play("SkeletonD");
+                break;
+        }
         this.GetComponent<ShadowCaster2D>().enabled = false;
         this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         this.GetComponent<NetworkRigidBody2D>().enabled = false;
