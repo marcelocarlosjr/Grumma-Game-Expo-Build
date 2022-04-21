@@ -310,6 +310,10 @@ public abstract class PlayerController : NetworkComponent
         if(flag == "SAFE" && IsClient)
         {
             IsSafe = bool.Parse(value);
+            if (FindObjectOfType<PVPModeUI>())
+            {
+                FindObjectOfType<PVPModeUI>().SetPVP(IsSafe);
+            }
         }
     }
 
