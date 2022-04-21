@@ -61,6 +61,11 @@ public class Projectile : NetworkComponent
                     MyCore.NetDestroyObject(this.NetId);
                 }
             }
+            if (collision.collider.gameObject.tag == "WALL")
+            {
+                MyCore.NetDestroyObject(this.NetId);
+            }
+
         }
     }
     public IEnumerator Die()

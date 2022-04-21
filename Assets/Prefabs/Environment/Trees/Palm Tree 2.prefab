@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7851867646309495616}
   m_Layer: 0
   m_Name: Trunk
-  m_TagString: Untagged
+  m_TagString: WALL
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -131,7 +131,7 @@ MonoBehaviour:
   - {x: -0.26319885, y: -0.2001133, z: 0}
   m_ShapePathHash: 278769261
   m_Mesh: {fileID: 0}
-  m_InstanceId: 158734
+  m_InstanceId: 463250
 --- !u!1 &3887247240125287946
 GameObject:
   m_ObjectHideFlags: 0
