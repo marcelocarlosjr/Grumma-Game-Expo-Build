@@ -3649,10 +3649,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d5c0275471e3941888dd0de34ff849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PublicIP: 127.0.0.1
-  FloridaPolyIP: 127.0.0.1
+  PublicIP: 71.44.212.55
+  FloridaPolyIP: 10.200.208.197
   IsTeleporting: 0
   IsServer: 0
+  PName: 
   Health: 0
   Stamina: 0
   EXP: 0
