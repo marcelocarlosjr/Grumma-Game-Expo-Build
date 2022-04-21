@@ -103,6 +103,7 @@ MonoBehaviour:
   IsDirty: 0
   MyRig: {fileID: 1772590419654116529}
   PositionMod: -0.1875
+  type: 1
   radius: 0.09375
   distance: 0.3125
   DestroyTimer: 1.5

@@ -12,13 +12,35 @@ public class EnemyProjectile : NetworkComponent
     Vector3 position;
     public float PositionMod;
     Vector3 direction;
+    public int type;
     public float radius;
     public float distance;
     public float DestroyTimer;
 
     public override void HandleMessage(string flag, string value)
     {
+        if (flag == "SOUND")
+        {
+            if (IsClient)
+            {
+                switch (int.Parse(value))
+                {
+                    case 0:
+                        FindObjectOfType<AudioManager>().Play("SpearProjectileHit");
+                        break;
+                    case 1:
+                        FindObjectOfType<AudioManager>().Play("FireProjectileHit");
+                        break;
+                    case 2:
+                        FindObjectOfType<AudioManager>().Play("BoneProjectileHit");
+                        break;
+                    case 3:
+                        FindObjectOfType<AudioManager>().Play("SlimeProjectileHit");
+                        break;
+                }
 
+            }
+        }
     }
 
     public override void NetworkedStart()
@@ -82,6 +104,7 @@ public class EnemyProjectile : NetworkComponent
                 if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
                 {
                     collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(Damage, -1);
+                    SendUpdate("SOUND", type.ToString());
                     MyCore.NetDestroyObject(this.NetId);
                 }
             }
@@ -97,6 +120,7 @@ public class EnemyProjectile : NetworkComponent
                             pc.GetLastEnemy(collision.collider.GetComponent<NetworkID>().NetId);
                         }
                     }
+                    SendUpdate("SOUND", type.ToString());
                     MyCore.NetDestroyObject(this.NetId);
                 }
             }

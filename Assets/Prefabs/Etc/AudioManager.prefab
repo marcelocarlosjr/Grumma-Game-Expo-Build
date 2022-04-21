@@ -298,3 +298,45 @@ MonoBehaviour:
     loop: 0
     soundType: 1
     source: {fileID: 0}
+  - name: ArrowProjectileHit
+    clip: {fileID: 8300000, guid: 6e4ae5466e1473244a065ffcfe1a9280, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: MagicProjectileHit
+    clip: {fileID: 8300000, guid: 78cabb7067f3eea4b9cdf32897de2112, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: SpearProjectileHit
+    clip: {fileID: 8300000, guid: d9cd908b88e9e24468a3eb1e97b11a4a, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: FireProjectileHit
+    clip: {fileID: 8300000, guid: 624f05f22464e6d4d884c8caa42ac2fe, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: BoneProjectileHit
+    clip: {fileID: 8300000, guid: dbd71378a9f07d74895e2077029bf42b, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
+  - name: SlimeProjectileHit
+    clip: {fileID: 8300000, guid: 71bdfb2b30c7a4747b4e485e9eed0720, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    soundType: 1
+    source: {fileID: 0}
