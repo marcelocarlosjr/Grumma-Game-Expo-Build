@@ -19,10 +19,7 @@ public class EnemySpawner : NetworkComponent
 
     public override void NetworkedStart()
     {
-        if (IsServer)
-        {
-            LinkedEnemy = MyCore.NetCreateObject(SpawnPrefab, -1, this.transform.position, Quaternion.identity);
-        }
+
     }
 
     public override IEnumerator SlowUpdate()
