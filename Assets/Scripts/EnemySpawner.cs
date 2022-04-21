@@ -12,9 +12,11 @@ public class EnemySpawner : MonoBehaviour
 
     bool Timer;
 
+    bool IsServer;
+
     private void Update()
     {
-        if (FindObjectOfType<NetworkCore>() && FindObjectOfType<NetworkCore>().IsServer)
+        if (IsServer)
         {
             if(LinkedEnemy == null)
             {
@@ -26,6 +28,11 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        StartCoroutine(GetIsServer());
+    }
+
     public IEnumerator SpawnTimer()
     {
         Timer = true;
@@ -33,5 +40,18 @@ public class EnemySpawner : MonoBehaviour
         LinkedEnemy = FindObjectOfType<NetworkCore>().NetCreateObject(SpawnPrefab, -1, this.transform.position, Quaternion.identity);
         Timer = false;
 
+    }
+
+    public IEnumerator GetIsServer()
+    {
+        yield return new WaitUntil(() => FindObjectOfType<NetworkCore>().IsConnected);
+        if (FindObjectOfType<NetworkCore>().IsServer)
+        {
+            IsServer = true;
+        }
+        else
+        {
+            IsServer = false;
+        }
     }
 }
