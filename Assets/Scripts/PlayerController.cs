@@ -950,7 +950,7 @@ public abstract class PlayerController : NetworkComponent
 
     public IEnumerator LevelTimer(int _level, int _exp)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.2f);
         levelSystem = new LevelSystem(true, _level, _exp);
         levelSystem.OnLevelChanged += LevelSystem_OnLevelChanged;
         levelSystem.OnExperienceChanged += LevelSystem_OnExperienceChanged;
@@ -964,7 +964,7 @@ public abstract class PlayerController : NetworkComponent
 
     public void LevelSystem_OnLevelChanged(object sender, EventArgs e)
     {
-        FindObjectOfType<AudioManager>().Play("PlayerLevel");
+        //FindObjectOfType<AudioManager>().Play("PlayerLevel");
         Level = levelSystem.level + 1;
         SendUpdate("LEVEL", Level.ToString());
     }
@@ -1005,10 +1005,11 @@ public abstract class PlayerController : NetworkComponent
             {
                 SprintMod = 1;
             }
-            //EXP = levelSystem.experience;
-            //SendUpdate("EXPERIENCE", EXP + "," + levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
-            //Level = levelSystem.level + 1;
-            //SendUpdate("LEVEL", Level.ToString());
+
+            EXP = levelSystem.experience;
+            SendUpdate("EXPERIENCE", EXP + "," + levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
+            Level = levelSystem.level + 1;
+            SendUpdate("LEVEL", Level.ToString());
 
             Damage = (DamageBase + (DamageUpgradeMod * DamageUpgrade)) + ((DamageMod * .01f) * (DamageBase + (DamageUpgradeMod * DamageUpgrade)));
             MaxHealth = (HealthBase + (HealthUpgradeMod * HealthUpgrade)) + ((HealthMod * .01f) * (HealthBase + (HealthUpgradeMod * HealthUpgrade)));
