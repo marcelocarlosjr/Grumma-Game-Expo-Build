@@ -399,7 +399,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 7024939e72355d047b228d0e853fb8d1, type: 3}
+  m_Actions: {fileID: 0}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -572,6 +572,61 @@ MonoBehaviour:
   StaticItemDatabase: {fileID: 11400000, guid: 0773bb310c27acf4fafef43ed2e92b13, type: 2}
   DisplayUI: {fileID: 0}
   LastEnemyAttacked: 0
+  InputActionPlayer: {fileID: -944628639613478452, guid: 7024939e72355d047b228d0e853fb8d1, type: 3}
+  MoveAction:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 3e90f056-25a3-4a53-913d-9eb7a5ba9e50
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  LFireAction:
+    m_Name: L Fire
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 150c4801-93b7-4ad8-9fad-14374f0d4b8e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  RFireAction:
+    m_Name: R Fire
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: af54e6df-2f07-4e9a-bb92-43390714e4d7
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  SprintAction:
+    m_Name: Sprint
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 0646a250-bc9d-4d52-8797-2afd3e801dd9
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  AimAction:
+    m_Name: Aim
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 68d7d500-9ccb-4ad9-955f-e07f4936e9e9
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  ControlsChangedEventAction:
+    m_Name: Controls Changed Event
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c4186976-aed7-44ea-a672-50fb7cd5cb6a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
   MoveInput: {x: 0, y: 0}
   AimInput: {x: 0, y: 0}
   AimDir: {x: 0, y: 0}
@@ -614,7 +669,10 @@ MonoBehaviour:
   EXPModUpgrade: 0
   StaminaUpgrade: 0
   Name: 
+  type: 0
+  IsSafe: 0
   InputType: 
+  teleport: 0
   TouchingObjects: []
   SlashAnim: {fileID: 0}
   LFireDamage: 3

@@ -19,6 +19,16 @@ public abstract class PlayerController : NetworkComponent
     public DisplayInventory DisplayUI;
     public int LastEnemyAttacked;
     public LevelSystem levelSystem;
+    public InputActionAsset InputActionPlayer;
+
+    public InputAction MoveAction;
+    public InputAction LFireAction;
+    public InputAction RFireAction;
+    public InputAction SprintAction;
+    public InputAction AimAction;
+
+    public InputAction ControlsChangedEventAction;
+
 
     [Header("Player Inputs")]
     public Vector2 MoveInput;
@@ -323,7 +333,52 @@ public abstract class PlayerController : NetworkComponent
             Inventory.database = StaticItemDatabase;
 
             FindObjectOfType<PlayerHealthUI>().SetPlayerImage(type);
+
+            FindObjectOfType<PlayerInput>().actions = InputActionPlayer;
+
+            MoveAction = GetComponent<PlayerInput>().currentActionMap.FindAction("Move", true);
+            MoveAction.started += this.OnMoveInput;
+            MoveAction.performed += this.OnMoveInput;
+            MoveAction.canceled += this.OnMoveInput;
+            LFireAction = GetComponent<PlayerInput>().currentActionMap.FindAction("LFire", true);
+            LFireAction.started += this.OnLClickInput;
+            LFireAction.performed += this.OnLClickInput;
+            LFireAction.canceled += this.OnLClickInput;
+            RFireAction = GetComponent<PlayerInput>().currentActionMap.FindAction("RFire", true);
+            RFireAction.started += this.OnRClickInput;
+            RFireAction.performed += this.OnRClickInput;
+            RFireAction.canceled += this.OnRClickInput;
+            SprintAction = GetComponent<PlayerInput>().currentActionMap.FindAction("Sprint", true);
+            SprintAction.started += this.OnSprintInput;
+            SprintAction.performed += this.OnSprintInput;
+            SprintAction.canceled += this.OnSprintInput;
+            AimAction = GetComponent<PlayerInput>().currentActionMap.FindAction("Aim", true);
+            AimAction.started += this.OnAimInput;
+            AimAction.performed += this.OnAimInput;
+            AimAction.canceled += this.OnAimInput;
+
+            InputType = KBM;
+
         }
+    }
+    public void OnDestroy()
+    {
+        MoveAction.started -= this.OnMoveInput;
+        MoveAction.performed -= this.OnMoveInput;
+        MoveAction.canceled -= this.OnMoveInput;
+        LFireAction.started -= this.OnLClickInput;
+        LFireAction.performed -= this.OnLClickInput;
+        LFireAction.canceled -= this.OnLClickInput;
+        RFireAction.started -= this.OnRClickInput;
+        RFireAction.performed -= this.OnRClickInput;
+        RFireAction.canceled -= this.OnRClickInput;
+        SprintAction.started -= this.OnSprintInput;
+        SprintAction.performed -= this.OnSprintInput;
+        SprintAction.canceled -= this.OnSprintInput;
+        AimAction.started -= this.OnAimInput;
+        AimAction.performed -= this.OnAimInput;
+        AimAction.canceled -= this.OnAimInput;
+
     }
     public override IEnumerator SlowUpdate()
     {
