@@ -261,7 +261,7 @@ MonoBehaviour:
   - {x: 0.16637968, y: 0.25845098, z: 0}
   m_ShapePathHash: 641600109
   m_Mesh: {fileID: 0}
-  m_InstanceId: 187278
+  m_InstanceId: 38262
 --- !u!195 &8474902697927252122
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -480,7 +480,7 @@ Animator:
   m_GameObject: {fileID: 5569594213809543684}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f027fd5281d58ec4ea0613e086b25b93, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6d14a1a7d71733a488b2718e82d70270, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
