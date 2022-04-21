@@ -325,7 +325,7 @@ MonoBehaviour:
   Damage: 69
   ItemDrops: 290000002a0000002b0000002c0000002d0000002e000000
   EmptyDrops: 20
-  AttackSpeed: 0
+  AttackSpeed: 4
   ProjectileSpeed: 0
 --- !u!114 &1286466891
 MonoBehaviour:

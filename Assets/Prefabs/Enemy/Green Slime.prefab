@@ -515,8 +515,8 @@ MonoBehaviour:
   Damage: 20
   ItemDrops: 22000000230000002400000025000000
   EmptyDrops: 15
-  AttackSpeed: 0
-  ProjectileSpeed: 0
+  AttackSpeed: 4
+  ProjectileSpeed: 3
 --- !u!114 &1027775127246292113
 MonoBehaviour:
   m_ObjectHideFlags: 0

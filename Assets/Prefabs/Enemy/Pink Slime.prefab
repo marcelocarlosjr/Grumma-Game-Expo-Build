@@ -409,8 +409,8 @@ MonoBehaviour:
   Damage: 30
   ItemDrops: 22000000240000002600000023000000
   EmptyDrops: 10
-  AttackSpeed: 0
-  ProjectileSpeed: 0
+  AttackSpeed: 4
+  ProjectileSpeed: 3
 --- !u!70 &-2177015485197472977
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
