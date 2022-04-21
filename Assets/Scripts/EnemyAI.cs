@@ -170,6 +170,7 @@ public class EnemyAI : NetworkComponent
                         {
                             MyAgent.speed = Speed * 2;
                             DestinationMet = true;
+                            DestinationMet = true;
                             FollowPlayer = true;
                             Vector2 position = transform.position;
                             Vector2 direction = this.transform.up;
@@ -200,7 +201,7 @@ public class EnemyAI : NetworkComponent
 
                         if (!StopMove)
                         {
-                            MyAgent.SetDestination(new Vector3(this.transform.position.x + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1), this.transform.position.y + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1)));
+                            GetRandLocation();
                             DestinationMet = false;
                             StopTimer = false;
                         }
@@ -352,7 +353,7 @@ public class EnemyAI : NetworkComponent
 
                         if (!StopMove)
                         {
-                            MyAgent.SetDestination(new Vector3(this.transform.position.x + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1), this.transform.position.y + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1)));
+                            GetRandLocation();
                             DestinationMet = false;
                             StopTimer = false;
                         }
@@ -493,6 +494,20 @@ public class EnemyAI : NetworkComponent
         Attacking = false;
 
     }
+
+    public void GetRandLocation()
+    {
+        Vector2 RandLocation = new Vector2(this.transform.position.x + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1), this.transform.position.y + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1));
+        if (MyAgent.SetDestination(RandLocation))
+        {
+            MyAgent.SetDestination(RandLocation);
+        }
+        else if (!MyAgent.SetDestination(RandLocation))
+        {
+            GetRandLocation();
+        }
+    }
+
     public IEnumerator AttackSFX()
     {
         switch (EnemyPrefab)
