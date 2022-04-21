@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 882114383623855930}
   - component: {fileID: 5340378762995897996}
   - component: {fileID: 6702816552228402417}
+  - component: {fileID: 4335312335119113081}
   m_Layer: 0
   m_Name: Trunk
   m_TagString: WALL
@@ -131,7 +132,23 @@ MonoBehaviour:
   - {x: -0.26319885, y: -0.2001133, z: 0}
   m_ShapePathHash: 278769261
   m_Mesh: {fileID: 0}
-  m_InstanceId: 463312
+  m_InstanceId: 467164
+--- !u!114 &4335312335119113081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6635063213405917089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
 --- !u!1 &8578122393357206376
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5807255106748577255}
   - component: {fileID: 1306078925616561867}
   - component: {fileID: 367792924297628094}
+  - component: {fileID: -8125893768353471918}
   m_Layer: 0
   m_Name: House (5)
   m_TagString: WALL
@@ -151,3 +152,19 @@ MonoBehaviour:
   m_ShapePathHash: -1135595667
   m_Mesh: {fileID: 0}
   m_InstanceId: -746456
+--- !u!114 &-8125893768353471918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7865253838778313745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 1
+  m_Area: 1
+  m_IgnoreFromBuild: 0
+  m_AffectedAgents: ffffffff
