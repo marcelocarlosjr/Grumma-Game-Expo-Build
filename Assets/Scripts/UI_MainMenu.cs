@@ -20,11 +20,17 @@ public class UI_MainMenu : MonoBehaviour
         FindObjectOfType<AudioManager>().Play("ClickUI");
     }
 
+    private void Start()
+    {
+        FindObjectOfType<OfflinePlayerHolder>().RemoveLoading();
+    }
+
     public void Connect()
     {
         if(Pname != "" && Char != -1)
         {
             FindObjectOfType<AudioManager>().Play("ClickUI");
+            FindObjectOfType<OfflinePlayerHolder>().ShowLoading();
             SceneManager.LoadScene(1);
         }
     }

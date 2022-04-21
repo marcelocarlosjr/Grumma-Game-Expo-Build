@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Text;
+using UnityEngine.UI;
 
 public class OfflinePlayerHolder : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class OfflinePlayerHolder : MonoBehaviour
     public bool IsServer = false;
 
     public string PName;
+
+    public GameObject LoadingScreen;
 
     [Header("Player Current Stats")]
     public float Health;
@@ -50,6 +53,18 @@ public class OfflinePlayerHolder : MonoBehaviour
     public int item4ID;
     public int item5ID;
 
+    public void ShowLoading()
+    {
+        LoadingScreen.transform.GetChild(0).gameObject.SetActive(true);
+        LoadingScreen.transform.GetChild(1).gameObject.SetActive(true);
+    }
+
+    public void RemoveLoading()
+    {
+        LoadingScreen.transform.GetChild(0).gameObject.SetActive(false);
+        LoadingScreen.transform.GetChild(1).gameObject.SetActive(false);
+    }
+
     public void setPNAME(string _name)
     {
         PName = _name;
@@ -66,6 +81,16 @@ public class OfflinePlayerHolder : MonoBehaviour
 
     private void Start()
     {
+        LoadingScreen = FindObjectOfType<LoadingScreen>().gameObject;
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            RemoveLoading();
+        }
+        else
+        {
+            ShowLoading();
+        }
+
         SceneManager.sceneLoaded += this.OnSceneSwitched;
         string[] args = System.Environment.GetCommandLineArgs();
         foreach (string s in args)
@@ -100,6 +125,7 @@ public class OfflinePlayerHolder : MonoBehaviour
 
     public void OnSceneSwitched(Scene s, LoadSceneMode l)
     {
+        LoadingScreen = FindObjectOfType<LoadingScreen>().gameObject;
         if (s.buildIndex == 0 && isUsed)
         {
             Destroy(this.gameObject);
@@ -186,53 +212,6 @@ public class OfflinePlayerHolder : MonoBehaviour
         FindObjectOfType<NetworkCore>().IP = IP;
         FindObjectOfType<NetworkCore>().UI_StartClient();
     }
-    /*public IEnumerator SlowAgentStart()
-    {
-        bool UsePublic = false;
-        bool UseFlorida = false;
-        string IP = "127.0.0.1";
-
-        //Ping Public Ip address to see if we are external..........
-        System.Net.NetworkInformation.Ping ping = new System.Net.NetworkInformation.Ping();
-        System.Net.NetworkInformation.PingOptions po = new System.Net.NetworkInformation.PingOptions();
-        po.DontFragment = true;
-        string data = "HELLLLOOOOO!";
-        byte[] buffer = ASCIIEncoding.ASCII.GetBytes(data);
-        int timeout = 500;
-        System.Net.NetworkInformation.PingReply pr = ping.Send(PublicIP, timeout, buffer, po);
-        yield return new WaitForSeconds(1.5f);
-        if (pr.Status == System.Net.NetworkInformation.IPStatus.Success)
-        {
-            UsePublic = true;
-            IP = PublicIP;
-        }
-        else
-        {
-            UsePublic = false;
-        }
-        //-------------------If not public, ping Florida Poly for internal access.
-        if (!UsePublic)
-        {
-            pr = ping.Send(FloridaPolyIP, timeout, buffer, po);
-            yield return new WaitForSeconds(1.5f);
-            if (pr.Status.ToString() == "Success")
-            {
-                UseFlorida = true;
-                IP = FloridaPolyIP;
-            }
-            else
-            {
-                UseFlorida = false;
-            }
-        }
-        //Otherwise use local host, assume testing.
-        if (!UsePublic && !UseFlorida)
-        {
-            IP = "127.0.0.1";
-        }
-        FindObjectOfType<NetworkCore>().IP = IP;
-        FindObjectOfType<NetworkCore>().UI_StartClient();
-    }*/
 
     public IEnumerator Teleport(int scene)
     {

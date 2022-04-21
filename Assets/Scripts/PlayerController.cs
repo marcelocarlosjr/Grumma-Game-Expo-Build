@@ -304,6 +304,7 @@ public abstract class PlayerController : NetworkComponent
         {
             Name = value;
             NameBox.text = Name;
+            FindObjectOfType<OfflinePlayerHolder>().RemoveLoading();
         }
 
         if(flag == "SAFE" && IsClient)

@@ -73,8 +73,8 @@ public class EnemySpawner : MonoBehaviour
     public IEnumerator SpawnTimer()
     {
         Timer = true;
-        yield return new WaitForSeconds(RespawnTimer);
         LinkedEnemy = FindObjectOfType<NetworkCore>().NetCreateObject(SpawnPrefab, -1, this.transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(RespawnTimer);
         Timer = false;
 
     }
