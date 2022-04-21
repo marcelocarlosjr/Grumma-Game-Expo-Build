@@ -18,6 +18,7 @@ public class MageController : PlayerController
         {
             if (!LFireCD)
             {
+                FindObjectOfType<AudioManager>().Play("MageA");
                 StartCoroutine(LFire());
             }
         }
@@ -51,6 +52,7 @@ public class MageController : PlayerController
             if (!RFireCD)
             {
                 RFireCD = true;
+                FindObjectOfType<AudioManager>().Play("MageS");
                 StartCoroutine(RFire());
             }
         }

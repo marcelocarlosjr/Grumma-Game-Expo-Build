@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Arrow : Projectile
 {
-    public int type;
-
     protected override void Start()
     {
         if (IsServer)
@@ -28,7 +26,7 @@ public class Arrow : Projectile
             radius = 0.1875f;
             distance = 0.6875f;
             base.Update();
-            DectectCollisionCircleCast(position, radius, direction, distance, type);
+            DectectCollisionCircleCast(position, radius, direction, distance);
         }
     }
 }

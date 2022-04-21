@@ -13,7 +13,7 @@ public class Projectile : NetworkComponent
     public float radius;
     public float distance;
 
-    //public int type;
+    public int type;
     public float Damage;
     public float Speed;
     public float Timer;
@@ -23,6 +23,7 @@ public class Projectile : NetworkComponent
         if (IsServer)
         {
             MyRig = GetComponent<Rigidbody2D>();
+            //SendUpdate("SOUND", type.ToString());
             StartCoroutine(Die());
         }
     }
@@ -34,7 +35,7 @@ public class Projectile : NetworkComponent
         }
     }
 
-    public void DectectCollisionCircleCast(Vector2 position1, float radius1, Vector2 direction1, float distance1, int type)
+    public void DectectCollisionCircleCast(Vector2 position1, float radius1, Vector2 direction1, float distance1)
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll(position1, radius1, direction1, (distance1 - radius1));
         foreach (RaycastHit2D collision in hits)
@@ -44,7 +45,7 @@ public class Projectile : NetworkComponent
                 if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
                 {
                     collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(Damage, Owner);
-                    SendUpdate("SOUND", type.ToString());
+                    SendUpdate("SOUNDHIT", type.ToString());
                     MyCore.NetDestroyObject(this.NetId);
                 }
             }
@@ -60,13 +61,13 @@ public class Projectile : NetworkComponent
                             pc.GetLastEnemy(collision.collider.GetComponent<NetworkID>().NetId);
                         }
                     }
-                    SendUpdate("SOUND", type.ToString());
+                    SendUpdate("SOUNDHIT", type.ToString());
                     MyCore.NetDestroyObject(this.NetId);
                 }
             }
             if (collision.collider.gameObject.tag == "WALL")
             {
-                SendUpdate("SOUND", type.ToString());
+                SendUpdate("SOUNDHIT", type.ToString());
                 MyCore.NetDestroyObject(this.NetId);
             }
 
@@ -93,7 +94,7 @@ public class Projectile : NetworkComponent
 
     public override void HandleMessage(string flag, string value)
     {
-        if (flag == "SOUND")
+        if (flag == "SOUNDHIT")
         {
             if (IsClient)
             {
@@ -105,8 +106,30 @@ public class Projectile : NetworkComponent
                     case 1:
                         FindObjectOfType<AudioManager>().Play("MagicProjectileHit");
                         break;
+                    case 2:
+                        FindObjectOfType<AudioManager>().Play("MagicProjectileHit");
+                        break;
                 }
                 
+            }
+        }
+        if (flag == "SOUND")
+        {
+            if (IsClient)
+            {
+                switch (int.Parse(value))
+                {
+                    case 0:
+                        FindObjectOfType<AudioManager>().Play("ArcherA");
+                        break;
+                    case 1:
+                        FindObjectOfType<AudioManager>().Play("MageA");
+                        break;
+                    case 2:
+                        FindObjectOfType<AudioManager>().Play("MageS");
+                        break;
+                }
+
             }
         }
     }

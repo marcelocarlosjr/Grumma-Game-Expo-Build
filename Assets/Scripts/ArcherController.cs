@@ -18,15 +18,16 @@ public class ArcherController : PlayerController
         {
             if (!LFireCD)
             {
+                FindObjectOfType<AudioManager>().Play("ArcherA");
                 StartCoroutine(LFire());
             }
         }
     }
     public override IEnumerator LFire()
     {
-        while (LFireInput && !RFireAnimation && !TakingDamage && !Dead)
+        if (IsServer)
         {
-            if (IsServer)
+            while (LFireInput && !RFireAnimation && !TakingDamage && !Dead)
             {
                 LFireCD = true;
                 StartCoroutine(LFireAnim());
@@ -35,13 +36,7 @@ public class ArcherController : PlayerController
                 LFireCD = false;
 
             }
-            else
-            {
-                FindObjectOfType<AudioManager>().Play("ArcherA");
-                yield return new WaitForSeconds(1);
-            }
         }
-        
     }
     public IEnumerator LFireAnim()
     {
@@ -57,6 +52,7 @@ public class ArcherController : PlayerController
             if (!RFireCD)
             {
                 RFireCD = true;
+                FindObjectOfType<AudioManager>().Play("ArcherS");
                 StartCoroutine(RFire());
             }
         }

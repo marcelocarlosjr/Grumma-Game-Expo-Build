@@ -273,11 +273,11 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   radius: 0
   distance: 0
+  type: 2
   Damage: 15
   Speed: 7
   Timer: 4
   OuterRing: {fileID: 7269611349438378849}
-  type: 1
   RotationSpeed: 1
   Outer: 0
   MoveDir: {x: 0, y: 0}
