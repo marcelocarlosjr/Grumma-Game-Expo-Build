@@ -24,9 +24,9 @@ public class ArcherController : PlayerController
     }
     public override IEnumerator LFire()
     {
-        if (IsServer)
+        while (LFireInput && !RFireAnimation && !TakingDamage && !Dead)
         {
-            while (LFireInput && !RFireAnimation && !TakingDamage && !Dead)
+            if (IsServer)
             {
                 LFireCD = true;
                 StartCoroutine(LFireAnim());
@@ -35,7 +35,13 @@ public class ArcherController : PlayerController
                 LFireCD = false;
 
             }
+            else
+            {
+                FindObjectOfType<AudioManager>().Play("ArcherA");
+                yield return new WaitForSeconds(1);
+            }
         }
+        
     }
     public IEnumerator LFireAnim()
     {

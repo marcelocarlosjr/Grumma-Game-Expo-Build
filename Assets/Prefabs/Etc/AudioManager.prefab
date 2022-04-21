@@ -96,7 +96,7 @@ MonoBehaviour:
     soundType: 1
     source: {fileID: 0}
   - name: Walk
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 7d9e32498809fdb479740b1936b133a1, type: 3}
     volume: 0
     pitch: 0
     loop: 1
@@ -110,21 +110,21 @@ MonoBehaviour:
     soundType: 1
     source: {fileID: 0}
   - name: WarriorS
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: f7a95427d6ab91b4d94beeb88dbad88b, type: 3}
     volume: 0
     pitch: 0
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: ArcherA
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: aa22044a9436f764fb9fade805dd38bd, type: 3}
     volume: 0
     pitch: 0
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: ArcherS
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 34c27ed88a006ee4ab82a299451b9c9a, type: 3}
     volume: 0
     pitch: 0
     loop: 0
@@ -152,28 +152,21 @@ MonoBehaviour:
     soundType: 1
     source: {fileID: 0}
   - name: PlayerD
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 0d457cc1f77104540ab711a1ef77b5ca, type: 3}
     volume: 0
     pitch: 0
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: GolemA
-    clip: {fileID: 8300000, guid: 5566ca93bccf0c444a3e49006d2980a5, type: 3}
-    volume: 0
-    pitch: 0
-    loop: 0
-    soundType: 1
-    source: {fileID: 0}
-  - name: GolemTD
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: bf64f6e109a31fd4eb396e67f6497591, type: 3}
     volume: 0
     pitch: 0
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: GolemD
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: c63afe2528d09bf4385fdb2990aa8f60, type: 3}
     volume: 0
     pitch: 0
     loop: 0
@@ -200,13 +193,6 @@ MonoBehaviour:
     loop: 0
     soundType: 1
     source: {fileID: 0}
-  - name: GoblinTD
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
-    loop: 0
-    soundType: 1
-    source: {fileID: 0}
   - name: GoblinD
     clip: {fileID: 8300000, guid: 5212bbb7abbabc24dbadf1b6d2793655, type: 3}
     volume: 0
@@ -216,13 +202,6 @@ MonoBehaviour:
     source: {fileID: 0}
   - name: CrabA
     clip: {fileID: 8300000, guid: d6f364f5f06c2f44ba39f2fb0bcfd48b, type: 3}
-    volume: 0
-    pitch: 0
-    loop: 0
-    soundType: 1
-    source: {fileID: 0}
-  - name: CrabTD
-    clip: {fileID: 0}
     volume: 0
     pitch: 0
     loop: 0
@@ -242,13 +221,6 @@ MonoBehaviour:
     loop: 0
     soundType: 1
     source: {fileID: 0}
-  - name: BearTD
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
-    loop: 0
-    soundType: 1
-    source: {fileID: 0}
   - name: BearD
     clip: {fileID: 8300000, guid: c74da1fbee66efa409069c0bf0bfbb8c, type: 3}
     volume: 0
@@ -257,14 +229,7 @@ MonoBehaviour:
     soundType: 1
     source: {fileID: 0}
   - name: SpiderA
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
-    loop: 0
-    soundType: 1
-    source: {fileID: 0}
-  - name: SpiderTD
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: a7dcc1288cce29941b266b1277ca7be8, type: 3}
     volume: 0
     pitch: 0
     loop: 0
@@ -278,14 +243,7 @@ MonoBehaviour:
     soundType: 1
     source: {fileID: 0}
   - name: BroodMotherA
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
-    loop: 0
-    soundType: 1
-    source: {fileID: 0}
-  - name: BroodMotherTD
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: dbf4ae7ad6dc7d4459218e0f5feb34e3, type: 3}
     volume: 0
     pitch: 0
     loop: 0
@@ -299,63 +257,42 @@ MonoBehaviour:
     soundType: 1
     source: {fileID: 0}
   - name: SkeletonA
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
-    loop: 0
-    soundType: 1
-    source: {fileID: 0}
-  - name: SkeletonTD
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 9b82218c698d87e498fc93a636928c77, type: 3}
     volume: 0
     pitch: 0
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: SkeletonD
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 679d1d5d4fce77f41a71307f396c24f9, type: 3}
     volume: 0
     pitch: 0
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: SlimeA
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
-    loop: 0
-    soundType: 1
-    source: {fileID: 0}
-  - name: SlimeTD
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 468b974964cc8d84ca632d15a2dae656, type: 3}
     volume: 0
     pitch: 0
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: SlimeD
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: a0065872724686c439bbca5d37291af3, type: 3}
     volume: 0
     pitch: 0
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: WolfA
-    clip: {fileID: 0}
-    volume: 0
-    pitch: 0
-    loop: 0
-    soundType: 1
-    source: {fileID: 0}
-  - name: WolfTD
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 95e3d750bf97a6b4ebf143b785f2908a, type: 3}
     volume: 0
     pitch: 0
     loop: 0
     soundType: 1
     source: {fileID: 0}
   - name: WolfD
-    clip: {fileID: 0}
+    clip: {fileID: 8300000, guid: 8cd1973525eb0e44b9c41e175dc70353, type: 3}
     volume: 0
     pitch: 0
     loop: 0
