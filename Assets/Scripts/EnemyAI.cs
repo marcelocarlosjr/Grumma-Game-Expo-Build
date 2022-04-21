@@ -143,8 +143,25 @@ public class EnemyAI : NetworkComponent
         Health = MaxHealth;
     }
 
+    bool SetActiveMove;
+
     void Update()
     {
+        if (IsServer)
+        {
+            foreach(PlayerController pc in FindObjectsOfType<PlayerController>())
+            {
+                if(Vector3.Distance(pc.transform.position,this.transform.position) < 15)
+                {
+                    SetActiveMove = true;
+                }
+                else
+                {
+                    SetActiveMove = false;
+                }
+            }
+        }
+
         if(Health <= 0 && IsLocalPlayer)
         {
             HealthBar.transform.GetChild(1).GetComponent<RectTransform>().localScale = new Vector3(0, 1, 1);
@@ -160,7 +177,7 @@ public class EnemyAI : NetworkComponent
         }
         if (rangeType == RangeType.Melee)
         {
-            if (IsServer && IsConnected && !Dead)
+            if (IsServer && IsConnected && SetActiveMove && !Dead && MyAgent.isOnNavMesh)
             {
                 if (FindObjectsOfType<PlayerController>() != null && !Agro)
                 {
@@ -259,7 +276,7 @@ public class EnemyAI : NetworkComponent
         Coroutine shoot;
         if (rangeType == RangeType.Ranged)
         {
-            if (IsServer && IsConnected && !Dead)
+            if (IsServer && IsConnected && SetActiveMove && !Dead && MyAgent.isOnNavMesh)
             {
                 if (FindObjectsOfType<PlayerController>() != null)
                 {
