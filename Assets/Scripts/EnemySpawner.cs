@@ -8,7 +8,6 @@ public class EnemySpawner : MonoBehaviour
     public int SpawnPrefab;
     public float RespawnTimer;
 
-    public NetworkCore MyCore;
     public GameObject LinkedEnemy;
 
     bool Timer;
@@ -31,68 +30,61 @@ public class EnemySpawner : MonoBehaviour
             }
         }
     }
-    Coroutine despawn;
     bool detecting;
     public IEnumerator EnemyFindClosestPlayer()
     {
         detecting = true;
-        float minimumDistance = Mathf.Infinity;
-        foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+        if (LinkedEnemy)
         {
-            if (LinkedEnemy)
+            if (!FindObjectOfType<PlayerController>())
             {
+                FindObjectOfType<NetworkCore>().NetDestroyObject(LinkedEnemy.GetComponent<NetworkID>().NetId);
+                yield return new WaitForSeconds(2);
+                detecting = false;
+                yield break;
+            }
+            foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+            {
+                float minimumDistance = Mathf.Infinity;
                 float distance = Vector3.Distance(LinkedEnemy.transform.position, pc.transform.position);
                 if (distance < minimumDistance)
                 {
                     minimumDistance = distance;
                     nearestPlayer = pc.transform;
-
                 }
             }
-            else
+            if (Vector3.Distance(nearestPlayer.position, LinkedEnemy.transform.position) > 15)
             {
+                if (!Despawning)
+                {
+                    StartCoroutine(Despawn());
+                }
+            }
+        }
+        if (!LinkedEnemy)
+        {
+            if (!FindObjectOfType<PlayerController>())
+            {
+                yield return new WaitForSeconds(2);
+                detecting = false;
+                yield break;
+            }
+            foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+            {
+                float minimumDistance = Mathf.Infinity;
                 float distance = Vector3.Distance(this.transform.position, pc.transform.position);
                 if (distance < minimumDistance)
                 {
                     minimumDistance = distance;
                     nearestPlayer = pc.transform;
-
                 }
             }
-        }
-        if (LinkedEnemy)
-        {
-            if (Vector3.Distance(nearestPlayer.position, LinkedEnemy.transform.position) > 15)
-            {
-                if (!Despawning)
-                {
-                    if (!Despawning)
-                    {
-                        despawn = StartCoroutine(Despawn());
-                    }
-                }
-            }
-            else
-            {
-                if (despawn != null)
-                {
-                    StopCoroutine(despawn);
-                }
-            }
-        }
-        else if(!LinkedEnemy)
-        {
             if (Vector3.Distance(nearestPlayer.position, this.transform.position) < 15)
             {
-                if (!Despawning)
-                {
-                    despawn = StartCoroutine(Despawn());
-                }
                 if (!Spawning)
                 {
                     StartCoroutine(Spawn());
                 }
-
             }
         }
         yield return new WaitForSeconds(2);
@@ -105,14 +97,17 @@ public class EnemySpawner : MonoBehaviour
     {
         Despawning = true;
         yield return new WaitForSeconds(7);
-        MyCore.NetDestroyObject(LinkedEnemy.GetComponent<NetworkID>().NetId);
+        if((Vector3.Distance(nearestPlayer.position, LinkedEnemy.transform.position) > 15))
+        {
+            FindObjectOfType<NetworkCore>().NetDestroyObject(LinkedEnemy.GetComponent<NetworkID>().NetId);
+        }
         Despawning = false;
     }
 
     public IEnumerator Spawn()
     {
         Spawning = true;
-        MyCore.NetCreateObject(SpawnPrefab, -1, this.transform.position, Quaternion.identity);
+        FindObjectOfType<NetworkCore>().NetCreateObject(SpawnPrefab, -1, this.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(RespawnTimer);
         Spawning = false;
     }
@@ -132,7 +127,6 @@ public class EnemySpawner : MonoBehaviour
         if (FindObjectOfType<NetworkCore>().IsServer)
         {
             IsServer = true;
-            MyCore = FindObjectOfType<NetworkCore>();
         }
         else
         {
