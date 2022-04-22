@@ -82,12 +82,12 @@ public abstract class PlayerController : NetworkComponent
     public float StaminaUpgrade;
 
     float MoveSpeedUpgradeMod = 0.2f;
-    float HealthUpgradeMod = 5;
-    float DamageUpgradeMod = 1;
+    float HealthUpgradeMod = 10;
+    float DamageUpgradeMod = 3;
     float HealthRegenerationUpgradeMod = 0.25f;
     float AttackSpeedUpgradeMod = 0;
-    float EXPModUpgradeMod = 0.1f;
-    float StaminaUpgradesMod = 0.1f;
+    float EXPModUpgradeMod = 0.5f;
+    float StaminaUpgradesMod = 0.25f;
 
     [Header("Player Info")]
     public string Name;
@@ -695,7 +695,7 @@ public abstract class PlayerController : NetworkComponent
                             tempEXP += LevelEXP[i];
                         }
 
-                        p.levelSystem.AddExperience((int)tempEXP/3);
+                        p.levelSystem.AddExperience((int)((tempEXP/3) * p.EXPMulti));
                     }
                 }
                 Die();
@@ -748,85 +748,7 @@ public abstract class PlayerController : NetworkComponent
         yield return new WaitForSeconds(0.10f);
         TakingDamage = false;
     }
-    public void Heal(float amount)
-    {
-        if (IsServer)
-        {
-            if (Health + amount >= MaxHealth)
-            {
-                Health = MaxHealth;
-            }
-            else
-            {
-                Health += amount;
-            }
-            SendUpdate("HP", Health.ToString());
-        }
-    }
-    public void IncreaseMaxHealth(float amount)
-    {
-        if (IsServer)
-        {
-            MaxHealth += amount;
-            SendUpdate("MAXHP", MaxHealth.ToString());
-        }
-    }
-    public void IncreaseMoveSpeed(float amount)
-    {
-        if (IsServer)
-        {
-            MoveSpeed += amount;
-        }
-    }
-    public void IncreaseDamage(float amount)
-    {
-        if (IsServer)
-        {
-            Damage += amount;
-        }
-    }
-    public void IncreaseHealthRegen(float amount)
-    {
-        if (IsServer)
-        {
-            HealthRegeneration += amount;
-        }
-    }
-    public void IncreaseAttackSpeed(float amount)
-    {
-        if (IsServer)
-        {
-            AttackSpeed += amount;
-        }
-    }
-    public void IncreaseXPMod(float amount)
-    {
-        if (IsServer)
-        {
-            EXPMod += amount;
-        }
-    }
-    public void IncreaseMaxStamina(float amount)
-    {
-        if (IsServer)
-        {
-            MaxStamina += amount;
-        }
-    }
-    public void IncreaseStamina(float amount)
-    {
-        if (IsServer)
-        {
-            if(Stamina + amount >= MaxStamina)
-            {
-                Stamina = MaxStamina;
-            }
-            else
-            {
-                Stamina += amount;
-            }
-        }
-    }
+    
     public abstract IEnumerator LFire();
     public abstract IEnumerator RFire();
 
@@ -955,10 +877,10 @@ public abstract class PlayerController : NetworkComponent
             }
             else if(Stamina > 0)
             {
-                Stamina -= 0.004f;
+                Stamina -= 0.01f;
             }
             SendUpdate("STAMINA", Stamina.ToString());
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
     public IEnumerator SprintStaminaRegen()
@@ -968,7 +890,7 @@ public abstract class PlayerController : NetworkComponent
             if(Stamina <= MaxStamina)
             {
                 NoStamina = false;
-                Stamina += 0.001f;
+                Stamina += (MaxStamina * 0.01f);
                 SendUpdate("STAMINA", Stamina.ToString());
             }
             else
@@ -976,7 +898,7 @@ public abstract class PlayerController : NetworkComponent
                 Stamina = MaxStamina;
                 SendUpdate("STAMINA", Stamina.ToString());
             }
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0.1f);
         }
     }
     public virtual void Start()
@@ -1256,7 +1178,7 @@ public abstract class PlayerController : NetworkComponent
     public IEnumerator CollisionTimer()
     {
         PickingUp = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         for (int i = 0; i < TouchingObjects.Count; i++)
         {
             var item = TouchingObjects[i];

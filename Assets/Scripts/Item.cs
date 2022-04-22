@@ -74,17 +74,5 @@ public class Item : NetworkComponent
                 move = false;
             }
         }
-        if (collision.gameObject.GetComponent<PlayerController>())
-        {
-            Physics2D.IgnoreCollision(this.transform.GetChild(0).GetComponent<CircleCollider2D>(), collision.gameObject.GetComponent<CircleCollider2D>(), true);
-        }
-        if (collision.gameObject.GetComponent<EnemyAI>())
-        {
-            Physics2D.IgnoreCollision(this.transform.GetChild(0).GetComponent<CapsuleCollider2D>(), collision.gameObject.GetComponent<CapsuleCollider2D>(), true);
-        }
-        if (collision.gameObject.GetComponent<Item>())
-        {
-            Physics2D.IgnoreCollision(this.transform.GetChild(0).GetComponent<CircleCollider2D>(), collision.gameObject.GetComponent<CircleCollider2D>(), true);
-        }
     }
 }

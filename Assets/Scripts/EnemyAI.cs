@@ -673,7 +673,7 @@ public class EnemyAI : NetworkComponent
                 {
                     if(p.Owner == attackerid)
                     {
-                        p.levelSystem.AddExperience(ExpDrop);
+                        p.levelSystem.AddExperience((int)(ExpDrop * p.EXPMulti));
                     }
                 }
                 DropItem();
