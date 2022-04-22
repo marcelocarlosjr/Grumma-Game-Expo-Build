@@ -18,5 +18,6 @@ MonoBehaviour:
   type: 2
   attribute: 1
   rarity: 1
-  description: Increases player's Health stat 10%.
+  description: Increases player's Health stat.
   amount: 10
+  NameUI: Chunk O' Meat

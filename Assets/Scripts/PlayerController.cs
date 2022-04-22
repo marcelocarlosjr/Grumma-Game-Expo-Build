@@ -367,6 +367,8 @@ public abstract class PlayerController : NetworkComponent
 
             InputType = KBM;
 
+            Camera.main.transform.position = this.transform.position;
+
         }
     }
     public void OnDestroy()

@@ -16,10 +16,13 @@ public class DisplayInventory : MonoBehaviour
     public bool DisplayCreated;
     Dictionary<InventorySlot, GameObject> ItemsDisplayed = new Dictionary<InventorySlot, GameObject>();
 
+    public ToolTipUI toolTipUI;
+
     public Vector2 MousePos;
 
     private void Start()
     {
+        toolTipUI = FindObjectOfType<ToolTipUI>();
         InventoryLinked = false;
     }
     void Update()
@@ -113,12 +116,14 @@ public class DisplayInventory : MonoBehaviour
         if (obj.GetComponent<UIItemData>())
         {
             mouseItem.hoverObj = obj;
+            ItemObject temp = Inventory.database.GetItem[obj.GetComponent<UIItemData>().Id];
+            toolTipUI.SetStats(temp.NameUI, temp.description, temp.amount.ToString(), temp.rarity.ToString(), true);
         }
-
     }
     public void OnExit(GameObject obj)
     {
         mouseItem.hoverObj = null;
+        toolTipUI.SetStats("", "", "", "", false);
     }
     public void OnDragStart(GameObject obj)
     {

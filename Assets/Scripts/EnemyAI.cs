@@ -483,19 +483,16 @@ public class EnemyAI : NetworkComponent
                     MyRig.rotation = Mathf.LerpAngle(MyRig.rotation, rotationAngle, 2);
                 }
             }
-        }
-
-        if (Dead)
-        {
-            if (FindObjectOfType<NavMeshAgent>().enabled)
+            if (Dead)
             {
-                MyAgent.isStopped = true;
-                MyAgent.velocity = Vector3.zero;
-                MyRig.velocity = MyAgent.velocity;
+                if (FindObjectOfType<NavMeshAgent>().enabled)
+                {
+                    MyAgent.isStopped = true;
+                    MyAgent.velocity = Vector3.zero;
+                    MyRig.velocity = MyAgent.velocity;
+                }
             }
         }
-
-
         HealthBar.transform.GetChild(1).GetComponent<RectTransform>().localScale = Vector3.Lerp(HealthBar.transform.GetChild(1).GetComponent<RectTransform>().localScale, new Vector3(Health / MaxHealth,1,1), 1f);
     }
 

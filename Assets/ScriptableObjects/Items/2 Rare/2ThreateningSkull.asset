@@ -18,5 +18,6 @@ MonoBehaviour:
   type: 2
   attribute: 0
   rarity: 2
-  description: Increases player's Damage stat by 15%.
+  description: Increases player's Damage stat.
   amount: 15
+  NameUI: Cursed Skull

@@ -18,5 +18,6 @@ MonoBehaviour:
   type: 2
   attribute: 2
   rarity: 2
-  description: Increases player's Health Regen stat by 15%.
+  description: Increases player's Health Regen stat.
   amount: 15
+  NameUI: Magic Caps

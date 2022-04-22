@@ -18,5 +18,6 @@ MonoBehaviour:
   type: 2
   attribute: 6
   rarity: 1
-  description: Increases player's Experience Gain stat 10%.
+  description: Increases player's Experience Gain stat.
   amount: 10
+  NameUI: Jar Of Eyes

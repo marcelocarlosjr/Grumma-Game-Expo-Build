@@ -57,12 +57,16 @@ public class OfflinePlayerHolder : MonoBehaviour
     {
         LoadingScreen.transform.GetChild(0).gameObject.SetActive(true);
         LoadingScreen.transform.GetChild(1).gameObject.SetActive(true);
+        LoadingScreen.transform.GetChild(2).gameObject.SetActive(true);
+        LoadingScreen.transform.GetChild(3).gameObject.SetActive(true);
     }
 
     public void RemoveLoading()
     {
         LoadingScreen.transform.GetChild(0).gameObject.SetActive(false);
         LoadingScreen.transform.GetChild(1).gameObject.SetActive(false);
+        LoadingScreen.transform.GetChild(2).gameObject.SetActive(false);
+        LoadingScreen.transform.GetChild(3).gameObject.SetActive(false);
     }
 
     public void setPNAME(string _name)

@@ -18,5 +18,6 @@ MonoBehaviour:
   type: 2
   attribute: 3
   rarity: 1
-  description: Increases player's Movement stat 10%.
+  description: Increases player's Movement stat.
   amount: 10
+  NameUI: Hermes Boots

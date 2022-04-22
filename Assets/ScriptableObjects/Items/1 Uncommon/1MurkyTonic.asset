@@ -18,5 +18,6 @@ MonoBehaviour:
   type: 2
   attribute: 5
   rarity: 1
-  description: Increases player's Stamina stat 10%.
+  description: Increases player's Stamina stat.
   amount: 10
+  NameUI: Murky Tonic

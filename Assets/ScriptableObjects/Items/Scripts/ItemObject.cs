@@ -40,4 +40,6 @@ public abstract class ItemObject : ScriptableObject
     public string description;
 
     public float amount;
+
+    public string NameUI;
 }

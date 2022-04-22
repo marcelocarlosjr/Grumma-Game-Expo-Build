@@ -18,5 +18,6 @@ MonoBehaviour:
   type: 2
   attribute: 6
   rarity: 1
-  description: Increases player's Experience Gain stat by 10%.
+  description: Increases player's Experience Gain.
   amount: 10
+  NameUI: Bone Strung Necklace
