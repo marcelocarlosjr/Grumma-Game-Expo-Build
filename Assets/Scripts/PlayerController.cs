@@ -881,7 +881,14 @@ public abstract class PlayerController : NetworkComponent
         if (IsLocalPlayer && !Dead)
         {
             MoveInput = context.ReadValue<Vector2>();
-            FindObjectOfType<AudioManager>().Play("Walk");
+            if(MoveInput.magnitude > 0)
+            {
+                FindObjectOfType<AudioManager>().Play("Walk");
+            }
+            else
+            {
+                FindObjectOfType<AudioManager>().Pause("Walk");
+            }
             SendCommand("MOVE", MoveInput.ToString());
         }
     }
@@ -1121,25 +1128,6 @@ public abstract class PlayerController : NetworkComponent
             else
             {
                 AnimController.SetFloat("SPEED", 5);
-            }
-        }
-        if (IsLocalPlayer)
-        {
-            if (STATE != IDLESTATE && !Dead)
-            {
-                if (!WalkSound)
-                {
-                    FindObjectOfType<AudioManager>().Play("Walk");
-                    WalkSound = true;
-                }
-            }
-            else
-            {
-                if (WalkSound)
-                {
-                    FindObjectOfType<AudioManager>().Pause("Walk");
-                    WalkSound = false;
-                }
             }
         }
     }

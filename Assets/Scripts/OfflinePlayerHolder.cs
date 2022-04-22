@@ -125,6 +125,11 @@ public class OfflinePlayerHolder : MonoBehaviour
                     break;
             }
         }
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            FindObjectOfType<AudioManager>().Play("MainMenuLoop");
+            FindObjectOfType<AudioManager>().Pause("OverworldLoop");
+        }
     }
 
     public void OnSceneSwitched(Scene s, LoadSceneMode l)
@@ -174,10 +179,11 @@ public class OfflinePlayerHolder : MonoBehaviour
         }
         if (SceneManager.GetActiveScene().buildIndex == 0)
         {
-                FindObjectOfType<AudioManager>().Play("MainMenuLoop");
-                FindObjectOfType<AudioManager>().Pause("OverworldLoop");
+            FindObjectOfType<AudioManager>().Play("MainMenuLoop");
+            FindObjectOfType<AudioManager>().Pause("OverworldLoop");
         }
     }
+
     public IEnumerator SlowAgentStart()
     {
         bool UsePublic = false;
