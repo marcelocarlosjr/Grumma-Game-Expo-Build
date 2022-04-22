@@ -391,7 +391,7 @@ MonoBehaviour:
   RoamDistance: 4
   MinStopTime: 1.5
   MaxStopTime: 5
-  Speed: 1.8
+  Speed: 1
   AgroDistance: 6
   AgroTimer: 6
   radius: 0
