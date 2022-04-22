@@ -67,24 +67,24 @@ public class Item : NetworkComponent
     {
         if (move && IsServer)
         {
-            if (collision.gameObject.tag == "WALL")
+            if (collision.gameObject.tag == "WALL" || collision.gameObject.tag == "NODE")
             {
                 MyRig.velocity = Vector3.zero;
                 MyRig.rotation = 0;
                 move = false;
             }
-        }
-        if (collision.gameObject.GetComponent<PlayerController>())
-        {
-            Physics2D.IgnoreCollision(this.transform.GetChild(0).GetComponent<CircleCollider2D>(), collision.gameObject.GetComponent<CircleCollider2D>());
-        }
-        if (collision.gameObject.GetComponent<EnemyAI>())
-        {
-            Physics2D.IgnoreCollision(this.transform.GetChild(0).GetComponent<CircleCollider2D>(), collision.gameObject.GetComponent<CircleCollider2D>());
-        }
-        if (collision.gameObject.GetComponent<Item>())
-        {
-            Physics2D.IgnoreCollision(this.transform.GetChild(0).GetComponent<CircleCollider2D>(), collision.gameObject.GetComponent<CircleCollider2D>());
+            if (collision.gameObject.GetComponent<PlayerController>())
+            {
+                Physics2D.IgnoreCollision(this.transform.GetChild(0).GetComponent<CircleCollider2D>(), collision.gameObject.GetComponent<CircleCollider2D>(),true);
+            }
+            if (collision.gameObject.GetComponent<EnemyAI>())
+            {
+                Physics2D.IgnoreCollision(this.transform.GetChild(0).GetComponent<CircleCollider2D>(), collision.gameObject.GetComponent<CircleCollider2D>(), true);
+            }
+            if (collision.gameObject.GetComponent<Item>())
+            {
+                Physics2D.IgnoreCollision(this.transform.GetChild(0).GetComponent<CircleCollider2D>(), collision.gameObject.GetComponent<CircleCollider2D>(), true);
+            }
         }
     }
 }

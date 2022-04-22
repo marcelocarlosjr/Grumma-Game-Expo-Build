@@ -28,6 +28,14 @@ public class EnemySpawner : MonoBehaviour
                     StartCoroutine(CheckPlayerProximity());
                 }
             }
+
+            if (LinkedEnemy)
+            {
+                if (!CheckingForPlayersD && !Despawning)
+                {
+                    StartCoroutine(CheckPlayerProximityD());
+                }
+            }
         }
     }
     bool Spawning;
@@ -54,6 +62,31 @@ public class EnemySpawner : MonoBehaviour
         }
         yield return new WaitForSeconds(2);
         CheckingForPlayer = false;
+    }
+    bool Despawning;
+    bool CheckingForPlayersD;
+    public IEnumerator DespawnEnemy()
+    {
+        Despawning = true;
+        yield return new WaitForSeconds(RespawnTimer);
+        FindObjectOfType<NetworkCore>().NetDestroyObject(LinkedEnemy.GetComponent<NetworkID>().NetId);
+        Despawning = false;
+    }
+    public IEnumerator CheckPlayerProximityD()
+    {
+        CheckingForPlayersD = true;
+        foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+        {
+            if (Vector3.Distance(LinkedEnemy.transform.position, pc.transform.position) < 15)
+            {
+                if (!Despawning)
+                {
+                    StartCoroutine(SpawnEnemy());
+                }
+            }
+        }
+        yield return new WaitForSeconds(2);
+        CheckingForPlayersD = false;
     }
 
 
