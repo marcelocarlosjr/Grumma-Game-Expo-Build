@@ -48,7 +48,7 @@ public class Orb2 : Projectile
                 radius = 0.9375f;
                 distance = 1.875f;
 
-                MyRig.rotation += RotationSpeed;
+                //MyRig.rotation += RotationSpeed;
             } 
             DectectCollisionCircleCast(position, radius, direction, distance);
         }

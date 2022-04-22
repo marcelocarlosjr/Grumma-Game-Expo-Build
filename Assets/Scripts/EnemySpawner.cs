@@ -77,7 +77,7 @@ public class EnemySpawner : MonoBehaviour
         CheckingForPlayersD = true;
         foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
         {
-            if (Vector3.Distance(LinkedEnemy.transform.position, pc.transform.position) < 15)
+            if (Vector3.Distance(LinkedEnemy.transform.position, pc.transform.position) > 15)
             {
                 if (!Despawning)
                 {
