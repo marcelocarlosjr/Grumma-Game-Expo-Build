@@ -371,7 +371,7 @@ MonoBehaviour:
   IsDirty: 0
   MyRig: {fileID: 0}
   AnimController: {fileID: 0}
-  NameBox: {fileID: 0}
+  NameBox: {fileID: 8702270577513931451}
   ShadowBox: {fileID: 3949172433044235927}
   Inventory: {fileID: 0}
   StaticItemDatabase: {fileID: 11400000, guid: 0773bb310c27acf4fafef43ed2e92b13, type: 2}
