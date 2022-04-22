@@ -131,7 +131,7 @@ public class WarriorController : PlayerController
             {
                 if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
                 {
-                    collision.collider.gameObject.GetComponent<EnemyAI>().TakeDamage(this.Owner, RFireDamage * (RFireTimer + 1));
+                    collision.collider.gameObject.GetComponent<EnemyAI>().TakeDamage(this.Owner, Damage * (RFireTimer + 1));
                     GetLastEnemy(collision.collider.GetComponent<NetworkID>().NetId);
                 }
             }
@@ -157,7 +157,7 @@ public class WarriorController : PlayerController
             {
                 if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
                 {
-                    collision.collider.gameObject.GetComponent<EnemyAI>().TakeDamage(this.Owner, LFireDamage);
+                    collision.collider.gameObject.GetComponent<EnemyAI>().TakeDamage(this.Owner, Damage);
                     SendUpdate("LASTENEMY", collision.collider.GetComponent<NetworkID>().NetId.ToString());
                 }
             }

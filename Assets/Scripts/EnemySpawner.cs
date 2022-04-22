@@ -107,7 +107,7 @@ public class EnemySpawner : MonoBehaviour
     public IEnumerator Spawn()
     {
         Spawning = true;
-        FindObjectOfType<NetworkCore>().NetCreateObject(SpawnPrefab, -1, this.transform.position, Quaternion.identity);
+        LinkedEnemy = FindObjectOfType<NetworkCore>().NetCreateObject(SpawnPrefab, -1, this.transform.position, Quaternion.identity);
         yield return new WaitForSeconds(RespawnTimer);
         Spawning = false;
     }
