@@ -190,7 +190,6 @@ public abstract class PlayerController : NetworkComponent
             if(STATE == DEADSTATE)
             {
                 Die();
-                FindObjectOfType<AudioManager>().Play("PlayerD");
                 if (IsLocalPlayer)
                 {
                     FindObjectOfType<DisplayInventory>().CallDropAllItems(this);
@@ -394,19 +393,9 @@ public abstract class PlayerController : NetworkComponent
     {
         if (IsServer)
         {
-            EXP = levelSystem.experience;
-            SendUpdate("EXPERIENCE", EXP + "," + levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
-            Level = levelSystem.level + 1;
-            SendUpdate("LEVEL", Level.ToString());
-            if (!Dead)
-            {
-                AnimController.SetFloat("STATE", STATE);
-                AnimController.SetInteger("ISTATE", (int)STATE);
-                SendUpdate("STATE", STATE.ToString());
-            }
-
             if (IsDirty)
             {
+                SendUpdate("STATE", STATE.ToString());
                 SendUpdate("HP", Health.ToString());
                 SendUpdate("MAXHP", MaxHealth.ToString());
                 SendUpdate("NAME", Name);
@@ -414,7 +403,7 @@ public abstract class PlayerController : NetworkComponent
                 IsDirty = false;
             }
         }
-        yield return new WaitForSeconds(0.01f);
+        yield return new WaitForSeconds(0.05f);
     }
 
     public void GetLastEnemy(int _id)
@@ -1116,6 +1105,16 @@ public abstract class PlayerController : NetworkComponent
             if (MyRig.velocity.magnitude > 0 && !LFireAnimation && !RFireAnimation && !TakingDamage && !Dead)
             {
                 STATE = RUNSTATE;
+            }
+            EXP = levelSystem.experience;
+            SendUpdate("EXPERIENCE", EXP + "," + levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
+            Level = levelSystem.level + 1;
+            SendUpdate("LEVEL", Level.ToString());
+            if (!Dead)
+            {
+                AnimController.SetFloat("STATE", STATE);
+                AnimController.SetInteger("ISTATE", (int)STATE);
+                SendUpdate("STATE", STATE.ToString());
             }
         }
 
