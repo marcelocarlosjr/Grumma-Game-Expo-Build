@@ -4301,7 +4301,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 442482360159928995, guid: 8e9554b4ba54cdf43867f8c1d053af40, type: 3}
       propertyPath: musicVolume
-      value: 0.4
+      value: 0.351
       objectReference: {fileID: 0}
     - target: {fileID: 442482360159928995, guid: 8e9554b4ba54cdf43867f8c1d053af40, type: 3}
       propertyPath: sounds.Array.data[0].volume
@@ -4313,7 +4313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 442482360159928995, guid: 8e9554b4ba54cdf43867f8c1d053af40, type: 3}
       propertyPath: sounds.Array.data[7].volume
-      value: 0.1
+      value: 0.052
       objectReference: {fileID: 0}
     - target: {fileID: 1205483817814441999, guid: 8e9554b4ba54cdf43867f8c1d053af40, type: 3}
       propertyPath: m_RootOrder
