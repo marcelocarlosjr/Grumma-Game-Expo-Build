@@ -10,11 +10,6 @@ public class Arrow : Projectile
         {
             base.Start();
         }
-        else
-        {
-            //test
-            //FindObjectOfType<AudioManager>().Play("ArcherA");
-        }
     }
 
     protected override void Update()

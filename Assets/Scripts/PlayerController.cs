@@ -706,7 +706,6 @@ public abstract class PlayerController : NetworkComponent
     public void Die()
     {
         Dead = true;
-        FindObjectOfType<AudioManager>().Play("PlayerD");
         if (!IsLocalPlayer)
         {
             this.GetComponent<PlayerInput>().enabled = false;
@@ -725,6 +724,7 @@ public abstract class PlayerController : NetworkComponent
         {
             if (!DeadCycle)
             {
+                FindObjectOfType<AudioManager>().Play("PlayerD");
                 this.GetComponent<PlayerInput>().enabled = false;
                 this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
                 this.GetComponent<NetworkRigidBody2D>().enabled = false;
@@ -870,14 +870,6 @@ public abstract class PlayerController : NetworkComponent
         if (IsLocalPlayer && !Dead)
         {
             MoveInput = context.ReadValue<Vector2>();
-            if(MoveInput.magnitude > 0)
-            {
-                FindObjectOfType<AudioManager>().Play("Walk");
-            }
-            else
-            {
-                FindObjectOfType<AudioManager>().Pause("Walk");
-            }
             SendCommand("MOVE", MoveInput.ToString());
         }
     }
@@ -1036,7 +1028,6 @@ public abstract class PlayerController : NetworkComponent
 
     public void LevelSystem_OnLevelChanged(object sender, EventArgs e)
     {
-        FindObjectOfType<AudioManager>().Play("PlayerLevel");
         Level = levelSystem.level + 1;
         SendUpdate("LEVEL", Level.ToString());
     }
@@ -1106,10 +1097,13 @@ public abstract class PlayerController : NetworkComponent
             {
                 STATE = RUNSTATE;
             }
-            EXP = levelSystem.experience;
-            SendUpdate("EXPERIENCE", EXP + "," + levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
-            Level = levelSystem.level + 1;
-            SendUpdate("LEVEL", Level.ToString());
+            if(levelSystem != null)
+            {
+                EXP = levelSystem.experience;
+                SendUpdate("EXPERIENCE", EXP + "," + levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
+                Level = levelSystem.level + 1;
+                SendUpdate("LEVEL", Level.ToString());
+            }
             if (!Dead)
             {
                 AnimController.SetFloat("STATE", STATE);
@@ -1129,7 +1123,29 @@ public abstract class PlayerController : NetworkComponent
                 AnimController.SetFloat("SPEED", 5);
             }
         }
+
+        if (IsLocalPlayer)
+        {
+            if (MoveInput.magnitude > 0)
+            {
+                if(!walking)
+                {
+                    FindObjectOfType<AudioManager>().Play("Walk");
+                    walking = true;
+                }
+            }
+            else
+            {
+                if (walking)
+                {
+                    FindObjectOfType<AudioManager>().Pause("Walk");
+                    walking = false;
+                }
+            }
+        }
     }
+    bool walking;
+
 
     public List<Item> TouchingObjects;
     bool PickingUp;
@@ -1244,7 +1260,6 @@ public abstract class PlayerController : NetworkComponent
             var item = TouchingObjects[i];
             if (item && Inventory.Container.Count <= 4 && !item.move)
             {
-                FindObjectOfType<AudioManager>().Play("ItemPickUp");
                 Inventory.AddItem(item.item, 1, this.Owner);
                 MyCore.NetDestroyObject(item.NetId);
             }

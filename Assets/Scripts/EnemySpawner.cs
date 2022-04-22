@@ -21,62 +21,22 @@ public class EnemySpawner : MonoBehaviour
     {
         if (IsServer)
         {
-            if (!CheckPlayer && !LinkedEnemy)
+            if (!LinkedEnemy)
             {
-                StartCoroutine(CheckPlayerTimer());
+                StartCoroutine(SpawnEnemy());
             }
+        }
+    }
 
-            if (!Despawning && LinkedEnemy)
-            {
-                DespawnEnemy();
-            }
-        }
-    }
-    bool Despawn;
-    public IEnumerator CheckPlayerTimer()
+    public IEnumerator SpawnEnemy()
     {
-        CheckPlayer = true;
-        foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
-        {
-            if (Vector3.Distance(this.transform.position, pc.transform.position) < 15)
-            {
-                if (!Timer)
-                {
-                    SpawnTimer();
-                }
-            }
-        }
-        yield return new WaitForSeconds(2);
-        CheckPlayer = false;
+        yield return new WaitForSeconds(1);
     }
+
 
     private void Start()
     {
         StartCoroutine(GetIsServer());
-    }
-
-    bool Despawning;
-
-    public IEnumerator DespawnEnemy()
-    {
-        Despawning = true;
-        yield return new WaitForSeconds(10);
-        foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
-        {
-            if (Vector3.Distance(LinkedEnemy.transform.position, pc.transform.position) > 15)
-            {
-                FindObjectOfType<NetworkCore>().NetDestroyObject(LinkedEnemy.GetComponent<NetworkID>().NetId);
-            }
-        }
-        Despawning = false;
-    }
-
-    public IEnumerator SpawnTimer()
-    {
-        Timer = true;
-        LinkedEnemy = FindObjectOfType<NetworkCore>().NetCreateObject(SpawnPrefab, -1, this.transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(RespawnTimer);
-        Timer = false;
     }
 
     public IEnumerator GetIsServer()

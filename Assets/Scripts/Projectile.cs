@@ -39,37 +39,31 @@ public class Projectile : NetworkComponent
         RaycastHit2D[] hits = Physics2D.CircleCastAll(position1, radius1, direction1, (distance1 - radius1));
         foreach (RaycastHit2D collision in hits)
         {
+            if (collision.collider.gameObject.tag == "WALL")
+            {
+                MyCore.NetDestroyObject(this.NetId);
+                return;
+            }
             if (collision.collider.gameObject.GetComponent<PlayerController>())
             {
                 if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
                 {
                     collision.collider.gameObject.GetComponent<PlayerController>().TakeDamage(Damage, Owner);
-                    SendUpdate("SOUNDHIT", type.ToString());
                     MyCore.NetDestroyObject(this.NetId);
                 }
             }
             if (collision.collider.gameObject.GetComponent<EnemyAI>())
             {
-                if (collision.collider.GetComponent<NetworkID>().Owner != this.gameObject.GetComponent<NetworkID>().Owner)
+                collision.collider.gameObject.GetComponent<EnemyAI>().TakeDamage(this.Owner, Damage);
+                foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
                 {
-                    collision.collider.gameObject.GetComponent<EnemyAI>().TakeDamage(this.Owner, Damage);
-                    foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
+                    if (pc.Owner == this.Owner)
                     {
-                        if (pc.Owner == this.Owner)
-                        {
-                            pc.GetLastEnemy(collision.collider.GetComponent<NetworkID>().NetId);
-                        }
+                        pc.GetLastEnemy(collision.collider.GetComponent<NetworkID>().NetId);
                     }
-                    SendUpdate("SOUNDHIT", type.ToString());
-                    MyCore.NetDestroyObject(this.NetId);
                 }
-            }
-            if (collision.collider.gameObject.tag == "WALL")
-            {
-                SendUpdate("SOUNDHIT", type.ToString());
                 MyCore.NetDestroyObject(this.NetId);
             }
-
         }
     }
     public IEnumerator Die()
@@ -87,31 +81,13 @@ public class Projectile : NetworkComponent
     {
         while (IsConnected)
         {
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(.05f);
         }
     }
 
     public override void HandleMessage(string flag, string value)
     {
-        if (flag == "SOUNDHIT")
-        {
-            if (this.Owner == MyCore.LocalConnectionID)
-            {
-                switch (int.Parse(value))
-                {
-                    case 0:
-                        FindObjectOfType<AudioManager>().Play("ArrowProjectileHit");
-                        break;
-                    case 1:
-                        FindObjectOfType<AudioManager>().Play("MagicProjectileHit");
-                        break;
-                    case 2:
-                        FindObjectOfType<AudioManager>().Play("MagicProjectileHit");
-                        break;
-                }
-                
-            }
-        }
+
     }
 
     public override void NetworkedStart()
