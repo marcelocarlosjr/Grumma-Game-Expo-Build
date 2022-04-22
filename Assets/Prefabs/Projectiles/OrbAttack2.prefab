@@ -274,7 +274,7 @@ MonoBehaviour:
   distance: 0
   type: 2
   Damage: 15
-  Speed: 7
+  Speed: 8
   Timer: 4
   OuterRing: {fileID: 7269611349438378849}
   RotationSpeed: 1

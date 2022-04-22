@@ -802,8 +802,8 @@ MonoBehaviour:
   Level: 1
   MoveSpeedBase: 4
   HealthBase: 50
-  DamageBase: 5
-  HealthRegenerationBase: 1
+  DamageBase: 8
+  HealthRegenerationBase: 5
   AttackSpeedBase: 1
   EXPBase: 1
   StaminaBase: 1
