@@ -31,18 +31,21 @@ public class EnemySpawner : MonoBehaviour
     public IEnumerator CheckPlayerTimer()
     {
         CheckPlayer = true;
-        if(LinkedEnemy == null && !Timer)
+        if(LinkedEnemy == null)
         {
             foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
             {
                 if (Vector3.Distance(this.transform.position, pc.transform.position) < 15)
                 {
-                    SpawnTimer();
+                    if (!Timer)
+                    {
+                        SpawnTimer();
+                    }
                 }
             }
         }
 
-        if (LinkedEnemy != null && !Timer)
+        if (LinkedEnemy != null)
         {
             foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
             {
@@ -86,10 +89,12 @@ public class EnemySpawner : MonoBehaviour
             Timer = false;
             yield break;
         }
-        LinkedEnemy = FindObjectOfType<NetworkCore>().NetCreateObject(SpawnPrefab, -1, this.transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(RespawnTimer);
-        Timer = false;
-
+        else
+        {
+            LinkedEnemy = FindObjectOfType<NetworkCore>().NetCreateObject(SpawnPrefab, -1, this.transform.position, Quaternion.identity);
+            yield return new WaitForSeconds(RespawnTimer);
+            Timer = false;
+        }
     }
 
     public IEnumerator GetIsServer()

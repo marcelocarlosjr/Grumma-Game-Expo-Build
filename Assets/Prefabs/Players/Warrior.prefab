@@ -479,7 +479,7 @@ MonoBehaviour:
   InputType: 
   teleport: 0
   TouchingObjects: []
-  SlashAnim: {fileID: 0}
+  SlashAnim: {fileID: 543742431195935031}
   LFireDamage: 3
   RFireDamage: 10
   RFireTimer: 0
@@ -512,7 +512,7 @@ MonoBehaviour:
   - {x: -0.28041548, y: -0.14085102, z: 0}
   m_ShapePathHash: -284954151
   m_Mesh: {fileID: 0}
-  m_InstanceId: 675578
+  m_InstanceId: 720540
 --- !u!1 &295253788899888065
 GameObject:
   m_ObjectHideFlags: 0
