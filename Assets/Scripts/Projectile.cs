@@ -23,7 +23,6 @@ public class Projectile : NetworkComponent
         if (IsServer)
         {
             MyRig = GetComponent<Rigidbody2D>();
-            //SendUpdate("SOUND", type.ToString());
             StartCoroutine(Die());
         }
     }
@@ -96,7 +95,7 @@ public class Projectile : NetworkComponent
     {
         if (flag == "SOUNDHIT")
         {
-            if (IsClient)
+            if (this.Owner == MyCore.LocalConnectionID)
             {
                 switch (int.Parse(value))
                 {
@@ -111,25 +110,6 @@ public class Projectile : NetworkComponent
                         break;
                 }
                 
-            }
-        }
-        if (flag == "SOUND")
-        {
-            if (IsClient)
-            {
-                switch (int.Parse(value))
-                {
-                    case 0:
-                        FindObjectOfType<AudioManager>().Play("ArcherA");
-                        break;
-                    case 1:
-                        FindObjectOfType<AudioManager>().Play("MageA");
-                        break;
-                    case 2:
-                        FindObjectOfType<AudioManager>().Play("MageS");
-                        break;
-                }
-
             }
         }
     }

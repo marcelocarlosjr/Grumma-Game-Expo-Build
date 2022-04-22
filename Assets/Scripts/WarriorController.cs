@@ -28,7 +28,6 @@ public class WarriorController : PlayerController
         {
             if (!LFireCD)
             {
-                FindObjectOfType<AudioManager>().Play("WarriorA");
                 StartCoroutine(LFire());
             }
         }
@@ -62,7 +61,6 @@ public class WarriorController : PlayerController
             if (!RFireCD)
             {
                 RFireCD = true;
-                FindObjectOfType<AudioManager>().Play("WarriorS");
                 StartCoroutine(RFire());
             }
         }

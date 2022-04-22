@@ -83,7 +83,7 @@ public class EnemyAI : NetworkComponent
             }
             else if (STATE == ATTACKSTATE)
             {
-                StartCoroutine(AttackSFX());
+                //StartCoroutine(AttackSFX());
             }
         }
         if (flag == "HEALTH" && IsClient)
@@ -559,9 +559,7 @@ public class EnemyAI : NetworkComponent
     public IEnumerator Attack()
     {
         Attacking = true;
-        //StartCoroutine(AttackSFX()); //not used
         StartCoroutine(AttackAnimation());
-        //raycast to check to do damage
         yield return new WaitForSeconds(AttackSpeed);
         Attacking = false;
 

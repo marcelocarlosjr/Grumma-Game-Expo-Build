@@ -47,39 +47,18 @@ public class AudioManager : MonoBehaviour
     }
     private void Start()
     {
-        FindObjectOfType<AudioManager>().Play("MainMenuLoop");
-    }
-
-    private void Update()
-    {
-        foreach(Sound sound in sounds)
+        foreach (Sound sound in sounds)
         {
-            if(sound.soundType == Sound.SoundType.music)
+            if (sound.soundType == Sound.SoundType.music)
             {
                 sound.source.volume = musicVolume;
             }
-            else if(sound.soundType == Sound.SoundType.sfx)
+            else if (sound.soundType == Sound.SoundType.sfx)
             {
                 sound.source.volume = sfxVolume; ;
             }
         }
-
-
-        if (SceneManager.GetActiveScene().name != "0_MainMenue")
-        {
-            if (InGame == false)
-            {
-                FindObjectOfType<AudioManager>().Play("OverworldLoop");
-                InGame = true;
-            }
-        }
-        else
-        {
-            InGame = false;
-            FindObjectOfType<AudioManager>().Play("MainMenuLoop");
-        }
     }
-
     public void Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);

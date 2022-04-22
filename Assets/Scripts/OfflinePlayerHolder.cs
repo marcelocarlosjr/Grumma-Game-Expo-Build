@@ -166,8 +166,18 @@ public class OfflinePlayerHolder : MonoBehaviour
             //MyCore.IP = "127.0.0.1";
             StartCoroutine(SlowAgentStart());
         }
-    }
 
+        if (PreviousScene == 0)
+        {
+            FindObjectOfType<AudioManager>().Play("OverworldLoop");
+            FindObjectOfType<AudioManager>().Pause("MainMenuLoop");
+        }
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+                FindObjectOfType<AudioManager>().Play("MainMenuLoop");
+                FindObjectOfType<AudioManager>().Pause("OverworldLoop");
+        }
+    }
     public IEnumerator SlowAgentStart()
     {
         bool UsePublic = false;

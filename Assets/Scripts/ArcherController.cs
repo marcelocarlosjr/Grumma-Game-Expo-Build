@@ -18,7 +18,6 @@ public class ArcherController : PlayerController
         {
             if (!LFireCD)
             {
-                FindObjectOfType<AudioManager>().Play("ArcherA");
                 StartCoroutine(LFire());
             }
         }
