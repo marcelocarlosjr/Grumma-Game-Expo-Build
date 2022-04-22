@@ -268,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FreezeRotGO: {fileID: 4397875463133957525}
-  ParentGO: {fileID: 0}
+  ParentGO: {fileID: 5711426832451063904}
   YSpace: -0.7
 --- !u!1 &4467194309359958065
 GameObject:
@@ -859,4 +859,4 @@ MonoBehaviour:
   - {x: -0.28041548, y: -0.14085102, z: 0}
   m_ShapePathHash: -284954151
   m_Mesh: {fileID: 0}
-  m_InstanceId: 654778
+  m_InstanceId: 675456
