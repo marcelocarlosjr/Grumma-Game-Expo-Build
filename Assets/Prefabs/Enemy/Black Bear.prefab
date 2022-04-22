@@ -438,7 +438,7 @@ MonoBehaviour:
   radius: 0.6
   distance: 1.85
   Level: 45
-  ExpDrop: 1000
+  ExpDrop: 2000
   MaxHealth: 1000
   Health: 0
   Damage: 60
