@@ -709,6 +709,7 @@ public abstract class PlayerController : NetworkComponent
         if (!IsLocalPlayer)
         {
             this.GetComponent<PlayerInput>().enabled = false;
+            MyRig.velocity = Vector2.zero;
             this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
             this.GetComponent<NetworkRigidBody2D>().enabled = false;
             this.GetComponent<CircleCollider2D>().enabled = false;
@@ -726,6 +727,7 @@ public abstract class PlayerController : NetworkComponent
             {
                 FindObjectOfType<AudioManager>().Play("PlayerD");
                 this.GetComponent<PlayerInput>().enabled = false;
+                MyRig.velocity = Vector2.zero;
                 this.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
                 this.GetComponent<NetworkRigidBody2D>().enabled = false;
                 this.GetComponent<CircleCollider2D>().enabled = false;

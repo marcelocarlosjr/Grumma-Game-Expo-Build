@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 7598583046746695409}
   m_Layer: 0
   m_Name: Mage
-  m_TagString: Untagged
+  m_TagString: NODE
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

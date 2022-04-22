@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class UpgradeController : MonoBehaviour
 {
-    public int currentUpgradeAmount;
+    public int currentUpgradeAmount = 0;
     PlayerController LocalPlayer;
     public GameObject UpgradePanel;
 
@@ -21,7 +21,6 @@ public class UpgradeController : MonoBehaviour
     public void setPlayer(PlayerController _player)
     {
         LocalPlayer = _player;
-        currentUpgradeAmount = 0;
     }
 
     public void Show()

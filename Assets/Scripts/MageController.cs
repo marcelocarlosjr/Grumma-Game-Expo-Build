@@ -30,7 +30,8 @@ public class MageController : PlayerController
             {
                 LFireCD = true;
                 StartCoroutine(LFireAnim());
-                MyCore.NetCreateObject(4, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
+                var temp = MyCore.NetCreateObject(4, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
+                temp.GetComponent<Projectile>().Damage = Damage;
                 yield return new WaitForSeconds(1);
                 LFireCD = false;
 
@@ -75,6 +76,7 @@ public class MageController : PlayerController
                         RFireTimerDone = true;
 
                         GameObject temp = MyCore.NetCreateObject(5, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
+                        temp.GetComponent<Projectile>().Damage = Damage + ((RFIRECOUNT / 2) * 2);
                         if (RFIRECOUNT >= 5)
                         {
                             temp.GetComponent<Orb2>().SetOuter(true);
@@ -98,6 +100,7 @@ public class MageController : PlayerController
                         RFireTimerDone = true;
 
                         GameObject temp1 = MyCore.NetCreateObject(5, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
+                        temp1.GetComponent<Projectile>().Damage = Damage + ((RFIRECOUNT / 2) * 2);
                         if (RFIRECOUNT >= 5)
                         {
                             temp1.GetComponent<Orb2>().SetOuter(true);
@@ -119,6 +122,7 @@ public class MageController : PlayerController
                 RFireTimerDone = true;
 
                 GameObject temp2 = MyCore.NetCreateObject(5, this.Owner, this.transform.position, Quaternion.LookRotation(transform.forward, transform.up));
+                temp2.GetComponent<Projectile>().Damage = Damage + ((RFIRECOUNT/2) * 2);
                 if (RFIRECOUNT >= 5)
                 {
                     temp2.GetComponent<Orb2>().SetOuter(true);

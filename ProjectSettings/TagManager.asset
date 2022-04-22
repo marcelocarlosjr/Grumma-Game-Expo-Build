@@ -10,6 +10,7 @@ TagManager:
   - DOOR
   - PLAYERSPAWN
   - SAFE
+  - NODE
   layers:
   - Default
   - TransparentFX
