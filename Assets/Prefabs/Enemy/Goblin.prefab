@@ -245,7 +245,7 @@ MonoBehaviour:
   - {x: 0.10460204, y: 0.16220617, z: 0}
   m_ShapePathHash: 782753080
   m_Mesh: {fileID: 0}
-  m_InstanceId: 186256
+  m_InstanceId: 652576
 --- !u!70 &6590214009581524171
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -362,7 +362,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 48
+  m_Text: 10
 --- !u!1 &4607321168857259510
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,7 +630,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FreezeRotGO: {fileID: 7560324416727175297}
-  ParentGO: {fileID: 0}
+  ParentGO: {fileID: 1240758373250200180}
   YSpace: 0.68
 --- !u!1 &8807845130409068876
 GameObject:

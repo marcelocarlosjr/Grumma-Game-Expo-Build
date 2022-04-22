@@ -1,4 +1,3 @@
-using CodeMonkey.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,7 +21,6 @@ public class LevelSystemAnimated
         SetLevelSystem(levelSystem);
         updateTimerMax = .016f;
 
-        FunctionUpdater.Create(() => Update());
     }
     public void SetLevelSystem(LevelSystem levelSystem)
     {

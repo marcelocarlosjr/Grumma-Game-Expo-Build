@@ -117,6 +117,7 @@ public class EnemyAI : NetworkComponent
         {
             if (IsServer)
             {
+                SendUpdate("STATE", STATE.ToString());
                 if (IsDirty)
                 {
                     SendUpdate("HEALTH", Health.ToString());
@@ -272,9 +273,11 @@ public class EnemyAI : NetworkComponent
                 MyAnim.SetFloat("STATE", STATE);
                 MyAnim.SetInteger("ISTATE", (int)STATE);
                 AttackSprite.SetInteger("ISTATE", (int)STATE);
-                SendUpdate("STATE", STATE.ToString());
 
-                MyRig.velocity = MyAgent.velocity;
+                if (MyRig.bodyType != RigidbodyType2D.Static)
+                {
+                    MyRig.velocity = MyAgent.velocity;
+                }
 
                 if (MyRig.velocity.magnitude > 0.2f)
                 {
@@ -314,7 +317,10 @@ public class EnemyAI : NetworkComponent
                             bool hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
                             if (hit)
                             {
-                                MyAgent.isStopped = false;
+                                if (MyAgent && MyAgent.isOnNavMesh)
+                                {
+                                    MyAgent.isStopped = false;
+                                }
                                 MyAgent.speed = Speed * 1.3f;
                                 MyAgent.SetDestination(transform.position + OppositePlayerDirection);
                             }
@@ -325,7 +331,10 @@ public class EnemyAI : NetworkComponent
                                 hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
                                 if (hit)
                                 {
-                                    MyAgent.isStopped = false;
+                                    if (MyAgent && MyAgent.isOnNavMesh)
+                                    {
+                                        MyAgent.isStopped = false;
+                                    }
                                     MyAgent.speed = Speed * 1.3f;
                                     MyAgent.SetDestination(transform.position + OppositePlayerDirection);
                                 }
@@ -336,7 +345,10 @@ public class EnemyAI : NetworkComponent
                                     hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
                                     if (hit)
                                     {
-                                        MyAgent.isStopped = false;
+                                        if (MyAgent && MyAgent.isOnNavMesh)
+                                        {
+                                            MyAgent.isStopped = false;
+                                        }
                                         MyAgent.speed = Speed * 1.3f;
                                         MyAgent.SetDestination(transform.position + OppositePlayerDirection);
                                     }
@@ -348,14 +360,20 @@ public class EnemyAI : NetworkComponent
                         {
                             MyAgent.speed = Speed * 1.3f;
                             FollowPlayer = true;
-                            MyAgent.isStopped = false;
+                            if (MyAgent && MyAgent.isOnNavMesh)
+                            {
+                                MyAgent.isStopped = false;
+                            }
                             MyAgent.SetDestination(p.gameObject.transform.position);
                         }
                         else if (Vector2.Distance(this.transform.position, p.transform.position) > AgroDistance + 1 && Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance + 1.15)
                         {
                             MyAgent.speed = Speed * 1.3f;
                             FollowPlayer = true;
-                            MyAgent.isStopped = true;
+                            if (MyAgent && MyAgent.isOnNavMesh)
+                            {
+                                MyAgent.isStopped = true;
+                            }
                             MyAgent.velocity = Vector3.zero;
                             //attack player
                         }
@@ -409,7 +427,10 @@ public class EnemyAI : NetworkComponent
                                 bool hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
                                 if (hit)
                                 {
-                                    MyAgent.isStopped = false;
+                                    if (MyAgent && MyAgent.isOnNavMesh)
+                                    {
+                                        MyAgent.isStopped = false;
+                                    }
                                     MyAgent.speed = Speed * 1.3f;
                                     MyAgent.SetDestination(transform.position + OppositePlayerDirection);
                                 }
@@ -420,7 +441,10 @@ public class EnemyAI : NetworkComponent
                                     hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
                                     if (hit)
                                     {
-                                        MyAgent.isStopped = false;
+                                        if (MyAgent && MyAgent.isOnNavMesh)
+                                        {
+                                            MyAgent.isStopped = false;
+                                        }
                                         MyAgent.speed = Speed * 1.3f;
                                         MyAgent.SetDestination(transform.position + OppositePlayerDirection);
                                     }
@@ -431,7 +455,10 @@ public class EnemyAI : NetworkComponent
                                         hit = MyAgent.Raycast(OppositePlayerDirection, out CheckBehind);
                                         if (hit)
                                         {
-                                            MyAgent.isStopped = false;
+                                            if (MyAgent && MyAgent.isOnNavMesh)
+                                            {
+                                                MyAgent.isStopped = false;
+                                            }
                                             MyAgent.speed = Speed * 1.3f;
                                             MyAgent.SetDestination(transform.position + OppositePlayerDirection);
                                         }
@@ -443,14 +470,20 @@ public class EnemyAI : NetworkComponent
                             {
                                 MyAgent.speed = Speed * 1.3f;
                                 FollowPlayer = true;
-                                MyAgent.isStopped = false;
+                                if (MyAgent && MyAgent.isOnNavMesh)
+                                {
+                                    MyAgent.isStopped = false;
+                                }
                                 MyAgent.SetDestination(p.gameObject.transform.position);
                             }
                             else if (Vector2.Distance(this.transform.position, p.transform.position) > AgroDistance + 1 && Vector2.Distance(this.transform.position, p.transform.position) < AgroDistance + 1.15)
                             {
                                 MyAgent.speed = Speed * 1.3f;
                                 FollowPlayer = true;
-                                MyAgent.isStopped = true;
+                                if (MyAgent && MyAgent.isOnNavMesh)
+                                {
+                                    MyAgent.isStopped = true;
+                                }
                                 MyAgent.velocity = Vector3.zero;
                                 //attack player
                             }
@@ -474,8 +507,10 @@ public class EnemyAI : NetworkComponent
                 }
                 MyAnim.SetFloat("STATE", STATE);
                 MyAnim.SetInteger("ISTATE", (int)STATE);
-                SendUpdate("STATE", STATE.ToString());
-                MyRig.velocity = MyAgent.velocity;
+                if (MyRig.bodyType != RigidbodyType2D.Static)
+                {
+                    MyRig.velocity = MyAgent.velocity;
+                }
                 if (MyRig.velocity.magnitude > 0.2f)
                 {
                     Vector2 relative = MyAgent.velocity.normalized;
@@ -483,18 +518,27 @@ public class EnemyAI : NetworkComponent
                     MyRig.rotation = Mathf.LerpAngle(MyRig.rotation, rotationAngle, 2);
                 }
             }
-            if (Dead)
+            if (Dead && !DeadCycle)
             {
+                DeadCycle = true;
                 if (FindObjectOfType<NavMeshAgent>().enabled)
                 {
-                    MyAgent.isStopped = true;
+                    if (MyAgent && MyAgent.isOnNavMesh)
+                    {
+                        MyAgent.isStopped = true;
+                    }
                     MyAgent.velocity = Vector3.zero;
-                    MyRig.velocity = MyAgent.velocity;
+                    if (MyRig.bodyType != RigidbodyType2D.Static)
+                    {
+                        MyRig.velocity = MyAgent.velocity;
+                    }
                 }
             }
         }
         HealthBar.transform.GetChild(1).GetComponent<RectTransform>().localScale = Vector3.Lerp(HealthBar.transform.GetChild(1).GetComponent<RectTransform>().localScale, new Vector3(Health / MaxHealth,1,1), 1f);
     }
+
+    bool DeadCycle;
 
     public IEnumerator Stop(float timer)
     {
@@ -505,7 +549,10 @@ public class EnemyAI : NetworkComponent
         StopMove = false;
         if (!FollowPlayer)
         {
-            MyAgent.isStopped = false;
+            if (MyAgent && MyAgent.isOnNavMesh)
+            {
+                MyAgent.isStopped = false;
+            }
         }
         MyAgent.SetDestination(new Vector3(this.transform.position.x + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1), this.transform.position.y + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1)));
     }

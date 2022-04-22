@@ -27,7 +27,7 @@ public class EnemySpawner : MonoBehaviour
             }
         }
     }
-    Coroutine Despawn;
+    bool Despawn;
     public IEnumerator CheckPlayerTimer()
     {
         CheckPlayer = true;
@@ -35,10 +35,7 @@ public class EnemySpawner : MonoBehaviour
         {
             if(Vector3.Distance(this.transform.position, pc.transform.position) < 15)
             {
-                if (Despawn != null)
-                {
-                    StopCoroutine(Despawn);
-                }
+                Despawn = false;
                 if (LinkedEnemy == null)
                 {
                     if (!Timer)
@@ -47,11 +44,12 @@ public class EnemySpawner : MonoBehaviour
                     }
                 }
             }
-            else
+            else if(Vector3.Distance(this.transform.position, pc.transform.position) > 15)
             {
                 if (LinkedEnemy)
                 {
-                    Despawn = StartCoroutine(DespawnEnemy());
+                    Despawn = true;
+                    StartCoroutine(DespawnEnemy());
                 }
             }
         }
@@ -67,7 +65,10 @@ public class EnemySpawner : MonoBehaviour
     public IEnumerator DespawnEnemy()
     {
         yield return new WaitForSeconds(10);
-        FindObjectOfType<NetworkCore>().NetDestroyObject(LinkedEnemy.GetComponent<NetworkID>().NetId);
+        if (Despawn)
+        {
+            FindObjectOfType<NetworkCore>().NetDestroyObject(LinkedEnemy.GetComponent<NetworkID>().NetId);
+        }
     }
 
     public IEnumerator SpawnTimer()

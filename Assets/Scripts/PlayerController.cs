@@ -394,6 +394,17 @@ public abstract class PlayerController : NetworkComponent
     {
         if (IsServer)
         {
+            EXP = levelSystem.experience;
+            SendUpdate("EXPERIENCE", EXP + "," + levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
+            Level = levelSystem.level + 1;
+            SendUpdate("LEVEL", Level.ToString());
+            if (!Dead)
+            {
+                AnimController.SetFloat("STATE", STATE);
+                AnimController.SetInteger("ISTATE", (int)STATE);
+                SendUpdate("STATE", STATE.ToString());
+            }
+
             if (IsDirty)
             {
                 SendUpdate("HP", Health.ToString());
@@ -1071,11 +1082,6 @@ public abstract class PlayerController : NetworkComponent
                 SprintMod = 1;
             }
 
-            EXP = levelSystem.experience;
-            SendUpdate("EXPERIENCE", EXP + "," + levelSystem.GetExperienceToNextLevel(levelSystem.GetLevelNumber()));
-            Level = levelSystem.level + 1;
-            SendUpdate("LEVEL", Level.ToString());
-
             Damage = (DamageBase + (DamageUpgradeMod * DamageUpgrade)) + ((DamageMod * .01f) * (DamageBase + (DamageUpgradeMod * DamageUpgrade)));
             MaxHealth = (HealthBase + (HealthUpgradeMod * HealthUpgrade)) + ((HealthMod * .01f) * (HealthBase + (HealthUpgradeMod * HealthUpgrade)));
             HealthRegeneration = (HealthRegenerationBase + (HealthRegenerationUpgradeMod * HealthRegenerationUpgrade)) + ((HealthRegenerationMod * .01f) * (HealthRegenerationBase + (HealthRegenerationUpgradeMod * HealthRegenerationUpgrade)));
@@ -1104,13 +1110,6 @@ public abstract class PlayerController : NetworkComponent
             {
                 STATE = RUNSTATE;
             }
-
-            if (!Dead)
-            {
-                AnimController.SetFloat("STATE", STATE);
-                AnimController.SetInteger("ISTATE", (int)STATE);
-                SendUpdate("STATE", STATE.ToString());
-            }
         }
 
         if (IsClient)
@@ -1118,6 +1117,16 @@ public abstract class PlayerController : NetworkComponent
             if (STATE != IDLESTATE && !Dead)
             {
                 AnimController.SetFloat("SPEED", MyRig.velocity.magnitude);
+            }
+            else
+            {
+                AnimController.SetFloat("SPEED", 5);
+            }
+        }
+        if (IsLocalPlayer)
+        {
+            if (STATE != IDLESTATE && !Dead)
+            {
                 if (!WalkSound)
                 {
                     FindObjectOfType<AudioManager>().Play("Walk");
@@ -1131,7 +1140,6 @@ public abstract class PlayerController : NetworkComponent
                     FindObjectOfType<AudioManager>().Pause("Walk");
                     WalkSound = false;
                 }
-                AnimController.SetFloat("SPEED", 5);
             }
         }
     }
@@ -1243,7 +1251,7 @@ public abstract class PlayerController : NetworkComponent
     public IEnumerator CollisionTimer()
     {
         PickingUp = true;
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < TouchingObjects.Count; i++)
         {
             var item = TouchingObjects[i];
@@ -1253,7 +1261,7 @@ public abstract class PlayerController : NetworkComponent
                 Inventory.AddItem(item.item, 1, this.Owner);
                 MyCore.NetDestroyObject(item.NetId);
             }
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.3f);
         }
         PickingUp = false;
     }
@@ -1261,26 +1269,26 @@ public abstract class PlayerController : NetworkComponent
     public IEnumerator ReplaceItems(int item1, int item2, int item3, int item4, int item5)
     {
         yield return new WaitUntil(() => IsConnected);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.7f);
         if (item1 != 0)
         {
             Inventory.AddItem(Inventory.database.GetItem[item1], 1, Owner, false);
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.3f);
         }
         if (item2 != 0)
         {
             Inventory.AddItem(Inventory.database.GetItem[item2], 1, Owner, false);
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.3f);
         }
         if (item3 != 0)
         {
             Inventory.AddItem(Inventory.database.GetItem[item3], 1, Owner, false);
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.3f);
         }
         if (item4 != 0)
         {
             Inventory.AddItem(Inventory.database.GetItem[item4], 1, Owner, false);
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.3f);
         }
         if (item5 != 0)
         {
@@ -1307,7 +1315,7 @@ public abstract class PlayerController : NetworkComponent
     public IEnumerator SetName(string _name)
     {
         yield return new WaitUntil(() => IsConnected);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         Name = _name;
         SendUpdate("NAME", Name);
     }
