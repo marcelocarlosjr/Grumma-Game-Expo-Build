@@ -1027,7 +1027,7 @@ public abstract class PlayerController : NetworkComponent
 
     public void LevelSystem_OnLevelChanged(object sender, EventArgs e)
     {
-        //FindObjectOfType<AudioManager>().Play("PlayerLevel");
+        FindObjectOfType<AudioManager>().Play("PlayerLevel");
         Level = levelSystem.level + 1;
         SendUpdate("LEVEL", Level.ToString());
     }
@@ -1059,7 +1059,7 @@ public abstract class PlayerController : NetworkComponent
         yield return new WaitForSeconds(5);
         RegenHealth = false;
     }
-
+    bool WalkSound;
     private void Update()
     {
         if (IsServer)
@@ -1116,12 +1116,20 @@ public abstract class PlayerController : NetworkComponent
             if (STATE != IDLESTATE && !Dead)
             {
                 AnimController.SetFloat("SPEED", MyRig.velocity.magnitude);
-                FindObjectOfType<AudioManager>().Play("Walk");
+                if (!WalkSound)
+                {
+                    FindObjectOfType<AudioManager>().Play("Walk");
+                    WalkSound = true;
+                }
             }
             else
             {
+                if (WalkSound)
+                {
+                    FindObjectOfType<AudioManager>().Pause("Walk");
+                    WalkSound = false;
+                }
                 AnimController.SetFloat("SPEED", 5);
-                FindObjectOfType<AudioManager>().Pause("Walk");
             }
         }
     }
