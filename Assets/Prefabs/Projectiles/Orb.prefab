@@ -128,7 +128,7 @@ MonoBehaviour:
   distance: 0
   type: 1
   Damage: 10
-  Speed: 11
+  Speed: 10
   Timer: 3
 --- !u!114 &5890274673163790781
 MonoBehaviour:

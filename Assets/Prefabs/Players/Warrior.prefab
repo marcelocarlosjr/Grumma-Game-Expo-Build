@@ -455,7 +455,7 @@ MonoBehaviour:
   MoveSpeedBase: 5
   HealthBase: 100
   DamageBase: 10
-  HealthRegenerationBase: 1
+  HealthRegenerationBase: 10
   AttackSpeedBase: 1
   EXPBase: 1
   StaminaBase: 1
