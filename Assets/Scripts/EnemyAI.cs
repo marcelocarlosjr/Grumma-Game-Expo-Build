@@ -554,7 +554,15 @@ public class EnemyAI : NetworkComponent
                 MyAgent.isStopped = false;
             }
         }
-        MyAgent.SetDestination(new Vector3(this.transform.position.x + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1), this.transform.position.y + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1)));
+        Vector2 destination = new Vector3(this.transform.position.x + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1), this.transform.position.y + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1));
+        if (MyAgent.SetDestination(destination))
+        {
+            MyAgent.SetDestination(destination);
+        }
+        else
+        {
+            Stop(0);
+        }
     }
     public IEnumerator Attack()
     {

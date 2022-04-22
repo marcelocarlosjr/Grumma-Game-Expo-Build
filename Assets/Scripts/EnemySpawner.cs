@@ -79,6 +79,12 @@ public class EnemySpawner : MonoBehaviour
                     nearestPlayer = pc.transform;
                 }
             }
+            if (!nearestPlayer)
+            {
+                yield return new WaitForSeconds(2);
+                detecting = false;
+                yield break;
+            }
             if (Vector3.Distance(nearestPlayer.position, this.transform.position) < 15)
             {
                 if (!Spawning)
@@ -97,6 +103,12 @@ public class EnemySpawner : MonoBehaviour
     {
         Despawning = true;
         yield return new WaitForSeconds(7);
+        if(!nearestPlayer)
+        {
+            Despawning = false;
+            FindObjectOfType<NetworkCore>().NetDestroyObject(LinkedEnemy.GetComponent<NetworkID>().NetId);
+            yield break;
+        }
         if((Vector3.Distance(nearestPlayer.position, LinkedEnemy.transform.position) > 15))
         {
             FindObjectOfType<NetworkCore>().NetDestroyObject(LinkedEnemy.GetComponent<NetworkID>().NetId);
