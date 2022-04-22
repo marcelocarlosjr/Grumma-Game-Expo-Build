@@ -647,10 +647,10 @@ MonoBehaviour:
   EXP: 0
   EXPToLevel: 1
   Level: 1
-  MoveSpeedBase: 4
-  HealthBase: 50
-  DamageBase: 5
-  HealthRegenerationBase: 1
+  MoveSpeedBase: 5
+  HealthBase: 100
+  DamageBase: 10
+  HealthRegenerationBase: 2
   AttackSpeedBase: 1
   EXPBase: 1
   StaminaBase: 1
