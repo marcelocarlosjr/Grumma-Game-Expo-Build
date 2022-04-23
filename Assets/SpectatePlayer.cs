@@ -19,9 +19,6 @@ public class SpectatePlayer : NetworkComponent
 
             StartCoroutine(ChooseNextPlayer());
         }
-        FindObjectOfType<PlayerManagerScript>().playerspawned = true;
-        FindObjectOfType<OfflinePlayerHolder>().RemoveLoading();
-        FindObjectOfType<PlayerHealthUI>().transform.parent.gameObject.SetActive(false);
 
     }
 
@@ -39,14 +36,11 @@ public class SpectatePlayer : NetworkComponent
     {
         if (IsLocalPlayer)
         {
-            if (CurrentSpectate)
-            {
-                float cameraSpeed = 5f;
-                Vector3 offsetVector = transform.forward * -10;
-                Vector3 targetCameraPosition = CurrentSpectate.gameObject.transform.position;
-                Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetCameraPosition, cameraSpeed * Time.deltaTime);
-                Camera.main.transform.forward = new Vector3(0, 0, 1);
-            }
+            float cameraSpeed = 5f;
+            Vector3 offsetVector = transform.forward * -10;
+            Vector3 targetCameraPosition = CurrentSpectate.gameObject.transform.position;
+            Camera.main.transform.position = Vector3.Lerp(Camera.main.transform.position, targetCameraPosition, cameraSpeed * Time.deltaTime);
+            Camera.main.transform.forward = new Vector3(0, 0, 1);
         }
     }
 
