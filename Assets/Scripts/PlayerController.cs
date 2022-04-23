@@ -6,6 +6,7 @@ using NETWORK_ENGINE;
 using UnityEngine.UI;
 using UnityEngine.Animations;
 using System;
+using UnityEngine.SceneManagement;
 
 public abstract class PlayerController : NetworkComponent
 {
@@ -314,6 +315,16 @@ public abstract class PlayerController : NetworkComponent
             {
                 FindObjectOfType<PVPModeUI>().SetPVP(IsSafe);
             }
+            if (IsSafe)
+            {
+                FindObjectOfType<AudioManager>().Play("TownLoop");
+                FindObjectOfType<AudioManager>().Pause("OverworldLoop");
+            }
+            else
+            {
+                FindObjectOfType<AudioManager>().Pause("TownLoop");
+                FindObjectOfType<AudioManager>().Play("OverworldLoop");
+            }
         }
     }
 
@@ -364,10 +375,25 @@ public abstract class PlayerController : NetworkComponent
             AimAction.started += this.OnAimInput;
             AimAction.performed += this.OnAimInput;
             AimAction.canceled += this.OnAimInput;
-
             InputType = KBM;
 
             Camera.main.transform.position = this.transform.position;
+
+            if(SceneManager.GetActiveScene().buildIndex == 2 && SceneManager.GetActiveScene().buildIndex == 3)
+            {
+                FindObjectOfType<AudioManager>().Play("InstanceLoop");
+                FindObjectOfType<AudioManager>().Pause("OverworldLoop");
+                FindObjectOfType<AudioManager>().Pause("MainMenuLoop");
+                FindObjectOfType<AudioManager>().Pause("TownLoop");
+            }
+            if (SceneManager.GetActiveScene().buildIndex == 1)
+            {
+                FindObjectOfType<AudioManager>().Pause("InstanceLoop");
+                FindObjectOfType<AudioManager>().Play("OverworldLoop");
+                FindObjectOfType<AudioManager>().Pause("MainMenuLoop");
+                FindObjectOfType<AudioManager>().Pause("TownLoop");
+            }
+
         }
     }
     public void OnDestroy()

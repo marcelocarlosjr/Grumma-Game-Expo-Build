@@ -23,6 +23,9 @@ public class UI_MainMenu : MonoBehaviour
     private void Start()
     {
         FindObjectOfType<OfflinePlayerHolder>().RemoveLoading();
+        FindObjectOfType<AudioManager>().Pause("Walk");
+        FindObjectOfType<AudioManager>().Pause("TownLoop");
+        FindObjectOfType<AudioManager>().Pause("TownLoop");
     }
 
     public void Connect()
