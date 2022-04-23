@@ -198,8 +198,7 @@ public class EnemyAI : NetworkComponent
 
         if(Health <= 0 && IsLocalPlayer)
         {
-            HealthBar.transform.GetChild(1).GetComponent<RectTransform>().localScale = new Vector3(0, 1, 1);
-            HealthBar.transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector3(0, 1, 1);
+            HealthBar.SetActive(false);
         }
         if (STATE != IDLESTATE && !Dead)
         {
@@ -673,6 +672,10 @@ public class EnemyAI : NetworkComponent
         if (IsServer)
         {
             Invoke("DestroyBody", 10f);
+        }
+        if (IsLocalPlayer)
+        {
+            HealthBar.SetActive(false);
         }
         //this.GetComponent<NetworkID>().enabled = false;
         //this.GetComponent<EnemyAI>().enabled = false;

@@ -473,7 +473,7 @@ MonoBehaviour:
   columns: 1
   rows: 6
   spacing: {x: 5, y: 5}
-  cellSize: {x: 143.25447, y: 58.539215}
+  cellSize: {x: 147.34348, y: 58.539215}
   fitX: 1
   fitY: 1
   NudgeLastItemsOver: 0
@@ -2097,7 +2097,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: stamina
+          m_StringArgument: exp
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &8967654244565972169
@@ -2287,7 +2287,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 78.67174, y: -54.269653}
+  m_AnchoredPosition: {x: 78.67174, y: -54.269608}
   m_SizeDelta: {x: 147.34348, y: 58.539215}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8967654244708190328
@@ -2533,7 +2533,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: exp
+          m_StringArgument: stamina
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &8967654244905540201

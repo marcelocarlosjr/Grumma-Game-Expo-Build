@@ -369,6 +369,7 @@ public abstract class PlayerController : NetworkComponent
 
             Camera.main.transform.position = this.transform.position;
 
+            FindObjectOfType<PlayerManagerScript>().playerspawned = true;
         }
     }
     public void OnDestroy()
