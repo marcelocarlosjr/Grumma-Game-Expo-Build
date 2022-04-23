@@ -315,15 +315,18 @@ public abstract class PlayerController : NetworkComponent
             {
                 FindObjectOfType<PVPModeUI>().SetPVP(IsSafe);
             }
-            if (IsSafe)
+            if (IsLocalPlayer)
             {
-                FindObjectOfType<AudioManager>().Play("TownLoop");
-                FindObjectOfType<AudioManager>().Pause("OverworldLoop");
-            }
-            else
-            {
-                FindObjectOfType<AudioManager>().Pause("TownLoop");
-                FindObjectOfType<AudioManager>().Play("OverworldLoop");
+                if (IsSafe)
+                {
+                    FindObjectOfType<AudioManager>().Play("TownLoop");
+                    FindObjectOfType<AudioManager>().Pause("OverworldLoop");
+                }
+                else
+                {
+                    FindObjectOfType<AudioManager>().Pause("TownLoop");
+                    FindObjectOfType<AudioManager>().Play("OverworldLoop");
+                }
             }
         }
     }
