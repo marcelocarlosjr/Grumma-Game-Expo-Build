@@ -131,7 +131,7 @@ PlayerSettings:
   m_SupportedAspectRatios:
     4:3: 1
     5:4: 1
-    16:10: 1
+    16:10: 0
     16:9: 1
     Others: 1
   bundleVersion: 1.0
@@ -143,6 +143,7 @@ PlayerSettings:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 11400000, guid: d210736db60428044b5d95828f0d5699, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -160,7 +161,7 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Standalone: com.DefaultCompany.GameDev2Project
+    Standalone: com.GrummaGames.Grumma
   buildNumber:
     Standalone: 0
     iPhone: 0
@@ -277,42 +278,42 @@ PlayerSettings:
   - m_BuildTarget: Standalone
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 0}
+      m_Icon: {fileID: 2800000, guid: a386fdad96a7fae4a98d1e565860b77c, type: 3}
       m_Width: 1024
       m_Height: 1024
       m_Kind: 0
     - serializedVersion: 2
-      m_Icon: {fileID: 0}
+      m_Icon: {fileID: 2800000, guid: a33a10a9542bb514dbe23d93f954dc42, type: 3}
       m_Width: 512
       m_Height: 512
       m_Kind: 0
     - serializedVersion: 2
-      m_Icon: {fileID: 0}
+      m_Icon: {fileID: 2800000, guid: ba693ae0d654f804994c9587c6ce545e, type: 3}
       m_Width: 256
       m_Height: 256
       m_Kind: 0
     - serializedVersion: 2
-      m_Icon: {fileID: 0}
+      m_Icon: {fileID: 2800000, guid: 8e7a846f66480464c9fb3fa7d9c76343, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
     - serializedVersion: 2
-      m_Icon: {fileID: 0}
+      m_Icon: {fileID: 2800000, guid: bc994c1946f4c6e44a7d972e17a0834d, type: 3}
       m_Width: 64
       m_Height: 64
       m_Kind: 0
     - serializedVersion: 2
-      m_Icon: {fileID: 0}
+      m_Icon: {fileID: 2800000, guid: e31c836222d60b244b7c15bcb6ef855f, type: 3}
       m_Width: 48
       m_Height: 48
       m_Kind: 0
     - serializedVersion: 2
-      m_Icon: {fileID: 0}
+      m_Icon: {fileID: 2800000, guid: 29ed68e5d20ea7b41a33dc89191ab9dc, type: 3}
       m_Width: 32
       m_Height: 32
       m_Kind: 0
     - serializedVersion: 2
-      m_Icon: {fileID: 0}
+      m_Icon: {fileID: 2800000, guid: f4acfe9dd6714204a894af59b894549c, type: 3}
       m_Width: 16
       m_Height: 16
       m_Kind: 0

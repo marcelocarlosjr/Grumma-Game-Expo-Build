@@ -305,7 +305,10 @@ public abstract class PlayerController : NetworkComponent
         {
             Name = value;
             NameBox.text = Name;
-            FindObjectOfType<OfflinePlayerHolder>().RemoveLoading();
+            if (IsLocalPlayer)
+            {
+                FindObjectOfType<OfflinePlayerHolder>().RemoveLoading();
+            }
         }
 
         if(flag == "SAFE" && IsClient)
@@ -918,7 +921,7 @@ public abstract class PlayerController : NetworkComponent
     {
         while (!SprintInput)
         {
-            if(Stamina <= MaxStamina)
+            if(Stamina < MaxStamina)
             {
                 NoStamina = false;
                 Stamina += (MaxStamina * 0.01f);
@@ -928,6 +931,7 @@ public abstract class PlayerController : NetworkComponent
             {
                 Stamina = MaxStamina;
                 SendUpdate("STAMINA", Stamina.ToString());
+                SendUpdate("MAXSTAMINA", MaxStamina.ToString());
             }
             yield return new WaitForSeconds(0.1f);
         }
