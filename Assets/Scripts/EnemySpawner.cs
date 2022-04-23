@@ -43,9 +43,9 @@ public class EnemySpawner : MonoBehaviour
                 detecting = false;
                 yield break;
             }
+            float minimumDistance = Mathf.Infinity;
             foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
             {
-                float minimumDistance = Mathf.Infinity;
                 float distance = Vector3.Distance(LinkedEnemy.transform.position, pc.transform.position);
                 if (distance < minimumDistance)
                 {
@@ -65,13 +65,14 @@ public class EnemySpawner : MonoBehaviour
         {
             if (!FindObjectOfType<PlayerController>())
             {
+                nearestPlayer = null;
                 yield return new WaitForSeconds(2);
                 detecting = false;
                 yield break;
             }
+            float minimumDistance = Mathf.Infinity;
             foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
             {
-                float minimumDistance = Mathf.Infinity;
                 float distance = Vector3.Distance(this.transform.position, pc.transform.position);
                 if (distance < minimumDistance)
                 {
@@ -103,10 +104,15 @@ public class EnemySpawner : MonoBehaviour
     {
         Despawning = true;
         yield return new WaitForSeconds(7);
-        if(!nearestPlayer)
+        if (!LinkedEnemy)
         {
             Despawning = false;
+            yield break;
+        }
+        if(!nearestPlayer)
+        {
             FindObjectOfType<NetworkCore>().NetDestroyObject(LinkedEnemy.GetComponent<NetworkID>().NetId);
+            Despawning = false;
             yield break;
         }
         if((Vector3.Distance(nearestPlayer.position, LinkedEnemy.transform.position) > 15))

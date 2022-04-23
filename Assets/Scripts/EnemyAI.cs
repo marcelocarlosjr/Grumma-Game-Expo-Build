@@ -146,19 +146,41 @@ public class EnemyAI : NetworkComponent
 
     bool SetActiveMove;
     bool CheckForPlayer;
+    Transform nearestPlayer;
     public IEnumerator CheckPlayerTimer()
     {
         CheckForPlayer = true;
+        if (!FindObjectOfType<PlayerController>())
+        {
+            nearestPlayer = null;
+            yield return new WaitForSeconds(2);
+            CheckForPlayer = false;
+            yield break;
+        }
+        float minimumDistance = Mathf.Infinity;
         foreach (PlayerController pc in FindObjectsOfType<PlayerController>())
         {
-            if (Vector3.Distance(pc.transform.position, this.transform.position) < 15)
+            float distance = Vector3.Distance(this.transform.position, pc.transform.position);
+            if (distance < minimumDistance)
             {
-                SetActiveMove = true;
+                minimumDistance = distance;
+                nearestPlayer = pc.transform;
             }
-            else
-            {
-                SetActiveMove = false;
-            }
+
+        }
+        if (!nearestPlayer)
+        {
+            yield return new WaitForSeconds(2);
+            CheckForPlayer = false;
+            yield break;
+        }
+        if (Vector3.Distance(nearestPlayer.position, this.transform.position) < 15)
+        {
+            SetActiveMove = true;
+        }
+        else
+        {
+            SetActiveMove = false;
         }
         yield return new WaitForSeconds(2);
         CheckForPlayer = false;
@@ -555,7 +577,7 @@ public class EnemyAI : NetworkComponent
             }
         }
         Vector2 destination = new Vector3(this.transform.position.x + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1), this.transform.position.y + Random.Range((RoamDistance + 1) * -1, RoamDistance + 1));
-        if (MyAgent.SetDestination(destination))
+        if (MyAgent.isOnNavMesh)
         {
             MyAgent.SetDestination(destination);
         }

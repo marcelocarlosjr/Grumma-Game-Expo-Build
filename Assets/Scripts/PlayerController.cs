@@ -254,10 +254,11 @@ public abstract class PlayerController : NetworkComponent
         {
             if(int.Parse(value) > Level)
             {
+                int levelDelta = int.Parse(value) - Level;
                 var temp = FindObjectOfType<UpgradeController>();
                 temp.setPlayer(this);
                 temp.Show();
-                temp.SetCurrentUpgradeAmount(1);
+                temp.SetCurrentUpgradeAmount(levelDelta);
             }
 
             Level = int.Parse(value);
