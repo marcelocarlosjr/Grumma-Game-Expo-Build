@@ -15,22 +15,12 @@ public class PlayerManagerScript : NetworkComponent
             args = value.Split(',');
             StartCoroutine(SetStats());
         }
-
-        if(flag == "SPECTATE" && IsServer)
-        {
-            MyCore.NetCreateObject(61, Owner, Vector3.zero, Quaternion.identity);
-        }
     }
 
     public override void NetworkedStart()
     {
         if (IsLocalPlayer)
         {
-            if(OfflinePlayerHolder.PlayerPrefab == 69)
-            {
-                SendCommand("SPECTATE", "69");
-            }
-
             var temp = FindObjectOfType<OfflinePlayerHolder>();
             SendCommand("LOGIN",
                 OfflinePlayerHolder.PlayerPrefab + "," + OfflinePlayerHolder.PreviousScene + "," + temp.PName + "," +
@@ -95,11 +85,6 @@ public class PlayerManagerScript : NetworkComponent
             int item3ID = int.Parse(args[24]);
             int item4ID = int.Parse(args[25]);
             int item5ID = int.Parse(args[26]);
-
-            if(type == 69)
-            {
-                MyCore.NetCreateObject(type, Owner, Vector3.zero, Quaternion.identity);
-            }
 
             GameObject spawnLocation = GameObject.Find(lastScene.ToString());
             if (spawnLocation == null && lastScene != 0)

@@ -27,12 +27,6 @@ public class UI_MainMenu : MonoBehaviour
 
     public void Connect()
     {
-        if(Pname == "SPECTATE")
-        {
-            OfflinePlayerHolder.PlayerPrefab = 69;
-            SceneManager.LoadScene(1);
-        }
-
         if(Pname != "" && Char != -1)
         {
             FindObjectOfType<AudioManager>().Play("ClickUI");
