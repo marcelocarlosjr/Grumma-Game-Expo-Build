@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UsingUDP: 0
-  MasterTimer: 0.05
+  MasterTimer: 0.01
   LocalConnectionID: -1
   UseMenuManager: 1
   DisconnectScreen: {fileID: 0}

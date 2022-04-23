@@ -77,8 +77,10 @@ public class EnemyAI : NetworkComponent
             }
             if (STATE == DEADSTATE)
             {
-                HealthBar.transform.GetChild(1).GetComponent<RectTransform>().localScale = new Vector3(0, 1, 1);
-                HealthBar.transform.GetChild(0).GetComponent<RectTransform>().localScale = new Vector3(0, 1, 1);
+                if (IsLocalPlayer)
+                {
+                    HealthBar.gameObject.GetComponent<Canvas>().enabled = false;
+                }
                 Die();
             }
             else if (STATE == ATTACKSTATE)
@@ -198,7 +200,7 @@ public class EnemyAI : NetworkComponent
 
         if(Health <= 0 && IsLocalPlayer)
         {
-            HealthBar.SetActive(false);
+            HealthBar.gameObject.SetActive(false);
         }
         if (STATE != IDLESTATE && !Dead)
         {
@@ -673,10 +675,6 @@ public class EnemyAI : NetworkComponent
         {
             Invoke("DestroyBody", 10f);
         }
-        if (IsLocalPlayer)
-        {
-            HealthBar.SetActive(false);
-        }
         //this.GetComponent<NetworkID>().enabled = false;
         //this.GetComponent<EnemyAI>().enabled = false;
     }
@@ -794,7 +792,7 @@ public class EnemyAI : NetworkComponent
 
     public void DisableHealthBar()
     {
-        HealthBar.SetActive(false);
+        HealthBar.gameObject.SetActive(false);
     }
     public void EnableHealthBar(int owner)
     {

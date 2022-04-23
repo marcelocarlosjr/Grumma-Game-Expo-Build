@@ -429,6 +429,7 @@ public abstract class PlayerController : NetworkComponent
                 SendUpdate("MAXHP", MaxHealth.ToString());
                 SendUpdate("NAME", Name);
                 SendUpdate("SAFE", IsSafe.ToString());
+                SendUpdate("MAXSTAMINA", MaxStamina.ToString());
                 IsDirty = false;
             }
         }
@@ -909,6 +910,7 @@ public abstract class PlayerController : NetworkComponent
                 Stamina -= 0.01f;
             }
             SendUpdate("STAMINA", Stamina.ToString());
+            SendUpdate("MAXSTAMINA", MaxStamina.ToString());
             yield return new WaitForSeconds(0.1f);
         }
     }
