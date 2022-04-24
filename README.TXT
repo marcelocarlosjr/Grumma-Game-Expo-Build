@@ -1,4 +1,5 @@
-Grumam
+Grumma
+
 Created for a University project for Game Development 2, Grumma is a server authoritative networked MMO .io style game where you can player as a warrior, archer, or mage. Kill enemies to level up and upgrade your skill points and collect items that drop to buff your stats. Be aware, other player can be roaming in the shadows.
 
 When you start, you spawn in a town that is a safe zone (NO PVP). You can explore the world, and fight various levels of enemies that drop items and exp depending on their strengths.
