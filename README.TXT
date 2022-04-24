@@ -4,9 +4,9 @@ Created for a University project for Game Development 2, Grumma is a server auth
 
 When you start, you spawn in a town that is a safe zone (NO PVP). You can explore the world, and fight various levels of enemies that drop items and exp depending on their strengths.
 
-As you level up and choose how where your character will add their strengths, you can find various items with different rarities (common: blue; uncommon: purple; rare: red; and legendary: yellow) As rariries increase, so does the powerups of their stats.
+As you level up and choose how where your character will add their strengths, you can find various items with different rarities (common: blue; uncommon: purple; rare: red; and legendary: yellow) As rarities increase, so does the powerups of their stats. 
 
-Expore the wold and find two secret instances, the swamp and the mines, where you can fight though and find secret legendary items.
+Explore the world and find two secret instances, the swamp and the mines, where you can fight though and find secret legendary items.
 
 
 https://itch.io/jam/flpoly-expo-spring-2022/rate/1478638
