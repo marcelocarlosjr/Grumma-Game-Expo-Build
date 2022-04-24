@@ -10,4 +10,4 @@ Expore the wold and find two secret instances, the swamp and the mines, where yo
 
 
 https://itch.io/jam/flpoly-expo-spring-2022/rate/1478638
-SOURCE CODE FOR GRUMMA MADE FOR GAME DESIGN w @ FLORIDA POLY GAME EXPO SPRING 2022
+SOURCE CODE FOR GRUMMA MADE FOR GAME DESIGN 2 @ FLORIDA POLY GAME EXPO SPRING 2022
