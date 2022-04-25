@@ -61,6 +61,15 @@ public class Item : NetworkComponent
     private void Start()
     {
         MyRig = GetComponent<Rigidbody2D>();
+        if (IsServer)
+        {
+            Invoke("Despawn", 180);
+        }
+    }
+
+    public void Despawn()
+    {
+        MyCore.NetDestroyObject(this.NetId);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
